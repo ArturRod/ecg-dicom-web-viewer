@@ -72,6 +72,7 @@ class DrawGraphs {
         document.getElementById(chartId) == undefined
       ) {
         let id = 'myWaveform' + this.index;
+        let a = document.getElementById(id);
         document.getElementById(id).innerHTML +=
           '<div id="' + chartId + '"></div>';
       }
