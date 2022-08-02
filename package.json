@@ -1,0 +1,38 @@
+{
+  "name": "ecg-dicom-web-viewer",
+  "version": "1.0.0",
+  "description": "Together with the cornerstone library, this project allows reading and drawing ECGs from a dcm in web version.",
+  "main": "dist/index.umd.js",
+  "module": "src/index.js",
+  "engines": {
+    "node": ">=10",
+    "npm": ">=6",
+    "yarn": ">=1.16.0"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArturRod/ecg-dicom-web-viewer.git"
+  },
+  "keywords": [
+    "DICOM",
+    "ECG"
+  ],
+  "author": "Arturo Rodrigo (https://github.com/ArturRod)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ArturRod/ecg-dicom-web-viewer/issues"
+  },
+  "homepage": "https://github.com/ArturRod/ecg-dicom-web-viewer#readme",
+  "dependencies": {
+    "babel-loader": "^8.2.5",
+    "c3": "^0.7.20",
+    "dicom-parser": "^1.8.11"
+  },
+  "devDependencies": {
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  }
+}
