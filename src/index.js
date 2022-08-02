@@ -1,4 +1,4 @@
-import  ReadECGData   from "./utils/ReadECGData";
+import ReadECGData from "./utils/ReadECGData";
 import DrawGraphs from "./utils/DrawGraphs";
 import GraphicCalibration from "./constants/graphicCalibration";
 import DicomECGViewer from "./viewer/DicomECGViewer";

@@ -1,8 +1,8 @@
 import dicomParser from 'dicom-parser';
 import './DicomECGViewer.css';
 import graphicCalibration from '../constants/graphicCalibration';
-import ReadECGData from 'c:/users/wacheland/desktop/dicom-ecg-main/src/utils/readecgdata';
 import DrawGraphs from '../utils/DrawGraphs';
+import ReadECGData from '../utils/ReadECGData';
 
 class DicomECGViewer {
 

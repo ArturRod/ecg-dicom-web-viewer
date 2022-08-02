@@ -1,13 +1,13 @@
 /**
  * ReadECGData.
  */
- export default class ReadECGData {
+class ReadECGData {
     /**
      * Read and return ECG Data.
      * Structure: Waveform - Multiplex - channels - sample
      * @param {DataSet ECG} dataSet
      */
-    static readData(dataSet) {
+    readData(dataSet) {
       let mg = {}; // multiplexGroup
       let channelSourceSequence = dataSet.elements.x003a0208;
       if (channelSourceSequence !== undefined) {
@@ -233,3 +233,4 @@
       return code;
     }
   }
+  export default ReadECGData;
