@@ -186,6 +186,7 @@
     background: #F9F8F2;
     height: 100%;
     width: 100%;
+    overflow: scroll;
   }
   
   .loader:empty {
@@ -216,7 +217,7 @@
     width: 100%;
     border-bottom: 2px solid #000000;
     display: table;
-      padding: 10px;
+    padding: 10px;
   }
   
   .divTableRow {
