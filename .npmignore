@@ -1,0 +1,6 @@
+## All Non-Dist Firectories
+src
+node_modules
+example
+.webpack
+.gitignore
