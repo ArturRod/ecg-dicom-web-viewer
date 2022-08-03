@@ -1,9 +1,9 @@
 const path = require("path")
 
 var dist = {
-  entry: path.resolve(__dirname, "src/index.js"),
+  entry: path.resolve(__dirname, "../src/index.js"),
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "../dist"),
     filename: "index.umd.js",
     library: "$",
     libraryTarget: "umd",
@@ -21,13 +21,13 @@ var dist = {
       },
     ],
   },
-  mode: "development",
+  mode: "production",
 };
 
 var example = {
-  entry: path.resolve(__dirname, "src/index.js"),
+  entry: path.resolve(__dirname, "../src/index.js"),
   output: {
-    path: path.resolve(__dirname, "example"),
+    path: path.resolve(__dirname, "../example"),
     filename: "index.umd.js",
     library: "$",
     libraryTarget: "umd",
@@ -45,7 +45,7 @@ var example = {
       },
     ],
   },
-  mode: "development",
+  mode: "production",
 };
 
 // Return Array of Configurations
