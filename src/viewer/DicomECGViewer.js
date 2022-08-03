@@ -10,13 +10,13 @@ class DicomECGViewer {
    * Create Viwer
    * @param {*} dataDICOMarrayBuffer DICOM DCM ECG Array Buffer.
    * @param {*} canvas Draw ID View.
-   * @param {*} patientData Patient Data: patientData = { NAME: name, PATIENT_ID: id, BIRTH: birth, SEX:sex, DATE:date, DESCRIPTION: description }
-   * @param {*} nameView Identifier of the view you want to put, in case you have several views.
+   * @param {*} patientData Patient Data, default null: patientData = { NAME: name, PATIENT_ID: id, BIRTH: birth, SEX:sex, DATE:date, DESCRIPTION: description }
+   * @param {*} nameView Identifier of the view you want to put, in case you have several views, default 0.
    */
     constructor(dataDICOMarrayBuffer, canvas, patientData = null, nameView = '0'){
         this.dataDICOMarrayBuffer = dataDICOMarrayBuffer;
         this.canvas = canvas;
-        this.nameView = nameView;
+        this.nameView = "myWaveform" + nameView;
         this.patientData = patientData;
       }
 
@@ -24,14 +24,13 @@ class DicomECGViewer {
      * Create struct of view.
      */
     createView(){
-        let id = 'myWaveform' +  this.nameView;
         let view = '';
         document.getElementById(this.canvas).innerHTML = view;
         if(this.patientData != null){
-          view = '<div class="waveform"><div class="wavedata"><div class="divTableBody"><div class="divTableRow"><div class="divTableCell">NAME: <i>' + this.patientData.NAME + '</i></div><div class="divTableCell">SEX: <i>' + this.patientData.SEX + '</i></div><div class="divTableCell">DATE: <i>' + this.patientData.DATE + '</i></div></div><div class="divTableRow"><div class="divTableCell">PATIENT ID: <i>' + this.patientData.PATIENT_ID + '</i></div><div class="divTableCell">DESCRIPTION: <i>' + this.patientData.DESCRIPTION + '</i></div></div><div class="divTableRow"><div class="divTableCell">BIRTH: <i>' + this.patientData.BIRTH + '</i></div></div></div></div><div id=' + id + ' /></div><div class="wavemenu" />';
+          view = '<div class="waveform"><div class="wavedata"><div class="divTableBody"><div class="divTableRow"><div class="divTableCell">NAME: <i>' + this.patientData.NAME + '</i></div><div class="divTableCell">SEX: <i>' + this.patientData.SEX + '</i></div><div class="divTableCell">DATE: <i>' + this.patientData.DATE + '</i></div></div><div class="divTableRow"><div class="divTableCell">PATIENT ID: <i>' + this.patientData.PATIENT_ID + '</i></div><div class="divTableCell">DESCRIPTION: <i>' + this.patientData.DESCRIPTION + '</i></div></div><div class="divTableRow"><div class="divTableCell">BIRTH: <i>' + this.patientData.BIRTH + '</i></div></div></div></div><div id=' + this.nameView + ' /></div><div class="wavemenu" />';
         }
         else{
-           view = '<div class="waveform"><div id=' + id + ' /><div class="wavemenu"/>';
+           view = '<div class="waveform"><div id=' + this.nameView + ' /><div class="wavemenu"/>';
         }
         document.getElementById(this.canvas).innerHTML = view;
         this.loadInstance();

@@ -29,9 +29,8 @@ class DrawGraphs {
 
   //No compatible ECG
   noCompatible() {
-    let id = 'myWaveform' + this.index;
     this.removeLoader();
-    document.getElementById(id).innerHTML =
+    document.getElementById(this.index).innerHTML =
       '<h1 style="vertical-align: center;text-align: center;">ECG NO COMPATIBLE</h1>';
   }
 
@@ -39,8 +38,7 @@ class DrawGraphs {
    * Draw loader.
    */
   async drawLoader() {
-    let id = 'myWaveform' + this.index;
-    document.getElementById(id).innerHTML = '<div class="loader"></div>'; //Clear
+    document.getElementById(this.index).innerHTML = '<div class="loader"></div>'; //Clear
     await new Promise(resolve => setTimeout(resolve, 500));
   }
 
@@ -71,9 +69,7 @@ class DrawGraphs {
         document.getElementById(chartId) == null ||
         document.getElementById(chartId) == undefined
       ) {
-        let id = 'myWaveform' + this.index;
-        let a = document.getElementById(id);
-        document.getElementById(id).innerHTML +=
+        document.getElementById(this.index).innerHTML +=
           '<div id="' + chartId + '"></div>';
       }
     }

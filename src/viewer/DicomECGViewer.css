@@ -186,7 +186,6 @@
     background: #F9F8F2;
     height: 100%;
     width: 100%;
-    overflow: auto;
   }
   
   .loader:empty {
