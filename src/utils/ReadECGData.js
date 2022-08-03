@@ -7,7 +7,7 @@ class ReadECGData {
      * Structure: Waveform - Multiplex - channels - sample
      * @param {DataSet ECG} dataSet
      */
-    readData(dataSet) {
+    static readData(dataSet) {
       let mg = {}; // multiplexGroup
       let channelSourceSequence = dataSet.elements.x003a0208;
       if (channelSourceSequence !== undefined) {

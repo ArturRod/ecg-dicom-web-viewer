@@ -1,6 +1,8 @@
 {
   "name": "ecg-dicom-web-viewer",
   "version": "1.0.0",
+  "author": "Arturo Rodrigo (https://github.com/ArturRod)",
+  "license": "MIT",
   "description": "Together with the cornerstone library, this project allows reading and drawing ECGs from a dcm in web version.",
   "main": "dist/index.umd.js",
   "module": "src/index.js",
@@ -20,8 +22,6 @@
     "DICOM",
     "ECG"
   ],
-  "author": "Arturo Rodrigo (https://github.com/ArturRod)",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ArturRod/ecg-dicom-web-viewer/issues"
   },

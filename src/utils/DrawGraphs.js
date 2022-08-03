@@ -1,5 +1,5 @@
 import c3 from 'c3';
-import graphicCalibration from '../constants/graphicCalibration';
+import Constants from '../constants/Constants';
 
 /**
  * Render Draw Graphs ECG.
@@ -100,25 +100,25 @@ class DrawGraphs {
             .channelSensitivityUnits.codeValue
         ) {
           case 'uV':
-            yAxis.min = graphicCalibration.uV.min;
-            yAxis.max = graphicCalibration.uV.max;
-            yAxis.deltaMain = graphicCalibration.uV.deltaMain;
-            yAxis.deltaSecondary = graphicCalibration.uV.deltaSecondary;
+            yAxis.min = Constants.uV.min;
+            yAxis.max = Constants.uV.max;
+            yAxis.deltaMain = Constants.uV.deltaMain;
+            yAxis.deltaSecondary = Constants.uV.deltaSecondary;
             break;
 
           case 'mV':
             // *** ToDo: proper rounding of values in y axis
-            yAxis.min = graphicCalibration.mV.min;
-            yAxis.max = graphicCalibration.mV.max;
-            yAxis.deltaMain = graphicCalibration.mV.deltaMain;
-            yAxis.deltaSecondary = graphicCalibration.mV.deltaSecondary;
+            yAxis.min = Constants.mV.min;
+            yAxis.max = Constants.mV.max;
+            yAxis.deltaMain = Constants.mV.deltaMain;
+            yAxis.deltaSecondary = Constants.mV.deltaSecondary;
             break;
 
           case 'mm[Hg]': // Better 60 ~ 160 range ?
-            yAxis.min = graphicCalibration.mmHg.min;
-            yAxis.max = graphicCalibration.mmHg.max;
-            yAxis.deltaMain = graphicCalibration.mmHg.deltaMain;
-            yAxis.deltaSecondary = graphicCalibration.mmHg.deltaSecondary;
+            yAxis.min = Constants.mmHg.min;
+            yAxis.max = Constants.mmHg.max;
+            yAxis.deltaMain = Constants.mmHg.deltaMain;
+            yAxis.deltaSecondary = Constants.mmHg.deltaSecondary;
             break;
 
           default:

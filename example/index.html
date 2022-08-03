@@ -6,15 +6,11 @@
 
     <body>
         <input type="file" id="files" />
-        <div id="output"></div>
-        <div id="canvasECG">
+        <div id="canvasECG" style="height: 100%;"></div>
 
-        </div>    
-        
         <script src="index.umd.js"></script>    
-    <script type="application/javascript">
+        <script type="application/javascript">
         var input = document.getElementById("files"), output = document.getElementById('output');
-        
 
         // Eventhandler for file input. 
         function openfile(evt) {
@@ -33,22 +29,21 @@
             });
         }
 
-  /* 
-    Create a function which will be passed to the promise
-    and resolve it when FileReader has finished loading the file.
-  */
-  function getBuffer(fileData) {
-  	return function(resolve) {
-        var reader = new FileReader();
-        reader.readAsArrayBuffer(fileData);
-        reader.onload = function() {
-          var arrayBuffer = reader.result
-           console.log($)
-            let viewer = new $.DicomECGViewer(arrayBuffer, "canvasECG", "view1");
-            viewer.createView();
+        function getBuffer(fileData) {
+            return function(resolve) {
+                var reader = new FileReader();
+                reader.readAsArrayBuffer(fileData);
+                reader.onload = function() {
+                var arrayBuffer = reader.result
+                console.log($)
+                let patientData = { NAME: "User", PATIENT_ID: "00001", BIRTH: "19900101", SEX: "M", DATE:"20220101", DESCRIPTION: "ECG Test" }
+                let viewer = new $.DicomECGViewer(arrayBuffer, "canvasECG", patientData);
+                viewer.createView();
+                }
+            }
         }
-    }
-  }
+
+        //Event:
         document.getElementById('files').addEventListener('change', openfile, false);
     </script>
     </body>

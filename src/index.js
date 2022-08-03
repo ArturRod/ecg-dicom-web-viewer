@@ -1,6 +1,6 @@
 import ReadECGData from "./utils/ReadECGData";
 import DrawGraphs from "./utils/DrawGraphs";
-import GraphicCalibration from "./constants/graphicCalibration";
+import Constants from "./constants/Constants";
 import DicomECGViewer from "./viewer/DicomECGViewer";
 
-export { ReadECGData, DrawGraphs, GraphicCalibration, DicomECGViewer };
+export { ReadECGData, DrawGraphs, Constants, DicomECGViewer };
