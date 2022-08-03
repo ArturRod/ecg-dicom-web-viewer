@@ -1,2 +1,2 @@
 # ecg-dicom-web-viewer
-Together with the cornerstone library, this project allows reading and drawing ECGs from a dcm in web version.
+This library allows viewing an ECG file in DICOM format in web view.
