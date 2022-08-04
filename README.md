@@ -42,7 +42,13 @@ viewer.createView(); // Create graph.
 ```
 
 ## Documentation
-
+Currently it works:</br>
+<ul>
+  <li><strong>Sop12LeadECGWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.1.1', --> YES</strong></li>
+  <li><strong>GeneralECGWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.1.2', --> YES</strong></li>
+  <li><strong>AmbulatoryECGWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.1.3', --> NO SUPPORT</strong></li>
+  <li><strong>HemodynamicWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.2.1', --> YES</strong></li>
+</ul>
 The next available classes are as follows:
 <li><strong>Class ReadECGData</strong></li>
   <h6> - <strong>readData(dataSet)</strong></h4>
