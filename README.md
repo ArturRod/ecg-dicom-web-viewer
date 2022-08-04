@@ -19,6 +19,10 @@ The next available classes are as follows:
   <ul>
     <li>Method static readData(dataSet)</li>
     <p>Receives a dataSet data structure and returns a readable array.</p>
+    ```js
+// To install the newest version
+npm install --save ecg-dicom-web-viewer
+```
 ```js
 ReadECGData.readData(dataSet);
 ```
