@@ -11,6 +11,36 @@ should be installed as one of your project's `dependencies`:
 // To install the newest version
 npm install --save ecg-dicom-web-viewer
 ```
+
+## Example
+
+1. Once installed import the project.
+```js
+// Import
+import { DicomECGViewer } from 'ecg-dicom-web-viewer';
+```
+2. Instantiate the new class with the necessary data and create the view.
+```js
+//User data (optional)
+let userData = {
+  NAME: name,
+  SEX: sex,
+  DATE: date,
+  PATIENT_ID: patientID,
+  DESCRIPTION: desciption,
+  BIRTH: birth,
+};
+
+//Load view:
+let viewer = new DicomECGViewer(
+  byteArray, //Data array ECG (XMLHttpRequest response array or...local open data) 
+  divView, //Div where to draw the view
+  userData, //Optional
+  viewportIndex //View number, since you can have several views.
+);
+viewer.createView(); // Create graph.
+```
+
 ## Documentation
 
 The next available classes are as follows:
@@ -43,13 +73,3 @@ The next available classes are as follows:
   <h6> - <strong>loadInstance()</strong></h4>
   <p>Load the view according to the SOP UID.</p>
   
-  
-## Example
-
-This module is distributed via [npm][npm-url] which is bundled with [node][node] and
-should be installed as one of your project's `dependencies`:
-
-```js
-// To install the newest version
-npm install --save ecg-dicom-web-viewer
-```
