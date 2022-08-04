@@ -32,7 +32,21 @@ The next available classes are as follows:
   <p>Create and generate the line with the c3 library.</p>
 <li><strong>Static Constants</strong></li>
   <p>SOP UID of ECG types and graph measurements.</p>
-
+<li><strong>Class DicomECGViewer</strong></li>
+  <h6> - <strong>constructor(dataDICOMarrayBuffer, canvas, patientData, nameView)</strong></h4>
+  /**
+   * Create Viwer
+   * @param {*} dataDICOMarrayBuffer DICOM DCM ECG Array Buffer.
+   * @param {*} canvas Draw ID View.
+   * @param {*} patientData Patient Data, default null: patientData = { NAME: name, PATIENT_ID: id, BIRTH: birth, SEX:sex, DATE:date, DESCRIPTION: description }
+   * @param {*} nameView Identifier of the view you want to put, in case you have several views, default 0.
+  */
+  <h6> - <strong>createView()</strong></h4>
+  <p>Creates the ECG view from the data passed to it in the constructor.This is the main method to use in your project.</p>
+  <h6> - <strong>loadInstance()</strong></h4>
+  <p>Load the view according to the SOP UID</p>
+  
+  
 ## Example
 
 This module is distributed via [npm][npm-url] which is bundled with [node][node] and
