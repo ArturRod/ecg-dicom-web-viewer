@@ -79,3 +79,7 @@ The next available classes are as follows:
   <h6> - <strong>loadInstance()</strong></h4>
   <p>Load the view according to the SOP UID.</p>
   
+## Features
+<ul>
+  <li><strong>Generate the graph instead of using the c3 library (since it takes time to load), generate a canvas with the most personalized graph and actions such as scrolling or others.
+Calibrate Sop12LeadECGWaveformStorage and GeneralECGWaveformStorage to make it look good.
