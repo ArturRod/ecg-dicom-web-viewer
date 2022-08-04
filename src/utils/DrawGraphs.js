@@ -53,9 +53,7 @@ class DrawGraphs {
   }
 
   /**
-   * Load ECG divs:
-   * @param {Viewer Number} chartId
-   * @param {Chanel Number} index
+   * Load ECG divs.
    */
   addDOMChart() {
     //For number of channels:
