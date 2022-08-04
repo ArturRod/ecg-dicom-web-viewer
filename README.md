@@ -2,6 +2,7 @@
 
 This library allows viewing an ECG file in DICOM format in web view. </br>
 Thanks to the author https://github.com/jap1968 in his project https://github.com/jap1968/dcm-waveform since it is an adaptation of what has been done.
+- NPM: https://www.npmjs.com/package/ecg-dicom-web-viewer
 
 ## Installation
 
