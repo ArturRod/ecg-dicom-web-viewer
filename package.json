@@ -12,7 +12,8 @@
     "yarn": ">=1.16.0"
   },
   "scripts": {
-    "build": "webpack --config ./.webpack/webpack.config.js"
+    "build": "webpack --config ./.webpack/webpack.config.js",
+    "dev": "webpack --config ./.webpack/webpack.dev.js"
   },
   "repository": {
     "type": "git",
