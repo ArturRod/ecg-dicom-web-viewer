@@ -1,7 +1,19 @@
+import dicomParser from 'dicom-parser';
+
 /**
  * ReadECGData.
  */
 class ReadECGData {
+
+    /**
+     * Read the arraydicombuffer and return dataSet.
+     * @param {Array Dicom Buffer} dataDICOMarrayBuffer 
+     * @returns dataSet.
+     */
+    static getDataSet(dataDICOMarrayBuffer){
+      return dicomParser.parseDicom(new Uint8Array(dataDICOMarrayBuffer));
+    }
+
     /**
      * Read and return ECG Data.
      * Structure: Waveform - Multiplex - channels - sample

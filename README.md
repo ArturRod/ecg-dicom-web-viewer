@@ -19,7 +19,7 @@ npm install --save ecg-dicom-web-viewer
 1. Once installed import the project.
 ```js
 // Import
-import { DicomECGViewer } from 'ecg-dicom-web-viewer';
+import { ReadECGData, DrawGraphs, Constants, DicomECGViewer } from 'ecg-dicom-web-viewer';
 ```
 2. Instantiate the new class with the necessary data and create the view.
 ```js
@@ -58,6 +58,8 @@ The next available classes are as follows:
 <li><strong>Class ReadECGData</strong></li>
   <h6> - <strong>readData(dataSet)</strong></h4>
   <p>Receives a dataSet data structure and returns a readable array.</p>
+  <h6> - <strong>getDataSet(dataDICOMarrayBuffer)</strong></h4>
+  <p>Read the arraydicombuffer and return dataSet.</p>
 <li><strong>Class DrawGraphs</strong></li>
   <h6> - <strong>drawData()</strong></h6>
   <p>Allows you to draw the ECG graph.</p>

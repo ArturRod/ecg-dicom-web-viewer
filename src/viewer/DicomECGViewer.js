@@ -1,4 +1,3 @@
-import dicomParser from 'dicom-parser';
 import './DicomECGViewer.css';
 import Constants from '../constants/Constants';
 import DrawGraphs from '../utils/DrawGraphs';
@@ -42,10 +41,10 @@ class DicomECGViewer {
    */
   loadInstance() {
     try {
-      this.dataSet = dicomParser.parseDicom(new Uint8Array(this.dataDICOMarrayBuffer));
-      let sopClassUID = this.dataSet.string('x00080016');
+      let dataSet = ReadECGData.getDataSet(this.dataDICOMarrayBuffer);
+      let sopClassUID = dataSet.string('x00080016');
       //Read data from dataSet:
-      let dataMg = ReadECGData.readData(this.dataSet);
+      let dataMg = ReadECGData.readData(dataSet);
       //Crate instance drawGrahps:
       let drawGraphs;
       //make the image based on whether it is color or not
