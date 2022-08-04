@@ -14,7 +14,7 @@ npm install --save ecg-dicom-web-viewer
 ## Documentation
 
 The next available classes are as follows:
-<li><h5><strong>Class ReadECGData</strong></h3></li>
+<li><strong>Class ReadECGData</strong></li>
   <h6>Method static <strong>readData(dataSet)</strong></h4>
   <p>Receives a dataSet data structure and returns a readable array.</p>
 <h5><strong>Class DrawGraphs</strong></h5>
