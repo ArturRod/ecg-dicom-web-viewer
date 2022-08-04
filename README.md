@@ -19,13 +19,19 @@ The next available classes are as follows:
   <ul>
     <li>Method static readData(dataSet)</li>
     <p>Receives a dataSet data structure and returns a readable array.</p>
-    ```js
-// To install the newest version
-npm install --save ecg-dicom-web-viewer
-```
-```js
-ReadECGData.readData(dataSet);
-```
+  <ul>
+  <li>DrawGraphs</li>
+  <ul>
+    <li>Method drawData()</li>
+    <p>Allows you to draw the ECG graph.</p>
+    <li>Method noCompatible()</li>
+    <p>If the ECG is not compatible it will draw an incompatibility view.</p>
+    <li>Method drawLoader() & removeLoader()</li>
+    <p>Draw or erase a spinner while loading data.</p>
+    <li>Method drawData()</li>
+    <p>Allows you to draw the ECG graph.</p>
+    <li>Method drawData()</li>
+    <p>Allows you to draw the ECG graph.</p>
   <ul>
 <ul>
   
