@@ -17,7 +17,7 @@ The next available classes are as follows:
 <li><strong>Class ReadECGData</strong></li>
   <h6>Method static <strong>readData(dataSet)</strong></h4>
   <p>Receives a dataSet data structure and returns a readable array.</p>
-<h5><strong>Class DrawGraphs</strong></h5>
+<li><strong>Class DrawGraphs</strong></li>
   <h6>Method <strong>drawData()</strong></h6>
   <p>Allows you to draw the ECG graph.</p>
   <h6>Method <strong>noCompatible()</strong></h6>
@@ -30,6 +30,8 @@ The next available classes are as follows:
   <p>Draw the lines of the ECG.</p>
   <h6>Method <strong>bindChart(chartId, channelData, yAxis)</strong></h6>
   <p>Create and generate the line with the c3 library.</p>
+<li><strong>Static Constants</strong></li>
+  <p>SOP UID of ECG types and graph measurements.</p>
 
 ## Example
 
