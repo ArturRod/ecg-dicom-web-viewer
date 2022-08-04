@@ -34,17 +34,14 @@ The next available classes are as follows:
   <p>SOP UID of ECG types and graph measurements.</p>
 <li><strong>Class DicomECGViewer</strong></li>
   <h6> - <strong>constructor(dataDICOMarrayBuffer, canvas, patientData, nameView)</strong></h4>
-  /**
-   * Create Viwer
-   * @param {*} dataDICOMarrayBuffer DICOM DCM ECG Array Buffer.
-   * @param {*} canvas Draw ID View.
-   * @param {*} patientData Patient Data, default null: patientData = { NAME: name, PATIENT_ID: id, BIRTH: birth, SEX:sex, DATE:date, DESCRIPTION: description }
-   * @param {*} nameView Identifier of the view you want to put, in case you have several views, default 0.
-  */
+  <p><strong>dataDICOMarrayBuffer</strong> DICOM DCM ECG Array Buffer.</p>
+  <p><strong>canvas</strong> Draw ID View.</p>
+  <p><strong>patientData</strong> Patient Data, default null: patientData = { NAME, PATIENT_ID, BIRTH, SEX, DATE, DESCRIPTION }</p>
+  <p><strong>nameView</strong> Identifier of the view you want to put, in case you have several views, default 0.</p>
   <h6> - <strong>createView()</strong></h4>
   <p>Creates the ECG view from the data passed to it in the constructor.This is the main method to use in your project.</p>
   <h6> - <strong>loadInstance()</strong></h4>
-  <p>Load the view according to the SOP UID</p>
+  <p>Load the view according to the SOP UID.</p>
   
   
 ## Example
