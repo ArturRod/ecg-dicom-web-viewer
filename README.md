@@ -14,15 +14,15 @@ npm install --save ecg-dicom-web-viewer
 ## Documentation
 
 The next available classes are as follows:
-<h3>ReadECGData</h3>
-  <h4>Method static readData(dataSet)</h4>
+<h5><strong>ReadECGData</strong></h3>
+  <h6>Method static <strong>readData(dataSet)</strong></h4>
   <p>Receives a dataSet data structure and returns a readable array.</p>
-<h3>DrawGraphs</h3>
-  <h4>Method drawData()</h4>
+<h5><strong>DrawGraphs</strong></h5>
+  <h6>Method <strong>drawData()</strong></h6>
   <p>Allows you to draw the ECG graph.</p>
-  <h4>Method noCompatible()</h4>
+  <h6>Method <strong>noCompatible()</strong></h6>
   <p>If the ECG is not compatible it will draw an incompatibility view.</p>
-  <h4>Method drawLoader() & removeLoader()</h4>
+  <h6>Method <strong>drawLoader() & removeLoader()</strong></h6>
   <p>Draw or erase a spinner while loading data.</p>
   
   
