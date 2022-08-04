@@ -41,6 +41,9 @@ let viewer = new DicomECGViewer(
 );
 viewer.createView(); // Create graph.
 ```
+## Result
+
+<img src="https://user-images.githubusercontent.com/86238895/182796938-24c66b88-0225-4756-95fd-523554d65e57.png"/>
 
 ## Documentation
 Currently it works:</br>
