@@ -31,6 +31,7 @@ class ReadECGData {
 
     let waveformSequence = dataSet.elements.x54000100;
     if (waveformSequence !== undefined) {
+      mg.sopClassUID = dataSet.string("x00080016");
       //console.log('Waveform data is present');
       if (waveformSequence.items.length > 0) {
         waveformSequence.items.forEach(function (item) {

@@ -7,7 +7,6 @@ class DrawECGCanvas extends GenericCanvas {
   constructor(id_canvas, dataMg) {
     super(id_canvas, dataMg);
   }
-
   /**
    * Draw curve with specified data
    */

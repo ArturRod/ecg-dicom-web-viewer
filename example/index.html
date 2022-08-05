@@ -11,7 +11,7 @@
                 <input type="file" id="files" />
             </div>
             <!--<div id="canvasECG" style="height: 100%;"></div>-->
-            <canvas id="ECGCanvas"></canvas>
+            <div id="ecgView"></div>
         </div>
         <script src="index.umd.js"></script>    
         <script type="application/javascript">
@@ -42,9 +42,8 @@
                     var arrayBuffer = reader.result
                     console.log($)
                     let patientData = { NAME: "User", PATIENT_ID: "00001", BIRTH: "19900101", SEX: "M", DATE:"20220101", DESCRIPTION: "ECG Test" }
-                    let viewer = new $.DicomECGViewer(arrayBuffer, "ECGCanvas", patientData);
-                    //viewer.createView();
-                    viewer.createCanvas();
+                    let viewer = new $.DicomECGViewer(arrayBuffer, "ecgView", patientData, '0');
+                    viewer.loadCanvas();
                     }
                 }
             }

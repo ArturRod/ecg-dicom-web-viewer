@@ -1,3 +1,4 @@
+import DrawECGCanvas from "./DrawECGCanvas";
 import GenericCanvas from "./GenericCanvas";
 
 /**
@@ -49,6 +50,18 @@ class DrawGridCanvas extends GenericCanvas {
     this.drawECGIndicators();
   }
 
+  /**
+   * Load view no compatible:
+   */
+  drawNoCompatible(){
+    this.ctx.font = "3rem Arial";
+    this.ctx.fillText(
+      "ECG NO COMPATIBLE",
+      this.canvas.width / 2,
+      this.canvas.height / 2
+    );
+  }
+
   //Draw I, II, III, aVR, aVL, aVF, V1, V2, V3, V4, V5, V6
   drawECGIndicators() {
     let h = this.canvas.height - this.configuration.START_GRID;
@@ -77,7 +90,22 @@ class DrawGridCanvas extends GenericCanvas {
   /**
    * Load user data information in range y: 0 to 100.
    */
-  loadUserData() {}
+  loadUserData() {
+    //Draw line user:
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.canvas.width, this.configuration.START_GRID);
+    this.ctx.lineTo(0, this.configuration.START_GRID);
+    this.ctx.moveTo(this.canvas.width, 1);
+    this.ctx.lineTo(1, 1);
+    this.ctx.moveTo(1, this.configuration.START_GRID);
+    this.ctx.lineTo(1, 1);
+    this.ctx.moveTo(this.canvas.width - 1, 0);
+    this.ctx.lineTo(this.canvas.width - 1, this.configuration.START_GRID);
+    this.ctx.stroke();
+
+    //Data user:
+  }
+
 }
 
 export default DrawGridCanvas;
