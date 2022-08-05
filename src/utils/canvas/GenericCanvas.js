@@ -18,6 +18,7 @@ class GenericCanvas {
       FREQUENCY: 250, //The frequency to update the curve
       GRID_COLOR: "#F08080",
       LINE_COLOR: "#000033",
+      BACKGROUND_COLOR: "#F9F8F2",
       START_GRID: 100, //Start grid draw.
       //ROWS and COLUMS canvas separation I, II, III, aVR, aVL, aVF, V1, V2, V3, V4, V5, V6
       ROWS: 6,
@@ -30,6 +31,8 @@ class GenericCanvas {
     //Canvas resize:
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
+    //Color canvas:
+    this.canvas.style.backgroundColor = this.configuration.BACKGROUND_COLOR;
 
     this.configuration.BLOCK_SIZE = this.configuration.CELL_SIZE * 5;
     //Frequency data dcm:
