@@ -5,18 +5,18 @@ import GenericCanvas from "./GenericCanvas";
  * Draw grid canvas template.
  */
 class DrawGridCanvas extends GenericCanvas {
-  constructor(id_canvas, dataMg) {
+  constructor(id_canvas: string, dataMg: any) {
     super(id_canvas, dataMg);
   }
 
   /**
    * Draw the grid
    */
-  drawGrid() {
-    let w = this.getWidth() - 1;
-    let h = this.getHeight() - 1;
-    let bs = this.getBlockSize();
-    let cs = this.getCellSize();
+  public drawGrid() {
+    let w = this.width - 1;
+    let h = this.height - 1;
+    let bs = this.blockSize;
+    let cs = this.cellSize;
     let lw = this.ctx.lineWidth;
     let ss = this.ctx.strokeStyle;
 
@@ -53,7 +53,7 @@ class DrawGridCanvas extends GenericCanvas {
   /**
    * Load view no compatible:
    */
-  drawNoCompatible(){
+  public drawNoCompatible(){
     this.ctx.font = "3rem Arial";
     this.ctx.fillText(
       "ECG NO COMPATIBLE",
@@ -63,7 +63,7 @@ class DrawGridCanvas extends GenericCanvas {
   }
 
   //Draw I, II, III, aVR, aVL, aVF, V1, V2, V3, V4, V5, V6
-  drawECGIndicators() {
+  public drawECGIndicators() {
     let h = this.canvas.height - this.configuration.START_GRID;
     let gridWidth = this.canvas.width / this.configuration.COLUMS;
     let gridHeight = h / this.configuration.ROWS;
@@ -90,7 +90,7 @@ class DrawGridCanvas extends GenericCanvas {
   /**
    * Load user data information in range y: 0 to 100.
    */
-  loadUserData() {
+  public loadUserData() {
     //Draw line user:
     this.ctx.beginPath();
     this.ctx.moveTo(this.canvas.width, this.configuration.START_GRID);

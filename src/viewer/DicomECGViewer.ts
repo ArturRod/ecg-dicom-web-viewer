@@ -2,6 +2,10 @@ import Constants from "../constants/Constants";
 import ReadECGData from "../utils/ReadECGData";
 import DrawGridCanvas from "../draw/DrawGridCanvas";
 class DicomECGViewer {
+  dataDICOMarrayBuffer: any;
+  idView: string;
+  nameView: string;
+  patientData: string;
   /**
    * Create Viwer
    * @param {*} dataDICOMarrayBuffer DICOM DCM ECG Array Buffer.
@@ -10,10 +14,10 @@ class DicomECGViewer {
    * @param {*} nameView Identifier of the view you want to put, in case you have several views, default 0.
    */
   constructor(
-    dataDICOMarrayBuffer,
-    idView,
-    patientData = null,
-    nameView = "0"
+    dataDICOMarrayBuffer: any,
+    idView: string,
+    patientData: null,
+    nameView:"0"
   ) {
     this.dataDICOMarrayBuffer = dataDICOMarrayBuffer;
     this.idView = idView;
@@ -52,10 +56,10 @@ class DicomECGViewer {
           break;
         default:
           gridCanvas.drawNoCompatible();
-          console.log("Unsupported SOP Class UID: " + sopClassUID);
+          console.log("Unsupported SOP Class UID: " + dataMg.sopClassUID);
       }
     } catch (err) {
-      gridCanvas.drawNoCompatible();
+      //gridCanvas.drawNoCompatible();
     }
   }
 

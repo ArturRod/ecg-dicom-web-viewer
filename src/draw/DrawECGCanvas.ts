@@ -4,27 +4,27 @@ import GenericCanvas from "./GenericCanvas";
  * Draw line of ECG in canvas.
  */
 class DrawECGCanvas extends GenericCanvas {
-  constructor(id_canvas, dataMg) {
+  constructor(id_canvas: string, dataMg: any) {
     super(id_canvas, dataMg);
   }
   /**
    * Draw curve with specified data
    */
-  drawCurve(data) {
+  public drawCurve(data) {
     let i = 0;
     let dt = null;
     let p0 = null;
     let p1 = null;
-    let cs = this.getCellSize();
-    let sr = this.getSamplingRate();
+    let cs = this.cellSize;
+    let sr = this.samplingRate;
     let lw = this.ctx.lineWidth;
     let ss = this.ctx.strokeStyle;
     let delta = cs / (0.04 * sr);
-    let height = this.getHeight();
-    let period = this.getPeriod();
+    let height = this.height;
+    let period = this.period;
 
-    this.clear();
-    this.drawGrid();
+    //this.clear();
+    //this.drawGrid();
     this.ctx.strokeStyle = this.configuration.LINE_COLOR;
     this.ctx.translate(0, height);
 
