@@ -4,24 +4,45 @@ import dicomParser from 'dicom-parser';
  * ReadECGData.
  * --> https://dicom.nema.org/medical/dicom/current/output/html/part16.html
  * --> https://dicom.nema.org/medical/dicom/2017e/output/chtml/part06/chapter_6.html
+ * Thanks to the author https://github.com/jap1968 in his project https://github.com/jap1968/dcm-waveform since it is an adaptation of what has been done.
  */
 class ReadECGData {
   /**
    * Read the arraydicombuffer and return dataSet.
-   * @param {Array Dicom Buffer} dataDICOMarrayBuffer
+   * @param dataDICOMarrayBuffer 
    * @returns dataSet.
    */
-  static getDataSet(dataDICOMarrayBuffer: any) {
+  public static getDataSet(dataDICOMarrayBuffer: ArrayBuffer) {
     return dicomParser.parseDicom(new Uint8Array(dataDICOMarrayBuffer));
   }
 
-  /**
-   * Read and return ECG Data.
-   * Structure: Waveform - Multiplex - channels - sample
-   * @param {DataSet ECG} dataSet
-   */
+ /**
+  * Read and return ECG Data.
+  * Structure: Waveform - Multiplex - channels - sample
+  * @param dataSet 
+  * @returns MultiplexGroup.
+  */
   public static readData(dataSet: any) {
-    let mg: any = {}; // multiplexGroup
+    // MultiplexGroup: 
+    let mg = {
+      sopClassUID: "", 
+      studyDate: "",
+      sex: "",
+      bithDate: "",
+      patientName: "",
+      patientID: "",
+      patientAge: "",
+      patientSize: "",
+      patientWeight: "",
+      waveformOriginality: "",
+      numberOfWaveformChannels: 0,
+      numberOfWaveformSamples: 0,
+      samplingFrequency: 0.0,
+      multiplexGroupLabel: "",
+      channels: [],
+      waveformBitsAllocated: 0,
+      waveformSampleInterpretation: "",
+    }; 
     let channelSourceSequence = dataSet.elements.x003a0208;
     if (channelSourceSequence !== undefined) {
       //console.log('Channel Source Sequence is present');
@@ -34,11 +55,11 @@ class ReadECGData {
     if (waveformSequence !== undefined) {
       //Read patient information:
       mg.sopClassUID = dataSet.string("x00080016"); //UID.
-      mg.studyDate = dataSet.string("x00080020"); //DA = Study Date.
-      mg.sex = dataSet.string("x00100040") //CS = Patient sex.
-      mg.bithDate = dataSet.string("x00100030") //DA = PN Patient birth.
-      mg.patientName = dataSet.string("x00100010") //PN = Patient Name.
-      mg.patientID = dataSet.string("x00100020") // LO = Patient id.
+      mg.studyDate = ReadECGData.formatData(dataSet.string("x00080020")); //DA = Study Date.
+      mg.sex = dataSet.string("x00100040"); //CS = Patient sex.
+      mg.bithDate = ReadECGData.formatData(dataSet.string("x00100030")); //DA = PN Patient birth.
+      mg.patientName = dataSet.string("x00100010"); //PN = Patient Name.
+      mg.patientID = dataSet.string("x00100020"); // LO = Patient id.
       mg.patientAge = dataSet.string("x00101010"); //AS = Patient age. Example 20Y.
       mg.patientSize = dataSet.string("x00101020"); //DS = Patient size.
       mg.patientWeight = dataSet.string("x00101030"); //DS = Patient weight.
@@ -238,7 +259,7 @@ class ReadECGData {
    * - Channel Source Sequence (003A,0208)
    * - Channel Sensitivity Units Sequence (003A,0211)
    */
-  private static readCodeSequence(codeSequence) {
+  private static readCodeSequence(codeSequence: any) {
     let code: any = {};
     if (codeSequence !== undefined) {
       if (codeSequence.items.length > 0) {
@@ -251,6 +272,23 @@ class ReadECGData {
       }
     }
     return code;
+  }
+
+  /**
+   * Trasform data. 
+   * @param data yyyymmdd
+   * @returns dd/mm/yyyy
+   */
+  private static formatData(data: string){
+    if(data == undefined){
+      return data
+    } 
+    else{
+      let year = data.substring(0, 4);
+      let month = data.substring(4, 6);
+      let day = data.substring(6, 8);
+      return day + "/" + month + "/" + year;
+    }
   }
 }
 export default ReadECGData;

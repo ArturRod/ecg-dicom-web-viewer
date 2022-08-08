@@ -104,6 +104,15 @@ class DrawGridCanvas extends GenericCanvas {
     this.ctx.stroke();
 
     //Data user:
+    this.ctx.font = "small-caps 800 14px Times New Roman";
+    this.ctx.fillText("NAME: " + this.dataMg.patientName, 10, 25);
+    this.ctx.fillText("ID: " + this.dataMg.patientID, 10, 40);
+    this.ctx.fillText("SEX: " + this.dataMg.sex, 10, 55);
+    this.ctx.fillText("BIRTH: " + this.dataMg.bithDate, 10, 70);
+    this.ctx.fillText("STUDY DATE: " + this.dataMg.studyDate, 10, 85);
+    this.ctx.fillText("AGE: " + this.dataMg.patientAge, 250, 55);
+    this.ctx.fillText("SIZE: " + this.dataMg.patientSize, 250, 70);
+    this.ctx.fillText("WEIGHT: " + this.dataMg.patientWeight, 250, 85);
   }
 
 }

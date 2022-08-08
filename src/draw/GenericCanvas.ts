@@ -29,7 +29,7 @@ class GenericCanvas {
   };
 
   /**
-   * 
+   * Constructor.
    * @param id_canvas ID Canvas view.
    * @param dataMg data Dicom.
    */
@@ -44,6 +44,7 @@ class GenericCanvas {
     //Color canvas:
     this.canvas.style.backgroundColor = this.configuration.BACKGROUND_COLOR;
 
+    //Bloqu size:
     this.configuration.BLOCK_SIZE = this.configuration.CELL_SIZE * 5;
     //Frequency data dcm:
     this.configuration.FREQUENCY = dataMg.samplingFrequency;
@@ -51,6 +52,10 @@ class GenericCanvas {
 
   /**
    * Draw a line from point (x1, y1) to point (x2, y2)
+   * @param x1 
+   * @param y1 
+   * @param x2 
+   * @param y2 
    */
   public drawLine(x1: number, y1: number, x2: number, y2:number) {
     this.ctx.moveTo(x1, y1);
@@ -60,7 +65,6 @@ class GenericCanvas {
   //GET Methods:
   /**
    * Returns the cell size
-   *
    * @return the cell size
    */
   get cellSize() {
@@ -69,7 +73,6 @@ class GenericCanvas {
 
   /**
    * Returns the block size
-   *
    * @return the block size
    */
   get blockSize() {
@@ -78,7 +81,6 @@ class GenericCanvas {
 
   /**
    * Returns the number of cells per period
-   *
    * @return the number of cells per period
    */
   get cellsPerPeriod() {
@@ -87,7 +89,6 @@ class GenericCanvas {
 
   /**
    * Returns the number of samples per cell
-   *
    * @return the number of samples per cell
    */
   get samplesPerCell() {
@@ -96,7 +97,6 @@ class GenericCanvas {
 
   /**
    * Returns the number of samples per second
-   *
    * @return the number of samples per second
    */
   get samplingRate() {
@@ -105,7 +105,6 @@ class GenericCanvas {
 
   /**
    * Returns the number of samples per period
-   *
    * @return the number of samples per period
    */
   get samplesPerPeriod() {
@@ -116,7 +115,6 @@ class GenericCanvas {
 
   /**
    * Returns the width of this electrocardiogram
-   *
    * @return the width of this electrocardiogram
    */
   get width() {
@@ -125,7 +123,6 @@ class GenericCanvas {
 
   /**
    * Returns the height of this electrocardiogram
-   *
    * @return the height of this electrocardiogram
    */
   get height() {
@@ -134,7 +131,6 @@ class GenericCanvas {
 
   /**
    * Returns the period (seconds) of this electrocardiogram
-   *
    * @return the period of this electrocardiogram
    */
   get period() {

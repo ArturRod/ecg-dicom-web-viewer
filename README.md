@@ -1,7 +1,7 @@
 # ecg-dicom-web-viewer
 
 This library allows viewing an ECG file in DICOM format in web view. </br>
-Thanks to the author https://github.com/jap1968 in his project https://github.com/jap1968/dcm-waveform since it is an adaptation of what has been done.
+
 - NPM: https://www.npmjs.com/package/ecg-dicom-web-viewer
 
 ## Installation
@@ -17,11 +17,19 @@ npm install --save ecg-dicom-web-viewer
 ## Example
 
 1. Once installed import the project.
+
 ```js
 // Import
-import { ReadECGData, DrawGraphs, Constants, DicomECGViewer } from 'ecg-dicom-web-viewer';
+import {
+  ReadECGData,
+  DrawGraphs,
+  Constants,
+  DicomECGViewer,
+} from "ecg-dicom-web-viewer";
 ```
+
 2. Instantiate the new class with the necessary data and create the view.
+
 ```js
 //User data (optional)
 let userData = {
@@ -35,19 +43,22 @@ let userData = {
 
 //Load view:
 let viewer = new DicomECGViewer(
-  byteArray, //Data array ECG (XMLHttpRequest response array or...local open data) 
+  byteArray, //Data array ECG (XMLHttpRequest response array or...local open data)
   divView, //Div where to draw the view
   userData, //Optional
   viewportIndex //View number, since you can have several views.
 );
 viewer.createView(); // Create graph.
 ```
+
 ## Result
 
 <img src="https://user-images.githubusercontent.com/86238895/182796938-24c66b88-0225-4756-95fd-523554d65e57.png"/>
 
 ## Documentation
+
 Currently it works:</br>
+
 <ul>
   <li><strong>Sop12LeadECGWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.1.1', --> YES</strong></li>
   <li><strong>GeneralECGWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.1.2', --> YES</strong></li>

@@ -2,7 +2,7 @@ import Constants from "../constants/Constants";
 import ReadECGData from "../utils/ReadECGData";
 import DrawGridCanvas from "../draw/DrawGridCanvas";
 class DicomECGViewer {
-  dataDICOMarrayBuffer: any;
+  dataDICOMarrayBuffer: ArrayBuffer;
   idView: string;
   nameView: string;
   patientData: string;
@@ -10,19 +10,16 @@ class DicomECGViewer {
    * Create Viwer
    * @param {*} dataDICOMarrayBuffer DICOM DCM ECG Array Buffer.
    * @param {*} idView Draw ID View.
-   * @param {*} patientData Patient Data, default null: patientData = { NAME: name, PATIENT_ID: id, BIRTH: birth, SEX:sex, DATE:date, DESCRIPTION: description }
    * @param {*} nameView Identifier of the view you want to put, in case you have several views, default 0.
    */
   constructor(
-    dataDICOMarrayBuffer: any,
+    dataDICOMarrayBuffer: ArrayBuffer,
     idView: string,
-    patientData: null,
-    nameView:"0"
+    nameView: "0"
   ) {
     this.dataDICOMarrayBuffer = dataDICOMarrayBuffer;
     this.idView = idView;
     this.nameView = nameView;
-    this.patientData = patientData;
   }
   /**
  * Load canva data.
