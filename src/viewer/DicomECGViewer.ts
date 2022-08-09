@@ -1,7 +1,10 @@
 import Constants from "../constants/Constants";
 import ReadECGData from "../utils/ReadECGData";
-import DrawGridCanvas from "../draw/DrawGridCanvas";
 import DrawECGCanvas from "../draw/DrawECGCanvas";
+
+/**
+ * Princial Class to render ECG viewer.
+ */
 class DicomECGViewer {
   dataDICOMarrayBuffer: ArrayBuffer;
   idView: string;
@@ -36,28 +39,27 @@ class DicomECGViewer {
       let dataMg = ReadECGData.readData(dataSet);
 
       //Draw template:
-      let gridCanvas = new DrawGridCanvas(this.idView + this.nameView, dataMg);
       let ecgCanvas = new DrawECGCanvas(this.idView + this.nameView, dataMg);
 
       //Draw compatible:
       switch (dataMg.sopClassUID) {
         case Constants.SOP_CLASS_UIDS.HemodynamicWaveformStorage: //Hemodynamic Waveform Storage
-          gridCanvas.drawGrid();
-          ecgCanvas.drawCurve();
+          ecgCanvas.drawGrid();
+          ecgCanvas.drawECG();
           break;
         case Constants.SOP_CLASS_UIDS.AmbulatoryECGWaveformStorage: //Ambulatory
-          gridCanvas.drawNoCompatible();
+          ecgCanvas.drawNoCompatible();
           break;
         case Constants.SOP_CLASS_UIDS.GeneralECGWaveformStorage: //General ECG Waveform Storage
-          gridCanvas.drawGrid();
-          ecgCanvas.drawCurve();
+          ecgCanvas.drawGrid();
+          ecgCanvas.drawECG();
           break;
         case Constants.SOP_CLASS_UIDS.Sop12LeadECGWaveformStorage: //12-lead ECG Waveform Storage
-          gridCanvas.drawGrid();
-          ecgCanvas.drawCurve();
+          ecgCanvas.drawGrid();
+          ecgCanvas.drawECG();
           break;
         default:
-          gridCanvas.drawNoCompatible();
+          ecgCanvas.drawNoCompatible();
           console.log("Unsupported SOP Class UID: " + dataMg.sopClassUID);
       }
     } catch (err) {
@@ -71,7 +73,10 @@ class DicomECGViewer {
   loadCanvasDOM() {
     let view = "";
     document.getElementById(this.idView).innerHTML = view;
-    view ='<canvas id="' + this.idView + this.nameView + '"/>';
+    view = 
+      '<canvas id="userData" style="border: 2px solid #000000;"></canvas>' +
+      '<canvas id="' + this.idView + this.nameView + '" style="border: 2px solid #ff0000;"></canvas>'
+    //view ='<canvas id="' + this.idView + this.nameView + '"/>';
     document.getElementById(this.idView).innerHTML = view;
   }
 

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.6](https://github.com/ArturRod/ecg-dicom-web-viewer) (2022-08-09)
+
+**Note:** It is no longer necessary to pass the user data, these will be read from the arraybyte file itself.
+
 ## [1.0.5](https://github.com/ArturRod/ecg-dicom-web-viewer) (2022-08-04)
 
 **Note:** Add Documentation.
@@ -26,4 +30,3 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ## [1.0.0](https://github.com/ArturRod/ecg-dicom-web-viewer) (2022-08-03)
 
 **Note:** Create proyect.
-

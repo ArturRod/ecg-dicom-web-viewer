@@ -1,27 +1,169 @@
 import GenericCanvas from "./GenericCanvas";
 
 /**
- * Draw line of ECG in canvas.
+ * Draw grid canvas template.
  */
 class DrawECGCanvas extends GenericCanvas {
   constructor(id_canvas: string, dataMg: any) {
     super(id_canvas, dataMg);
   }
 
+  //--------------------------------------------------------
+  //----------------   DRAW GRID   -------------------------
+  //--------------------------------------------------------
+  //#region DRAW GRID
+  /**
+   * Draw the grid
+   */
+  public drawGrid() {
+    let w = this.width - 1;
+    let h = this.height - 1;
+    let bs = this.blockSize;
+    let cs = this.cellSize;
+    let lw = this.ctx.lineWidth;
+    let ss = this.ctx.strokeStyle;
+
+    this.ctx.strokeStyle = this.configuration.GRID_COLOR;
+
+    for (var y = h; y >= 0; y -= cs) {
+      this.ctx.beginPath();
+      this.ctx.lineWidth =
+        (h - y) % bs
+          ? this.configuration.CELL_WIDTH
+          : this.configuration.BLOCK_WIDTH;
+      this.drawLine(0, y, w, y);
+      this.ctx.closePath();
+      this.ctx.stroke();
+    }
+
+    for (var x = 0; x <= w; x += cs) {
+      this.ctx.beginPath();
+      this.ctx.lineWidth =
+        x % bs ? this.configuration.CELL_WIDTH : this.configuration.BLOCK_WIDTH;
+      this.drawLine(x, 0, x, h);
+      this.ctx.closePath();
+      this.ctx.stroke();
+    }
+
+    this.ctx.lineWidth = lw;
+    this.ctx.strokeStyle = ss;
+    //Draw indicators:
+    this.drawECGIndicators();
+  }
+
+  /**
+   * Load view no compatible:
+   */
+  public drawNoCompatible(){
+    this.ctx.font = "3rem Arial";
+    this.ctx.fillText(
+      "ECG NO COMPATIBLE",
+      this.canvas.width / 2,
+      this.canvas.height / 2
+    );
+  }
+
+  //Draw I, II, III, aVR, aVL, aVF, V1, V2, V3, V4, V5, V6
+  public drawECGIndicators() {
+    let h = this.canvas.height;
+    let gridWidth = this.canvas.width / this.configuration.COLUMS;
+    let gridHeight = h / this.configuration.ROWS;
+
+    //Default margin text width:
+    let width = 10;
+
+    //COLUMNS:
+    for (let e = 0; e < this.configuration.COLUMS; e++) {
+      let middleHeight = gridHeight / 2;
+      //ROWS:
+      for (let i = 0; i < this.configuration.ROWS; i++) {
+        this.ctx.font = this.configuration.CTXFONT;
+        this.ctx.fillText(
+          this.configuration.columsText[e][i],
+          width,
+          middleHeight
+        );
+
+        middleHeight += gridHeight;
+        //Save positions for drawECG:
+        let position = {
+          name: this.configuration.columsText[e][i],
+          width: width,
+          height: middleHeight
+        }
+        this.positionsDraw.push(position);
+      }
+      width += gridWidth;
+    }
+  }
+  //#endregion
+
+  //--------------------------------------------------------
+  //----------------    DRAW ECG   -------------------------
+  //--------------------------------------------------------
+  //#region DRAW ECG
+
+  /**
+   * Draw ECG.
+   */
+  public drawECG(){
+    //Load user data:
+    this.loadUserData();
+    //load indicators:
+    this.drawCurve();
+  }
+  
+  /**
+   * Load user data information in canva user data.
+   */
+  public loadUserData() {
+    //Data user:
+    this.ctxUserData.font = this.configuration.CTXFONT;
+    this.ctxUserData.fillText("NAME: " + this.dataMg.patientName, 10, 25);
+    this.ctxUserData.fillText("ID: " + this.dataMg.patientID, 10, 40);
+    this.ctxUserData.fillText("SEX: " + this.dataMg.sex, 10, 55);
+    this.ctxUserData.fillText("BIRTH: " + this.dataMg.bithDate, 10, 70);
+    this.ctxUserData.fillText("STUDY DATE: " + this.dataMg.studyDate, 10, 85);
+    this.ctxUserData.fillText("AGE: " + this.dataMg.patientAge, 250, 55);
+    this.ctxUserData.fillText("SIZE: " + this.dataMg.patientSize, 250, 70);
+    this.ctxUserData.fillText("WEIGHT: " + this.dataMg.patientWeight, 250, 85);
+  }
+
+
+  /**
+   * Draw lines.
+   */
   public drawCurve(){
     let data = [];
     let secondsDraw = Math.floor((this.configuration.FREQUENCY/1000) % 60); //parse to seconds
     let time = 0;
 
+    //CHANELS:
+    let idStart;
+    let objPosition;
+    this.dataMg.channels.forEach(channel => {
+      switch(channel.channelDefinition.channelSource.codeMeaning){
+        case "Lead I":
+          objPosition = this.positionsDraw.find((obj) => {
+            return obj.name === "I";
+          });
+          debugger;
+          break;
+        case "Lead II":
+          break;
+        case "Lead III":
+          break;
+      }
+
+    });
+
     this.dataMg.channels[3].samples.forEach(element => {
       data.push(element);
     });
 
-    //Reference line:
-    let startY = this.configuration.START_GRID + 50;
+    //Reference to draw:
+    let startY = 0;
     let startX = 10;
-    this.drawLine(startX, startY, this.canvas.width, startY);
-    this.ctx.stroke();
 
     let latestPosition = startY;
     let i = 0;
@@ -29,7 +171,7 @@ class DrawECGCanvas extends GenericCanvas {
       this.drawLine(startX + time, latestPosition, startX + time, startY - data[i]);
       this.ctx.stroke();
       latestPosition = startY - data[i];
-      time += 1;
+      time += 0.8;
       i++;
     }
   }
@@ -86,5 +228,8 @@ class DrawECGCanvas extends GenericCanvas {
     this.ctx.strokeStyle = ss;
     this.ctx.translate(0, -height);
   }*/
+
+  //#endregion
 }
+
 export default DrawECGCanvas;

@@ -4,8 +4,14 @@
 class GenericCanvas {
   public id_canvas: string;
   public dataMg: any;
-  public canvas: any;
+  //Canvas ECG:
+  public canvas: HTMLCanvasElement;
   public ctx: CanvasRenderingContext2D;
+  //Canvas User Information:
+  public canvasUserData: HTMLCanvasElement;
+  public ctxUserData: CanvasRenderingContext2D;
+  public positionsDraw: Array<any>;
+
   //Configurantion:
   public configuration = {
     //GRID:
@@ -28,7 +34,7 @@ class GenericCanvas {
     GRID_COLOR: "#F08080",
     LINE_COLOR: "#000033",
     BACKGROUND_COLOR: "#F9F8F2",
-    START_GRID: 100, //Start grid draw.
+    HEIGHT_USER_INFO: 100, //Start grid draw.
     CTXFONT: "small-caps 800 14px Times New Roman", //Configuration style text.
   };
 
@@ -39,20 +45,45 @@ class GenericCanvas {
    */
   constructor(id_canvas: string, dataMg: any) {
     this.dataMg = dataMg;
+
+    //Canvas ECG:
     this.canvas = <HTMLCanvasElement> document.getElementById(id_canvas);
     this.ctx = this.canvas.getContext("2d");
+
+    //Canvas User Data:
+    this.canvasUserData = <HTMLCanvasElement> document.getElementById("userData");
+    this.ctxUserData = this.canvasUserData.getContext("2d");
 
     //Canvas resize:
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
+    this.canvas.style.width = "100%";
+    this.canvas.style.height = "100%";
+    //this.canvas.width = Math.max(400, this.canvas.clientWidth);
+    //this.canvas.height = this.canvas.clientHeight;
+
+    //Canves user resize:
+    this.canvasUserData.width = window.innerWidth;
+    this.canvasUserData.height = this.configuration.HEIGHT_USER_INFO;
+    this.canvasUserData.style.width = "100%";
+    this.canvasUserData.style.height = "100px";
+    this.canvasUserData.width = Math.max(400, this.canvasUserData.clientWidth);
+    this.canvasUserData.height = this.canvasUserData.clientHeight;
+
     //Color canvas:
     this.canvas.style.backgroundColor = this.configuration.BACKGROUND_COLOR;
+    this.canvasUserData.style.backgroundColor = this.configuration.BACKGROUND_COLOR;
 
     //Bloqu size:
     this.configuration.BLOCK_SIZE = this.configuration.CELL_SIZE * 5;
+
     //Frequency data dcm:
     this.configuration.FREQUENCY = dataMg.samplingFrequency;
+
+    //Star Array:
+    this.positionsDraw = new Array();
   }
+  
 
   /**
    * Draw a line from point (x1, y1) to point (x2, y2)
