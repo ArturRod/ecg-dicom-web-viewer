@@ -1,6 +1,7 @@
 import Constants from "../constants/Constants";
 import ReadECGData from "../utils/ReadECGData";
 import DrawGridCanvas from "../draw/DrawGridCanvas";
+import DrawECGCanvas from "../draw/DrawECGCanvas";
 class DicomECGViewer {
   dataDICOMarrayBuffer: ArrayBuffer;
   idView: string;
@@ -36,20 +37,24 @@ class DicomECGViewer {
 
       //Draw template:
       let gridCanvas = new DrawGridCanvas(this.idView + this.nameView, dataMg);
+      let ecgCanvas = new DrawECGCanvas(this.idView + this.nameView, dataMg);
 
       //Draw compatible:
       switch (dataMg.sopClassUID) {
         case Constants.SOP_CLASS_UIDS.HemodynamicWaveformStorage: //Hemodynamic Waveform Storage
           gridCanvas.drawGrid();
+          ecgCanvas.drawCurve();
           break;
         case Constants.SOP_CLASS_UIDS.AmbulatoryECGWaveformStorage: //Ambulatory
           gridCanvas.drawNoCompatible();
           break;
         case Constants.SOP_CLASS_UIDS.GeneralECGWaveformStorage: //General ECG Waveform Storage
           gridCanvas.drawGrid();
+          ecgCanvas.drawCurve();
           break;
         case Constants.SOP_CLASS_UIDS.Sop12LeadECGWaveformStorage: //12-lead ECG Waveform Storage
           gridCanvas.drawGrid();
+          ecgCanvas.drawCurve();
           break;
         default:
           gridCanvas.drawNoCompatible();

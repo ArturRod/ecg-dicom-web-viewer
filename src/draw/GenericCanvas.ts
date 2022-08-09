@@ -8,17 +8,11 @@ class GenericCanvas {
   public ctx: CanvasRenderingContext2D;
   //Configurantion:
   public configuration = {
+    //GRID:
     CELL_WIDTH: 0.1, //The stroke width of cell
     CELL_SIZE: 6, //The cell size
     BLOCK_WIDTH: 0.2, //The stroke width of block
     BLOCK_SIZE: 0, //CELL_SIZE * 5, //The block size, each block includes 5*5 cells
-    CURVE_WIDTH: 1, //The stroke width of curve
-    SAMPLING_RATE: 125, //The number of samples per second (1/0.008)
-    FREQUENCY: 250, //The frequency to update the curve
-    GRID_COLOR: "#F08080",
-    LINE_COLOR: "#000033",
-    BACKGROUND_COLOR: "#F9F8F2",
-    START_GRID: 100, //Start grid draw.
     //ROWS and COLUMS canvas separation I, II, III, aVR, aVL, aVF, V1, V2, V3, V4, V5, V6
     ROWS: 6,
     COLUMS: 2,
@@ -26,6 +20,16 @@ class GenericCanvas {
       ["I", "II", "III", "aVR", "aVL", "aVF"], //Colum 1
       ["V1", "V2", "V3", "V4", "V5", "V6"], // Colum 2
     ],
+    //LINE ECG:
+    CURVE_WIDTH: 1, //The stroke width of curve
+    SAMPLING_RATE: 125, //The number of samples per second (1/0.008)
+    FREQUENCY: 250, //The frequency to update the curve 25mm = 1000ms = 1s
+    //DESING:
+    GRID_COLOR: "#F08080",
+    LINE_COLOR: "#000033",
+    BACKGROUND_COLOR: "#F9F8F2",
+    START_GRID: 100, //Start grid draw.
+    CTXFONT: "small-caps 800 14px Times New Roman", //Configuration style text.
   };
 
   /**
@@ -52,10 +56,10 @@ class GenericCanvas {
 
   /**
    * Draw a line from point (x1, y1) to point (x2, y2)
-   * @param x1 
-   * @param y1 
-   * @param x2 
-   * @param y2 
+   * @param x1 moveTo(x1).
+   * @param y1 moveTo(y1).
+   * @param x2 lineTo(x2).
+   * @param y2 lineTo(y2).
    */
   public drawLine(x1: number, y1: number, x2: number, y2:number) {
     this.ctx.moveTo(x1, y1);

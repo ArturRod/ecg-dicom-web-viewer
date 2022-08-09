@@ -75,7 +75,7 @@ class DrawGridCanvas extends GenericCanvas {
       let middleHeight = gridHeight / 2 + this.configuration.START_GRID;
       //ROWS:
       for (let i = 0; i < this.configuration.ROWS; i++) {
-        this.ctx.font = "1rem Arial";
+        this.ctx.font = this.configuration.CTXFONT;
         this.ctx.fillText(
           this.configuration.columsText[e][i],
           width,
@@ -104,7 +104,7 @@ class DrawGridCanvas extends GenericCanvas {
     this.ctx.stroke();
 
     //Data user:
-    this.ctx.font = "small-caps 800 14px Times New Roman";
+    this.ctx.font = this.configuration.CTXFONT;
     this.ctx.fillText("NAME: " + this.dataMg.patientName, 10, 25);
     this.ctx.fillText("ID: " + this.dataMg.patientID, 10, 40);
     this.ctx.fillText("SEX: " + this.dataMg.sex, 10, 55);
