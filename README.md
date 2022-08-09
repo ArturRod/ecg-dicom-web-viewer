@@ -1,7 +1,7 @@
 # ecg-dicom-web-viewer
 
 This library allows viewing an ECG file in DICOM format in web view. </br>
-Thanks to the author https://github.com/jap1968 in his project https://github.com/jap1968/dcm-waveform since it is an adaptation of what has been done.
+
 - NPM: https://www.npmjs.com/package/ecg-dicom-web-viewer
 
 ## Installation
@@ -17,37 +17,37 @@ npm install --save ecg-dicom-web-viewer
 ## Example
 
 1. Once installed import the project.
+
 ```js
 // Import
-import { ReadECGData, DrawGraphs, Constants, DicomECGViewer } from 'ecg-dicom-web-viewer';
+import {
+  ReadECGData,
+  DrawGraphs,
+  Constants,
+  DicomECGViewer,
+} from "ecg-dicom-web-viewer";
 ```
-2. Instantiate the new class with the necessary data and create the view.
-```js
-//User data (optional)
-let userData = {
-  NAME: name,
-  SEX: sex,
-  DATE: date,
-  PATIENT_ID: patientID,
-  DESCRIPTION: desciption,
-  BIRTH: birth,
-};
 
+2. Instantiate the new class with the necessary data and create the view.
+
+```js
 //Load view:
 let viewer = new DicomECGViewer(
-  byteArray, //Data array ECG (XMLHttpRequest response array or...local open data) 
+  byteArray, //Data array ECG (XMLHttpRequest response array or...local open data)
   divView, //Div where to draw the view
-  userData, //Optional
   viewportIndex //View number, since you can have several views.
 );
-viewer.createView(); // Create graph.
+viewer.loadECG(); // Create ECG View.
 ```
+
 ## Result
 
 <img src="https://user-images.githubusercontent.com/86238895/182796938-24c66b88-0225-4756-95fd-523554d65e57.png"/>
 
 ## Documentation
+
 Currently it works:</br>
+
 <ul>
   <li><strong>Sop12LeadECGWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.1.1', --> YES</strong></li>
   <li><strong>GeneralECGWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.1.2', --> YES</strong></li>
@@ -82,9 +82,9 @@ The next available classes are as follows:
   <p><strong>patientData</strong> Patient Data, default null: patientData = { NAME, PATIENT_ID, BIRTH, SEX, DATE, DESCRIPTION }</p>
   <p><strong>nameView</strong> Identifier of the view you want to put, in case you have several views, default 0.</p>
   <h6> - <strong>createView()</strong></h4>
-  <p>Creates the ECG view from the data passed to it in the constructor.This is the main method to use in your project.</p>
-  <h6> - <strong>loadInstance()</strong></h4>
-  <p>Load the view according to the SOP UID.</p>
+  <p>Generates the DOM structure.</p>
+  <h6> - <strong>loadECG()</strong></h4>
+  <p>Load the data of the graph and draw the content, it is the main method.</p>
   
 ## Features
 <ul>

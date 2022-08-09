@@ -36,9 +36,8 @@
                 reader.onload = function() {
                 var arrayBuffer = reader.result
                 console.log($)
-                let patientData = { NAME: "User", PATIENT_ID: "00001", BIRTH: "19900101", SEX: "M", DATE:"20220101", DESCRIPTION: "ECG Test" }
-                let viewer = new $.DicomECGViewer(arrayBuffer, "canvasECG", patientData);
-                viewer.createView();
+                let viewer = new $.DicomECGViewer(arrayBuffer, "canvasECG");
+                viewer.loadECG();
                 }
             }
         }
