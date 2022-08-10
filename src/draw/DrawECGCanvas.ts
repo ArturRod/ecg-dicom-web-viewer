@@ -69,16 +69,14 @@ class DrawECGCanvas extends GenericCanvas {
     let h = this.canvas.height;
     let gridWidth = this.canvas.width / this.configuration.COLUMS;
     let gridHeight = h / this.configuration.ROWS;
-
-    //Default margin text width:
     let width = 10;
+    this.ctx.font = "small-caps 800 25px Times New Roman";
 
     //COLUMNS:
     for (let e = 0; e < this.configuration.COLUMS; e++) {
       let middleHeight = gridHeight / 2;
       //ROWS:
       for (let i = 0; i < this.configuration.ROWS; i++) {
-        this.ctx.font = this.configuration.CTXFONT;
         this.ctx.fillText(
           this.configuration.columsText[e][i],
           width,
@@ -118,7 +116,7 @@ class DrawECGCanvas extends GenericCanvas {
    */
   public loadUserData() {
     //Data user:
-    this.ctxUserData.font = this.configuration.CTXFONT;
+    this.ctxUserData.font = "small-caps 800 14px Times New Roman";
     this.ctxUserData.fillText("NAME: " + this.dataMg.patientName, 10, 25);
     this.ctxUserData.fillText("ID: " + this.dataMg.patientID, 10, 40);
     this.ctxUserData.fillText("SEX: " + this.dataMg.sex, 10, 55);

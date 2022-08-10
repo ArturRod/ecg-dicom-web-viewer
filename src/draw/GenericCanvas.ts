@@ -37,7 +37,6 @@ class GenericCanvas {
     LINE_COLOR: "#000033",
     BACKGROUND_COLOR: "#F9F8F2",
     HEIGHT_USER_INFO: 100, //Start grid draw.
-    CTXFONT: "small-caps 800 14px Times New Roman", //Configuration style text.
   };
 
   /**
