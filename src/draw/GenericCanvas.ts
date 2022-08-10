@@ -15,7 +15,7 @@ class GenericCanvas {
   //Configurantion:
   public configuration = {
     //GRID:
-    CELL_WIDTH: 0.1, //The stroke width of cell
+    CELL_WIDTH: 0.1, //The stroke width of cell 1mm
     CELL_SIZE: 6, //The cell size
     BLOCK_WIDTH: 0.2, //The stroke width of block
     BLOCK_SIZE: 0, //CELL_SIZE * 5, //The block size, each block includes 5*5 cells
@@ -30,6 +30,8 @@ class GenericCanvas {
     CURVE_WIDTH: 1, //The stroke width of curve
     SAMPLING_RATE: 125, //The number of samples per second (1/0.008)
     FREQUENCY: 250, //The frequency to update the curve 25mm = 1000ms = 1s
+    TEMPO: 0.25, //Default <- 25mm/s -> Each square is 1 mm
+    AMPLITUDE: 0.10, //Default 10mm/mV  Each square is 1 mm
     //DESING:
     GRID_COLOR: "#F08080",
     LINE_COLOR: "#000033",

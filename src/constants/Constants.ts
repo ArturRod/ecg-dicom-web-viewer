@@ -1,6 +1,6 @@
 //Microvolt:
 const uV = {
-  name: "mv",
+  name: "uV",
   min: -500,
   max: 1500,
   deltaMain: 500,
@@ -25,7 +25,6 @@ const mmHg = {
 
 
 const def = {
-  name: "mv",
   min: -500,
   max: 1500,
   deltaMain: 500,

@@ -133,9 +133,9 @@ class DrawECGCanvas extends GenericCanvas {
   /**
    * Draw lines.
    */
-  public drawCurve(){
+  public async drawCurve(){
     //CHANELS:
-    this.dataMg.channels.forEach(channel => {
+    this.dataMg.channels.forEach(async channel => {
       //code:
       let code = channel.channelDefinition.channelSource.codeMeaning.split(" ")[1];
       let objPosition = this.positionsDraw.find((obj) => {
@@ -151,98 +151,63 @@ class DrawECGCanvas extends GenericCanvas {
    * @param channel Channel draw:
    */
   private paintLines(objPosition: any, channel: any){
+    //Variables:
     let data = [];
-
-    //SCALE HEIGHT: 
-    let baseScale: number;
-    switch(channel.channelDefinition.channelSensitivityUnits.codeValue){
-      case Constants.mV.name:
-        baseScale = Constants.mV.deltaMain;
-        break;
-      case Constants.uV.name:
-        baseScale = Constants.uV.deltaMain;
-        break;
-      case Constants.mmHg.name:
-        baseScale = Constants.mmHg.deltaMain;
-        break;
-      default:
-        baseScale = Constants.def.deltaMain;
-        break;        
-    }
-    //let secondsDraw = Math.floor((this.configuration.FREQUENCY/1000) % 60); //parse to seconds
     let time = 0;
+    let i = 0;
     //Reference to draw:
     let startY = objPosition.height;
-    let startX = objPosition.width + 10;
+    let startX = objPosition.width;
+    let latestPosition = startY;
+    let baseScale: any;
+    
+    //Load data:
     channel.samples.forEach(element => {
       data.push(element);
     });
 
-    let latestPosition = startY;
-    let i = 0;
+    //Escale mV, uV. mmHg...
+    switch(channel.channelDefinition.channelSensitivityUnits.codeValue){
+      case Constants.mV.name:
+        baseScale = Constants.mV;
+        break;
+      case Constants.uV.name:
+        baseScale = Constants.uV;
+        break;
+      case Constants.mmHg.name:
+        baseScale = Constants.mmHg;
+        break;
+      default:
+        baseScale = Constants.def;
+        break;        
+    }
+    debugger;
 
-    while (i < data.length) {
-      let point = data[i] * objPosition.height / baseScale; //Rescalate.
+    //Draw line:
+    while (i < data.length && time < (this.canvas.width / 2 - startX)) {
+
+      //Line width:
+      this.ctx.lineWidth = this.configuration.CURVE_WIDTH;
+
+      //10mV/s:
+      let point = (data[i] * objPosition.height / baseScale.deltaMain) * this.configuration.AMPLITUDE; //Rescalate. 10mV/s Each square is 1 mm.
+
+      //Draw line:
       this.drawLine(startX + time, latestPosition, startX + time, startY - point);
       this.ctx.stroke();
+
+      //Positions:
       latestPosition = startY - point;
-      time += 1;
+      //25mm/s:
+      time += this.configuration.TEMPO; //25mm/s Each square is 1 mm
       i++;
+
+      //Reset to 0, complete width draw and repet secuency:
+      if(i == data.length){
+        i = 0;
+      }
     }
 }
-  /**
-   * Draw curve with specified data
-   */
-  /*public drawCurve() {
-    this.prueba();
-    let data = [];
-    let time = 0.000;
-    for(let i = 0; i < this.dataMg.channels[10].samples.length; i++){
-      let format = {'time':time += 0.008, 'pqrst':this.dataMg.channels[10].samples[i]};
-      data.push(format);
-    };
-
-    let i = 0;
-    let dt = null;
-    let p0 = null;
-    let p1 = null;
-    let cs = this.cellSize;
-    let sr = this.samplingRate;
-    let lw = this.ctx.lineWidth;
-    let ss = this.ctx.strokeStyle;
-    let delta = cs / (0.04 * sr);
-    let height = this.height;
-    let period = this.period;
-
-    //this.clear();
-    //this.drawGrid();
-    this.ctx.strokeStyle = this.configuration.LINE_COLOR;
-    this.ctx.translate(0, height);
-
-    while (i < data.length) {
-      if ((p0 = data[i++])) break;
-    }
-
-    p0.offset = (i - 1) * delta;
-
-    while (i < data.length) {
-      p1 = data[i];
-      p1.offset = i * delta;
-
-      this.ctx.beginPath();
-      this.ctx.lineWidth = this.configuration.CURVE_WIDTH;
-      this.drawLine(p0.offset, -p0.pqrst, p1.offset, -p1.pqrst);
-      this.ctx.closePath();
-      this.ctx.stroke();
-
-      p0 = p1;
-      i++;
-    }
-
-    this.ctx.lineWidth = lw;
-    this.ctx.strokeStyle = ss;
-    this.ctx.translate(0, -height);
-  }*/
 
   //#endregion
 }
