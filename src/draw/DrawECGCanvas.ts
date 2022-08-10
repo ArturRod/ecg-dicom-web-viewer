@@ -1,3 +1,4 @@
+import Constants from "../constants/Constants";
 import GenericCanvas from "./GenericCanvas";
 
 /**
@@ -83,8 +84,6 @@ class DrawECGCanvas extends GenericCanvas {
           width,
           middleHeight
         );
-
-        middleHeight += gridHeight;
         //Save positions for drawECG:
         let position = {
           name: this.configuration.columsText[e][i],
@@ -92,6 +91,7 @@ class DrawECGCanvas extends GenericCanvas {
           height: middleHeight
         }
         this.positionsDraw.push(position);
+        middleHeight += gridHeight;
       }
       width += gridWidth;
     }
@@ -134,47 +134,62 @@ class DrawECGCanvas extends GenericCanvas {
    * Draw lines.
    */
   public drawCurve(){
-    let data = [];
-    let secondsDraw = Math.floor((this.configuration.FREQUENCY/1000) % 60); //parse to seconds
-    let time = 0;
-
     //CHANELS:
-    let idStart;
-    let objPosition;
     this.dataMg.channels.forEach(channel => {
-      switch(channel.channelDefinition.channelSource.codeMeaning){
-        case "Lead I":
-          objPosition = this.positionsDraw.find((obj) => {
-            return obj.name === "I";
-          });
-          debugger;
-          break;
-        case "Lead II":
-          break;
-        case "Lead III":
-          break;
-      }
-
+      //code:
+      let code = channel.channelDefinition.channelSource.codeMeaning.split(" ")[1];
+      let objPosition = this.positionsDraw.find((obj) => {
+        return obj.name === code;
+      });
+      this.paintLines(objPosition, channel);
     });
+  }
 
-    this.dataMg.channels[3].samples.forEach(element => {
+  /**
+   * Paint Lines ECG.
+   * @param objPosition Position information draw.
+   * @param channel Channel draw:
+   */
+  private paintLines(objPosition: any, channel: any){
+    let data = [];
+
+    //SCALE HEIGHT: 
+    let baseScale: number;
+    switch(channel.channelDefinition.channelSensitivityUnits.codeValue){
+      case Constants.mV.name:
+        baseScale = Constants.mV.deltaMain;
+        break;
+      case Constants.uV.name:
+        baseScale = Constants.uV.deltaMain;
+        break;
+      case Constants.mmHg.name:
+        baseScale = Constants.mmHg.deltaMain;
+        break;
+      default:
+        baseScale = Constants.def.deltaMain;
+        break;        
+    }
+    //let secondsDraw = Math.floor((this.configuration.FREQUENCY/1000) % 60); //parse to seconds
+    let time = 0;
+    //Reference to draw:
+    let startY = objPosition.height;
+    let startX = objPosition.width + 10;
+    channel.samples.forEach(element => {
       data.push(element);
     });
 
-    //Reference to draw:
-    let startY = 0;
-    let startX = 10;
-
     let latestPosition = startY;
     let i = 0;
+
     while (i < data.length) {
-      this.drawLine(startX + time, latestPosition, startX + time, startY - data[i]);
+      let point = data[i] * objPosition.height / baseScale; //Rescalate.
+      this.drawLine(startX + time, latestPosition, startX + time, startY - point);
       this.ctx.stroke();
-      latestPosition = startY - data[i];
-      time += 0.8;
+      latestPosition = startY - point;
+      time += 1;
       i++;
     }
-  }
+}
   /**
    * Draw curve with specified data
    */
