@@ -7,6 +7,8 @@ import GenericCanvas from "./GenericCanvas";
 class DrawECGCanvas extends GenericCanvas {
   constructor(id_canvas: string, dataMg: any) {
     super(id_canvas, dataMg);
+    //LOAD USER DATA:
+    this.loadUserData();
   }
 
   //--------------------------------------------------------
@@ -100,16 +102,6 @@ class DrawECGCanvas extends GenericCanvas {
   //----------------    DRAW ECG   -------------------------
   //--------------------------------------------------------
   //#region DRAW ECG
-
-  /**
-   * Draw ECG.
-   */
-  public drawECG(){
-    //Load user data:
-    this.loadUserData();
-    //load indicators:
-    this.drawCurve();
-  }
   
   /**
    * Load user data information in canva user data.
@@ -131,9 +123,9 @@ class DrawECGCanvas extends GenericCanvas {
   /**
    * Draw lines.
    */
-  public async drawCurve(){
+  public drawECG(){
     //CHANELS:
-    this.dataMg.channels.forEach(async channel => {
+    this.dataMg.channels.forEach(channel => {
       //code:
       let code = channel.channelDefinition.channelSource.codeMeaning.split(" ")[1];
       let objPosition = this.positionsDraw.find((obj) => {
