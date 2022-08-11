@@ -191,6 +191,7 @@ class DrawECGCanvas extends GenericCanvas {
       let point = (data[i] * objPosition.height / baseScale.deltaMain) * this.configuration.AMPLITUDE; //Rescalate. 10mV/s Each square is 1 mm.
 
       //Draw line:
+      this.ctx.beginPath();
       this.drawLine(startX + time, latestPosition, startX + time, startY - point);
       this.ctx.stroke();
 
