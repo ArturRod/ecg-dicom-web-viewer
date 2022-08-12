@@ -6,10 +6,9 @@ import DrawECGCanvas from "../draw/DrawECGCanvas";
  * Princial Class to render ECG viewer.
  */
 class DicomECGViewer {
-  dataDICOMarrayBuffer: ArrayBuffer;
-  idView: string;
-  nameView: string;
-  patientData: string;
+  private dataDICOMarrayBuffer: ArrayBuffer;
+  private idView: string;
+  private nameView: string;
   /**
    * Create Viwer
    * @param {*} dataDICOMarrayBuffer DICOM DCM ECG Array Buffer.
@@ -25,7 +24,8 @@ class DicomECGViewer {
     this.idView = idView;
     this.nameView = nameView;
   }
-  /**
+
+/**
  * Load canva data.
  */
   loadCanvas() {
