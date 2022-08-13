@@ -59,7 +59,7 @@ class DrawECGCanvas extends GenericCanvas {
   /**
    * Load view no compatible:
    */
-  public drawNoCompatible(){
+  public drawNoCompatible() {
     this.ctx.font = "3rem Arial";
     this.ctx.fillText(
       "ECG NO COMPATIBLE",
@@ -71,27 +71,27 @@ class DrawECGCanvas extends GenericCanvas {
   //Draw I, II, III, aVR, aVL, aVF, V1, V2, V3, V4, V5, V6
   public drawECGIndicators() {
     let h = this.canvas.height;
-    let gridWidth = this.canvas.width / this.configuration.COLUMS;
-    let gridHeight = (h / this.configuration.ROWS);
+    let gridWidth = this.canvas.width / this.configuration.COLUMNS;
+    let gridHeight = h / this.configuration.ROWS;
     let marginWidth = 10;
     this.ctx.font = "small-caps 800 25px Times New Roman";
 
     //COLUMNS:
-    for (let e = 0; e < this.configuration.COLUMS; e++) {
+    for (let e = 0; e < this.configuration.COLUMNS; e++) {
       let middleHeight = gridHeight / 2;
       //ROWS:
       for (let i = 0; i < this.configuration.ROWS; i++) {
         this.ctx.fillText(
-          this.configuration.columsText[e][i],
+          this.configuration.columnsText[e][i],
           marginWidth,
           middleHeight - this.margin
         );
         //Save positions for drawECG:
         let position = {
-          name: this.configuration.columsText[e][i],
+          name: this.configuration.columnsText[e][i],
           width: marginWidth,
-          height: middleHeight
-        }
+          height: middleHeight,
+        };
         this.positionsDraw.push(position);
         middleHeight += gridHeight;
       }
@@ -104,9 +104,9 @@ class DrawECGCanvas extends GenericCanvas {
   //----------------    DRAW ECG   -------------------------
   //--------------------------------------------------------
   //#region DRAW ECG
-  
+
   /**
-   * Load user data information in canva user data.
+   * Load user data information in canvas user data.
    */
   public loadUserData() {
     //Data user:
@@ -121,19 +121,19 @@ class DrawECGCanvas extends GenericCanvas {
     this.ctxUserData.fillText("WEIGHT: " + this.dataMg.patientWeight, 250, 85);
   }
 
-
   /**
    * Draw lines.
    */
-  public drawECG(){
-    //CHANELS:
-    this.dataMg.channels.forEach(channel => {
+  public drawECG() {
+    //CHANNELS:
+    this.dataMg.channels.forEach((channel) => {
       //code:
-      let code = channel.channelDefinition.channelSource.codeMeaning.split(" ")[1];
+      let code =
+        channel.channelDefinition.channelSource.codeMeaning.split(" ")[1];
       let objPosition = this.positionsDraw.find((obj) => {
         return obj.name === code;
       });
-        //Variables:
+      //Variables:
       let data = [];
       let time = 0;
       let i = 0;
@@ -142,14 +142,14 @@ class DrawECGCanvas extends GenericCanvas {
       let startX = objPosition.width + this.margin; //Margin left and right to draw:
       let latestPosition = startY;
       let baseScale: any;
-      
+
       //Load data:
-      channel.samples.forEach(element => {
+      channel.samples.forEach((element) => {
         data.push(element);
       });
 
-      //Escale mV, uV. mmHg...
-      switch(channel.channelDefinition.channelSensitivityUnits.codeValue){
+      //Scale mV, uV. mmHg...
+      switch (channel.channelDefinition.channelSensitivityUnits.codeValue) {
         case Constants.mV.name:
           baseScale = Constants.mV;
           break;
@@ -166,22 +166,28 @@ class DrawECGCanvas extends GenericCanvas {
 
       //Colum calculator:
       let middleColum = startX + this.margin; // Margin Right.
-      if(startX != 10 + this.margin){
+      if (startX != 10 + this.margin) {
         middleColum = 0;
       }
 
       //Draw line:
-      while (i < data.length && time < (this.canvas.width / 2 - middleColum)) {
-
+      while (i < data.length && time < this.canvas.width / 2 - middleColum) {
         //Line width:
         this.ctx.lineWidth = this.configuration.CURVE_WIDTH;
 
         //10mV/s:
-        let point = (data[i] * objPosition.height / baseScale.deltaMain) * this.configuration.AMPLITUDE; //Rescalate. 10mV/s Each square is 1 mm.
+        let point =
+          ((data[i] * objPosition.height) / baseScale.deltaMain) *
+          this.configuration.AMPLITUDE; //Rescalate. 10mV/s Each square is 1 mm.
 
         //Draw line:
         this.ctx.beginPath();
-        this.drawLine(startX + time, latestPosition, startX + time, startY - point);
+        this.drawLine(
+          startX + time,
+          latestPosition,
+          startX + time,
+          startY - point
+        );
         this.ctx.stroke();
 
         //Positions:
@@ -190,8 +196,8 @@ class DrawECGCanvas extends GenericCanvas {
         time += this.configuration.TEMPO; //25mm/s Each square is 1 mm
         i++;
 
-        //Reset to 0, complete width draw and repet secuency:
-        if(i == data.length){
+        //Reset to 0, complete width draw and repeat secuency:
+        if (i == data.length) {
           i = 0;
         }
       }

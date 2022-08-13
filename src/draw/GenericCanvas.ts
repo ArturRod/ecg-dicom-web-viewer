@@ -12,17 +12,17 @@ class GenericCanvas {
   public ctxUserData: CanvasRenderingContext2D;
   public positionsDraw: Array<any>;
 
-  //Configurantion:
+  //configuration:
   public configuration = {
     //GRID:
     CELL_WIDTH: 0.1, //The stroke width of cell 1mm
     CELL_SIZE: 6, //The cell size
     BLOCK_WIDTH: 0.2, //The stroke width of block
     BLOCK_SIZE: 0, //CELL_SIZE * 5, //The block size, each block includes 5*5 cells
-    //ROWS and COLUMS canvas separation I, II, III, aVR, aVL, aVF, V1, V2, V3, V4, V5, V6
+    //ROWS and COLUMNS canvas separation I, II, III, aVR, aVL, aVF, V1, V2, V3, V4, V5, V6
     ROWS: 6,
-    COLUMS: 2,
-    columsText: [
+    COLUMNS: 2,
+    columnsText: [
       ["I", "II", "III", "aVR", "aVL", "aVF"], //Colum 1
       ["V1", "V2", "V3", "V4", "V5", "V6"], // Colum 2
     ],
@@ -31,8 +31,8 @@ class GenericCanvas {
     SAMPLING_RATE: 125, //The number of samples per second (1/0.008)
     FREQUENCY: 250, //The frequency to update the curve 25mm = 1000ms = 1s
     TEMPO: 0.25, //Default <- 25mm/s -> Each square is 1 mm
-    AMPLITUDE: 0.10, //Default 10mm/mV  Each square is 1 mm
-    //DESING:
+    AMPLITUDE: 0.1, //Default 10mm/mV  Each square is 1 mm
+    //DESIGN:
     GRID_COLOR: "#F08080",
     LINE_COLOR: "#000033",
     BACKGROUND_COLOR: "#F9F8F2",
@@ -48,11 +48,13 @@ class GenericCanvas {
     this.dataMg = dataMg;
 
     //Canvas ECG:
-    this.canvas = <HTMLCanvasElement> document.getElementById(id_canvas);
+    this.canvas = <HTMLCanvasElement>document.getElementById(id_canvas);
     this.ctx = this.canvas.getContext("2d");
 
     //Canvas User Data:
-    this.canvasUserData = <HTMLCanvasElement> document.getElementById("userData");
+    this.canvasUserData = <HTMLCanvasElement>(
+      document.getElementById("userData")
+    );
     this.ctxUserData = this.canvasUserData.getContext("2d");
 
     //Canvas resize:
@@ -63,7 +65,7 @@ class GenericCanvas {
     //this.canvas.width = Math.max(400, this.canvas.clientWidth);
     //this.canvas.height = this.canvas.clientHeight;
 
-    //Canves user resize:
+    //Canvas user resize:
     this.canvasUserData.width = window.innerWidth;
     this.canvasUserData.height = this.configuration.HEIGHT_USER_INFO;
     this.canvasUserData.style.width = "100%";
@@ -73,9 +75,10 @@ class GenericCanvas {
 
     //Color canvas:
     this.canvas.style.backgroundColor = this.configuration.BACKGROUND_COLOR;
-    this.canvasUserData.style.backgroundColor = this.configuration.BACKGROUND_COLOR;
+    this.canvasUserData.style.backgroundColor =
+      this.configuration.BACKGROUND_COLOR;
 
-    //Bloqu size:
+    //Block size:
     this.configuration.BLOCK_SIZE = this.configuration.CELL_SIZE * 5;
 
     //Frequency data dcm:
@@ -84,7 +87,6 @@ class GenericCanvas {
     //Star Array:
     this.positionsDraw = new Array();
   }
-  
 
   /**
    * Draw a line from point (x1, y1) to point (x2, y2)
@@ -93,7 +95,7 @@ class GenericCanvas {
    * @param x2 lineTo(x2).
    * @param y2 lineTo(y2).
    */
-  public drawLine(x1: number, y1: number, x2: number, y2:number) {
+  public drawLine(x1: number, y1: number, x2: number, y2: number) {
     this.ctx.moveTo(x1, y1);
     this.ctx.lineTo(x2, y2);
   }
@@ -144,9 +146,7 @@ class GenericCanvas {
    * @return the number of samples per period
    */
   get samplesPerPeriod() {
-    return Math.floor(
-      0.04 * this.samplingRate * (this.width / this.cellSize)
-    );
+    return Math.floor(0.04 * this.samplingRate * (this.width / this.cellSize));
   }
 
   /**

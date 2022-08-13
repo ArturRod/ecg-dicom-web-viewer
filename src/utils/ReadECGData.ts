@@ -1,4 +1,4 @@
-import dicomParser from 'dicom-parser';
+import dicomParser from "dicom-parser";
 
 /**
  * ReadECGData.
@@ -9,23 +9,23 @@ import dicomParser from 'dicom-parser';
 class ReadECGData {
   /**
    * Read the arraydicombuffer and return dataSet.
-   * @param dataDICOMarrayBuffer 
+   * @param dataDICOMarrayBuffer
    * @returns dataSet.
    */
   public static getDataSet(dataDICOMarrayBuffer: ArrayBuffer) {
     return dicomParser.parseDicom(new Uint8Array(dataDICOMarrayBuffer));
   }
 
- /**
-  * Read and return ECG Data.
-  * Structure: Waveform - Multiplex - channels - sample
-  * @param dataSet 
-  * @returns MultiplexGroup.
-  */
+  /**
+   * Read and return ECG Data.
+   * Structure: Waveform - Multiplex - channels - sample
+   * @param dataSet
+   * @returns MultiplexGroup.
+   */
   public static readData(dataSet: any) {
-    // MultiplexGroup: 
+    // MultiplexGroup:
     let mg = {
-      sopClassUID: "", 
+      sopClassUID: "",
       studyDate: "",
       sex: "",
       birthDate: "",
@@ -42,7 +42,7 @@ class ReadECGData {
       channels: [],
       waveformBitsAllocated: 0,
       waveformSampleInterpretation: "",
-    }; 
+    };
     let channelSourceSequence = dataSet.elements.x003a0208;
     if (channelSourceSequence !== undefined) {
       //console.log('Channel Source Sequence is present');
@@ -275,15 +275,14 @@ class ReadECGData {
   }
 
   /**
-   * Trasform data. 
+   * Trasform data.
    * @param data yyyymmdd
    * @returns dd/mm/yyyy
    */
-  private static formatData(data: string){
-    if(data == undefined){
-      return data
-    } 
-    else{
+  private static formatData(data: string) {
+    if (data == undefined) {
+      return data;
+    } else {
       let year = data.substring(0, 4);
       let month = data.substring(4, 6);
       let day = data.substring(6, 8);
