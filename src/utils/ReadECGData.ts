@@ -28,7 +28,7 @@ class ReadECGData {
       sopClassUID: "", 
       studyDate: "",
       sex: "",
-      bithDate: "",
+      birthDate: "",
       patientName: "",
       patientID: "",
       patientAge: "",
@@ -57,7 +57,7 @@ class ReadECGData {
       mg.sopClassUID = dataSet.string("x00080016"); //UID.
       mg.studyDate = ReadECGData.formatData(dataSet.string("x00080020")); //DA = Study Date.
       mg.sex = dataSet.string("x00100040"); //CS = Patient sex.
-      mg.bithDate = ReadECGData.formatData(dataSet.string("x00100030")); //DA = PN Patient birth.
+      mg.birthDate = ReadECGData.formatData(dataSet.string("x00100030")); //DA = PN Patient birth.
       mg.patientName = dataSet.string("x00100010"); //PN = Patient Name.
       mg.patientID = dataSet.string("x00100020"); // LO = Patient id.
       mg.patientAge = dataSet.string("x00101010"); //AS = Patient age. Example 20Y.

@@ -114,7 +114,7 @@ class DrawECGCanvas extends GenericCanvas {
     this.ctxUserData.fillText("NAME: " + this.dataMg.patientName, 10, 25);
     this.ctxUserData.fillText("ID: " + this.dataMg.patientID, 10, 40);
     this.ctxUserData.fillText("SEX: " + this.dataMg.sex, 10, 55);
-    this.ctxUserData.fillText("BIRTH: " + this.dataMg.bithDate, 10, 70);
+    this.ctxUserData.fillText("BIRTH: " + this.dataMg.birthDate, 10, 70);
     this.ctxUserData.fillText("STUDY DATE: " + this.dataMg.studyDate, 10, 85);
     this.ctxUserData.fillText("AGE: " + this.dataMg.patientAge, 250, 55);
     this.ctxUserData.fillText("SIZE: " + this.dataMg.patientSize, 250, 70);
