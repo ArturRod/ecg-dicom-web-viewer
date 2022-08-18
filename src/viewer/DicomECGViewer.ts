@@ -3,14 +3,14 @@ import ReadECGData from "../utils/ReadECGData";
 import DrawECGCanvas from "../draw/DrawECGCanvas";
 import './Style.css';
 /**
- * Princial Class to render ECG viewer.
+ * Principal Class to render ECG viewer.
  */
 class DicomECGViewer {
   private dataDICOMarrayBuffer: ArrayBuffer;
   private idView: string;
   private nameView: string;
   /**
-   * Create Viwer
+   * Create Viewer
    * @param {*} dataDICOMarrayBuffer DICOM DCM ECG Array Buffer.
    * @param {*} idView Draw ID View.
    * @param {*} nameView Identifier of the view you want to put, in case you have several views, default 0.
@@ -25,12 +25,19 @@ class DicomECGViewer {
     this.nameView = nameView;
   }
 
-/**
- * Load canva data.
- */
+  /**
+   * Load canvas data.
+   */
   loadCanvas() {
+<<<<<<< HEAD
     try{
       
+=======
+    try {
+      //Load DOM canvas:
+      this.loadCanvasDOM();
+
+>>>>>>> f6e88677bc62b855599088445562a08121b09d7a
       //DataSet:
       let dataSet = ReadECGData.getDataSet(this.dataDICOMarrayBuffer);
       //Read data from dataSet:
@@ -74,6 +81,7 @@ class DicomECGViewer {
   loadCanvasDOM(name, id, sex, birth, study, age, size, weight) {
     let view = "";
     document.getElementById(this.idView).innerHTML = view;
+<<<<<<< HEAD
     view = 
     '<div class="divTableBody">' +
     '<div class="divTableRow">' +
@@ -109,9 +117,16 @@ class DicomECGViewer {
     "</div>" + 
     '<canvas id="' + this.idView + this.nameView + '" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000;"></canvas>';
 
+=======
+    view =
+      '<canvas id="userData" style="border: 2px solid #000000;"></canvas>' +
+      '<canvas id="' +
+      this.idView +
+      this.nameView +
+      '" style="border: 2px solid #ff0000;"></canvas>';
+    //view ='<canvas id="' + this.idView + this.nameView + '"/>';
+>>>>>>> f6e88677bc62b855599088445562a08121b09d7a
     document.getElementById(this.idView).innerHTML = view;
   }
-
-
 }
 export default DicomECGViewer;
