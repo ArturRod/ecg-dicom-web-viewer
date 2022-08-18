@@ -25,26 +25,18 @@ class DicomECGViewer {
     this.nameView = nameView;
   }
 
-  /**
+/**
    * Load canvas data.
    */
   loadCanvas() {
-<<<<<<< HEAD
     try{
-      
-=======
-    try {
-      //Load DOM canvas:
-      this.loadCanvasDOM();
-
->>>>>>> f6e88677bc62b855599088445562a08121b09d7a
       //DataSet:
       let dataSet = ReadECGData.getDataSet(this.dataDICOMarrayBuffer);
       //Read data from dataSet:
       let dataMg = ReadECGData.readData(dataSet);
 
-      //Load DOM canva and load user data:
-      this.loadCanvasDOM(dataMg.patientName, dataMg.patientID, dataMg.sex, dataMg.bithDate, dataMg.studyDate, dataMg.patientAge, dataMg.patientSize, dataMg.patientWeight); 
+      //Load DOM canva and load user information:
+      this.loadCanvasDOM(dataMg.patientName, dataMg.patientID, dataMg.sex, dataMg.birthDate, dataMg.studyDate, dataMg.patientAge, dataMg.patientSize, dataMg.patientWeight); 
 
       //Draw template:
       let ecgCanvas = new DrawECGCanvas(this.idView + this.nameView, dataMg);
@@ -81,7 +73,6 @@ class DicomECGViewer {
   loadCanvasDOM(name, id, sex, birth, study, age, size, weight) {
     let view = "";
     document.getElementById(this.idView).innerHTML = view;
-<<<<<<< HEAD
     view = 
     '<div class="divTableBody">' +
     '<div class="divTableRow">' +
@@ -117,16 +108,9 @@ class DicomECGViewer {
     "</div>" + 
     '<canvas id="' + this.idView + this.nameView + '" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000;"></canvas>';
 
-=======
-    view =
-      '<canvas id="userData" style="border: 2px solid #000000;"></canvas>' +
-      '<canvas id="' +
-      this.idView +
-      this.nameView +
-      '" style="border: 2px solid #ff0000;"></canvas>';
-    //view ='<canvas id="' + this.idView + this.nameView + '"/>';
->>>>>>> f6e88677bc62b855599088445562a08121b09d7a
     document.getElementById(this.idView).innerHTML = view;
   }
+
+
 }
 export default DicomECGViewer;

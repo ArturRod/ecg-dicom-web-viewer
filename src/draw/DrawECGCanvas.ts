@@ -104,25 +104,6 @@ class DrawECGCanvas extends GenericCanvas {
   //#region DRAW ECG
 
   /**
-<<<<<<< HEAD
-=======
-   * Load user data information in canvas user data.
-   */
-  public loadUserData() {
-    //Data user:
-    this.ctxUserData.font = "small-caps 800 14px Times New Roman";
-    this.ctxUserData.fillText("NAME: " + this.dataMg.patientName, 10, 25);
-    this.ctxUserData.fillText("ID: " + this.dataMg.patientID, 10, 40);
-    this.ctxUserData.fillText("SEX: " + this.dataMg.sex, 10, 55);
-    this.ctxUserData.fillText("BIRTH: " + this.dataMg.birthDate, 10, 70);
-    this.ctxUserData.fillText("STUDY DATE: " + this.dataMg.studyDate, 10, 85);
-    this.ctxUserData.fillText("AGE: " + this.dataMg.patientAge, 250, 55);
-    this.ctxUserData.fillText("SIZE: " + this.dataMg.patientSize, 250, 70);
-    this.ctxUserData.fillText("WEIGHT: " + this.dataMg.patientWeight, 250, 85);
-  }
-
-  /**
->>>>>>> f6e88677bc62b855599088445562a08121b09d7a
    * Draw lines.
    */
   public drawECG() {
