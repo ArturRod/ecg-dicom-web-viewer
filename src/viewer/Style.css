@@ -1,0 +1,41 @@
+/*Table Data Study*/
+
+.divTableRow {
+  display: table-row;
+}
+.divTableHeading {
+  background-color: #eee;
+  display: table-header-group;
+}
+.divTableCell,
+.divTableHead {
+  display: table-cell;
+  font-size: 13px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.divTableCell i {
+  font-weight: normal;
+}
+
+.divTableHeading {
+  background-color: #eee;
+  display: table-header-group;
+  font-weight: bold;
+}
+.divTableFoot {
+  background-color: #eee;
+  display: table-footer-group;
+  font-weight: bold;
+}
+.divTableBody {
+  height: auto;
+  background: #f9f8f2;
+  width: 100%;
+  display: table;
+  padding: 10px;
+}
+.divTableCell .i {
+  font-weight: normal;
+}

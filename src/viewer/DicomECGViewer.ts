@@ -1,7 +1,7 @@
 import Constants from "../constants/Constants";
 import ReadECGData from "../utils/ReadECGData";
 import DrawECGCanvas from "../draw/DrawECGCanvas";
-
+import './Style.css';
 /**
  * Princial Class to render ECG viewer.
  */
@@ -30,13 +30,14 @@ class DicomECGViewer {
  */
   loadCanvas() {
     try{
-      //Load DOM canva:
-      this.loadCanvasDOM(); 
-
+      
       //DataSet:
       let dataSet = ReadECGData.getDataSet(this.dataDICOMarrayBuffer);
       //Read data from dataSet:
       let dataMg = ReadECGData.readData(dataSet);
+
+      //Load DOM canva and load user data:
+      this.loadCanvasDOM(dataMg.patientName, dataMg.patientID, dataMg.sex, dataMg.bithDate, dataMg.studyDate, dataMg.patientAge, dataMg.patientSize, dataMg.patientWeight); 
 
       //Draw template:
       let ecgCanvas = new DrawECGCanvas(this.idView + this.nameView, dataMg);
@@ -70,13 +71,44 @@ class DicomECGViewer {
   /**
    * Create struct of view.
    */
-  loadCanvasDOM() {
+  loadCanvasDOM(name, id, sex, birth, study, age, size, weight) {
     let view = "";
     document.getElementById(this.idView).innerHTML = view;
     view = 
-      '<canvas id="userData" style="border: 2px solid #000000;"></canvas>' +
-      '<canvas id="' + this.idView + this.nameView + '" style="border: 2px solid #ff0000;"></canvas>'
-    //view ='<canvas id="' + this.idView + this.nameView + '"/>';
+    '<div class="divTableBody">' +
+    '<div class="divTableRow">' +
+    '<div class="divTableCell">NAME: <i>' +
+    name +
+    "</i></div>" +
+    '<div class="divTableCell">SEX: <i>' +
+    sex+
+    "</i></div>" +
+    '<div class="divTableCell">PATIENT SIZE: <i>' +
+    size +
+    "</i></div>" +
+    "</div>" +
+    '<div class="divTableRow">' +
+    '<div class="divTableCell">PATIENT ID: <i>' +
+    id +
+    "</i></div>" +
+    '<div class="divTableCell">PATIENT AGE: <i>' +
+    age +
+    "</i></div>" +
+    '<div class="divTableCell">PATIENT WEIGHT: <i>' +
+    weight +
+    "</i></div>" +
+    "</div>" +
+    '<div class="divTableRow">' +
+    '<div class="divTableCell">DATE: <i>' +
+    study +
+    "</i></div>" +
+    '<div class="divTableCell">BIRTH: <i>' +
+    birth +
+    "</i></div>" +
+    "</div>" +
+    "</div>" + 
+    '<canvas id="' + this.idView + this.nameView + '" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000;"></canvas>';
+
     document.getElementById(this.idView).innerHTML = view;
   }
 

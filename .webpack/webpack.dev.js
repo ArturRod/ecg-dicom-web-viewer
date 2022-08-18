@@ -15,6 +15,7 @@ var dist = {
     rules: [
       { test: /\.tsx?$/, loader: "ts-loader" },
       { test: /\.js$/, loader: "source-map-loader" },
+      { test: /\.css$/i, use: ["style-loader", "css-loader"] },
     ],
   },
   mode: "development",
@@ -35,6 +36,7 @@ var example = {
     rules: [
       { test: /\.tsx?$/, loader: "ts-loader" },
       { test: /\.js$/, loader: "source-map-loader" },
+      { test: /\.css$/i, use: ["style-loader", "css-loader"] },
     ],
   },
   mode: "development",
