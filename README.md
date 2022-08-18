@@ -88,5 +88,5 @@ The next available classes are as follows:
   
 ## Features
 <ul>
-  <li><strong>Generate the graph instead of using the c3 library (since it takes time to load), generate a canvas with the most personalized graph and actions such as scrolling or others.
-Calibrate Sop12LeadECGWaveformStorage and GeneralECGWaveformStorage to make it look good.
+  <li><strong>Generate the ECG view on canvas, being able to manipulate the graph, move, zoom, change the speed and amplitude, which are by default at 25mm/s and 10mm/mV. In process ✅ (Branch Developer) </strong></li>
+</ul>
