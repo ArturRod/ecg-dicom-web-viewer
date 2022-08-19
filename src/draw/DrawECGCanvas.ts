@@ -12,13 +12,80 @@ class DrawECGCanvas extends GenericCanvas {
   }
 
   //--------------------------------------------------------
+  //------------------ DRAW AND EVENTS ---------------------
+  //--------------------------------------------------------
+ //#region DRAW AND EVENTS:
+  /**
+   * Draw grid and views:
+   */
+  public draw(){
+    this.drawGrid();
+    this.drawECG();
+    //Event buttons:
+    this.buttonsEvents();
+  }
+
+  /**
+   * Load view no compatible:
+   */
+  public drawNoCompatible() {
+    this.ctx.font = "3rem Arial";
+    this.ctx.fillText(
+      "ECG NO COMPATIBLE",
+      this.canvas.width / 2,
+      this.canvas.height / 2
+    );
+  }
+
+  /**
+   * Events buttons.
+   */
+  private buttonsEvents(){
+    //AMPLITUDE mm/mV:
+    let buttonAmUp = document.getElementById('amplitudeUp');
+    buttonAmUp.addEventListener('click', () => this.changeAmplitude(true));
+    let buttonAmDown = document.getElementById('amplitudeDown');
+    buttonAmDown.addEventListener('click', () => this.changeAmplitude(false));
+  }
+
+  /**
+   * Change amplitude
+   * @param up up or down.
+   */
+  private changeAmplitude(up: boolean){
+    let ampliUp;
+    if(up){
+      ampliUp = this.configuration.AMPLITUDE + 0.1; 
+    }
+    else{
+      ampliUp = this.configuration.AMPLITUDE - 0.1; 
+    }
+    //Max 1.0 = 100mm/mV | min 0.1 = 10mm/mV
+    if(ampliUp <= 1.0 && ampliUp >= 0.1){
+      //Change amplitude:
+      this.amplitude = ampliUp;
+      //Clear ecg:
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      //New draw:
+      this.drawGrid();
+      this.drawECG();
+
+      //Update text:
+      let text = document.getElementById('textAmplitude');
+      text.innerText = " " + Math.round(ampliUp * 100) + "mm/mV "
+    }
+  }
+
+  //#endregion
+
+  //--------------------------------------------------------
   //----------------   DRAW GRID   -------------------------
   //--------------------------------------------------------
   //#region DRAW GRID
   /**
    * Draw the grid
    */
-  public drawGrid() {
+  private drawGrid() {
     let w = this.width - 1;
     let h = this.height - 1;
     let bs = this.blockSize;
@@ -54,20 +121,8 @@ class DrawECGCanvas extends GenericCanvas {
     this.drawECGIndicators();
   }
 
-  /**
-   * Load view no compatible:
-   */
-  public drawNoCompatible() {
-    this.ctx.font = "3rem Arial";
-    this.ctx.fillText(
-      "ECG NO COMPATIBLE",
-      this.canvas.width / 2,
-      this.canvas.height / 2
-    );
-  }
-
   //Draw I, II, III, aVR, aVL, aVF, V1, V2, V3, V4, V5, V6
-  public drawECGIndicators() {
+  private drawECGIndicators() {
     let h = this.canvas.height;
     let gridWidth = this.canvas.width / this.configuration.COLUMNS;
     let gridHeight = h / this.configuration.ROWS;
@@ -106,7 +161,7 @@ class DrawECGCanvas extends GenericCanvas {
   /**
    * Draw lines.
    */
-  public drawECG() {
+  private drawECG() {
     //CHANNELS:
     this.dataMg.channels.forEach((channel) => {
       //code:

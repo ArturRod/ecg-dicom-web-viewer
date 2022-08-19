@@ -86,7 +86,7 @@ class GenericCanvas {
    * Returns the cell size
    * @return the cell size
    */
-  get cellSize() {
+  public get cellSize() {
     return this.configuration.CELL_SIZE;
   }
 
@@ -94,7 +94,7 @@ class GenericCanvas {
    * Returns the block size
    * @return the block size
    */
-  get blockSize() {
+  public get blockSize() {
     return 5 * this.configuration.CELL_SIZE;
   }
 
@@ -102,7 +102,7 @@ class GenericCanvas {
    * Returns the number of cells per period
    * @return the number of cells per period
    */
-  get cellsPerPeriod() {
+  public get cellsPerPeriod() {
     return Math.floor(this.width / this.cellSize);
   }
 
@@ -110,7 +110,7 @@ class GenericCanvas {
    * Returns the number of samples per cell
    * @return the number of samples per cell
    */
-  get samplesPerCell() {
+  public get samplesPerCell() {
     return 0.04 * this.samplingRate;
   }
 
@@ -118,7 +118,7 @@ class GenericCanvas {
    * Returns the number of samples per second
    * @return the number of samples per second
    */
-  get samplingRate() {
+  public get samplingRate() {
     return this.configuration.SAMPLING_RATE;
   }
 
@@ -126,7 +126,7 @@ class GenericCanvas {
    * Returns the number of samples per period
    * @return the number of samples per period
    */
-  get samplesPerPeriod() {
+  public get samplesPerPeriod() {
     return Math.floor(
       0.04 * this.samplingRate * (this.width / this.cellSize)
     );
@@ -136,7 +136,7 @@ class GenericCanvas {
    * Returns the width of this electrocardiogram
    * @return the width of this electrocardiogram
    */
-  get width() {
+  public get width() {
     return this.ctx.canvas.width;
   }
 
@@ -144,7 +144,7 @@ class GenericCanvas {
    * Returns the height of this electrocardiogram
    * @return the height of this electrocardiogram
    */
-  get height() {
+  public get height() {
     return this.ctx.canvas.height;
   }
 
@@ -152,8 +152,22 @@ class GenericCanvas {
    * Returns the period (seconds) of this electrocardiogram
    * @return the period of this electrocardiogram
    */
-  get period() {
+  public get period() {
     return (0.04 * this.width) / this.cellSize;
+  }
+
+  /**
+   * Change tempo.
+   */
+  public set tempo(tempo: number){
+    this.configuration.TEMPO = tempo;
+  }
+
+  /**
+   * Change amplitude.
+   */
+  public set amplitude(ampli: number){
+    this.configuration.AMPLITUDE = ampli;
   }
 }
 export default GenericCanvas;

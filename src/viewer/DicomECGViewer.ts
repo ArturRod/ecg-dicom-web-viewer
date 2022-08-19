@@ -44,19 +44,16 @@ class DicomECGViewer {
       //Draw compatible:
       switch (dataMg.sopClassUID) {
         case Constants.SOP_CLASS_UIDS.HemodynamicWaveformStorage: //Hemodynamic Waveform Storage
-          ecgCanvas.drawGrid();
-          ecgCanvas.drawECG();
+          ecgCanvas.draw();
           break;
         case Constants.SOP_CLASS_UIDS.AmbulatoryECGWaveformStorage: //Ambulatory
           ecgCanvas.drawNoCompatible();
           break;
         case Constants.SOP_CLASS_UIDS.GeneralECGWaveformStorage: //General ECG Waveform Storage
-          ecgCanvas.drawGrid();
-          ecgCanvas.drawECG();
+          ecgCanvas.draw();
           break;
         case Constants.SOP_CLASS_UIDS.Sop12LeadECGWaveformStorage: //12-lead ECG Waveform Storage
-          ecgCanvas.drawGrid();
-          ecgCanvas.drawECG();
+          ecgCanvas.draw();
           break;
         default:
           ecgCanvas.drawNoCompatible();
@@ -75,42 +72,32 @@ class DicomECGViewer {
     document.getElementById(this.idView).innerHTML = view;
     view = 
     '<div class="divTableBody">' +
-    '<div class="divTableRow">' +
-    '<div class="divTableCell">NAME: <i>' +
-    name +
-    "</i></div>" +
-    '<div class="divTableCell">SEX: <i>' +
-    sex+
-    "</i></div>" +
-    '<div class="divTableCell">PATIENT SIZE: <i>' +
-    size +
-    "</i></div>" +
-    "</div>" +
-    '<div class="divTableRow">' +
-    '<div class="divTableCell">PATIENT ID: <i>' +
-    id +
-    "</i></div>" +
-    '<div class="divTableCell">PATIENT AGE: <i>' +
-    age +
-    "</i></div>" +
-    '<div class="divTableCell">PATIENT WEIGHT: <i>' +
-    weight +
-    "</i></div>" +
-    "</div>" +
-    '<div class="divTableRow">' +
-    '<div class="divTableCell">DATE: <i>' +
-    study +
-    "</i></div>" +
-    '<div class="divTableCell">BIRTH: <i>' +
-    birth +
-    "</i></div>" +
-    "</div>" +
+      '<div class="divTableRow">' +
+        '<div class="divTableCell">NAME: <i>' + name + "</i></div>" +
+        '<div class="divTableCell">SEX: <i>' + sex + "</i></div>" +
+        '<div class="divTableCell">PATIENT SIZE: <i>' + size + "</i></div>" +
+      "</div>" +
+      '<div class="divTableRow">' +
+        '<div class="divTableCell">PATIENT ID: <i>' + id + "</i></div>" +
+        '<div class="divTableCell">PATIENT AGE: <i>' + age + "</i></div>" +
+        '<div class="divTableCell">PATIENT WEIGHT: <i>' + weight + "</i></div>" +
+      "</div>" +
+      '<div class="divTableRow">' +
+        '<div class="divTableCell">DATE: <i>' + study + "</i></div>" +
+        '<div class="divTableCell">BIRTH: <i>' + birth + "</i></div>" +
+      "</div>" +
     "</div>" + 
+    '<div class="toolsECG">' +
+      '<div class="divAmplitude">' +
+        '<b>AMPLITUDE: </b><i id="textAmplitude"> 10mm/mV </i>' +
+        '<button class="button" id="amplitudeDown">&#8595</button>' +
+        '<button class="button" id="amplitudeUp">&#8593</button>' +
+      '</div>'+
+    '</div>' +
     '<canvas id="' + this.idView + this.nameView + '" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000;"></canvas>';
 
     document.getElementById(this.idView).innerHTML = view;
   }
-
 
 }
 export default DicomECGViewer;

@@ -39,3 +39,25 @@
 .divTableCell .i {
   font-weight: normal;
 }
+
+/** Buttons **/
+.toolsECG {
+  background: #f9f8f2;
+  width: 100%;
+  display: flow-root;
+  border-top: 2px solid rgb(0, 0, 0);
+}
+.divAmplitude {
+  float: right;
+  font-size: 13px;
+  font-weight: 700;
+}
+.divAmplitude i {
+  font-weight: normal;
+}
+.button {
+  background-color: #dadada;
+  color: black;
+  padding: 5px 15px;
+  margin: 4px 2px;
+}
