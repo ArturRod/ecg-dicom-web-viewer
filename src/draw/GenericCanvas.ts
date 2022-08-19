@@ -24,10 +24,10 @@ class GenericCanvas {
       ["V1", "V2", "V3", "V4", "V5", "V6"], // Colum 2
     ],
     //LINE ECG:
-    CURVE_WIDTH: 1, //The stroke width of curve
+    CURVE_WIDTH: 1.5, //The stroke width of curve
     SAMPLING_RATE: 125, //The number of samples per second (1/0.008)
     FREQUENCY: 250, //The frequency to update the curve 25mm = 1000ms = 1s
-    TEMPO: 0.25, //Default <- 25mm/s -> Each square is 1 mm
+    TIME: 0.25, //Default <- 25mm/s -> Each square is 1 mm
     AMPLITUDE: 0.10, //Default 10mm/mV  Each square is 1 mm
     //DESING:
     GRID_COLOR: "#F08080",
@@ -157,10 +157,10 @@ class GenericCanvas {
   }
 
   /**
-   * Change tempo.
+   * Change time.
    */
-  public set tempo(tempo: number){
-    this.configuration.TEMPO = tempo;
+  public set time(time: number){
+    this.configuration.TIME = time;
   }
 
   /**

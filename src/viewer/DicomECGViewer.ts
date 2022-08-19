@@ -88,7 +88,12 @@ class DicomECGViewer {
       "</div>" +
     "</div>" + 
     '<div class="toolsECG">' +
-      '<div class="divAmplitude">' +
+    '<div class="divTools">' +
+        '<b>TIME: </b><i id="textTime"> 25mm/s </i>' +
+        '<button class="button" id="timeLeft">&#8592</button>' +
+        '<button class="button" id="timeRight">&#8594</button>' +
+      '</div>'+
+      '<div class="divTools">' +
         '<b>AMPLITUDE: </b><i id="textAmplitude"> 10mm/mV </i>' +
         '<button class="button" id="amplitudeDown">&#8595</button>' +
         '<button class="button" id="amplitudeUp">&#8593</button>' +

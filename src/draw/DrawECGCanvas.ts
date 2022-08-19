@@ -6,6 +6,7 @@ import GenericCanvas from "./GenericCanvas";
  */
 class DrawECGCanvas extends GenericCanvas {
   public margin = 25; //Margin to draw elements.
+  private changeValues = 0.05; //Value of change up down, left o right graph.
 
   constructor(id_canvas: string, dataMg: any) {
     super(id_canvas, dataMg);
@@ -46,6 +47,12 @@ class DrawECGCanvas extends GenericCanvas {
     buttonAmUp.addEventListener('click', () => this.changeAmplitude(true));
     let buttonAmDown = document.getElementById('amplitudeDown');
     buttonAmDown.addEventListener('click', () => this.changeAmplitude(false));
+
+    //TEMPO mm/s
+    let buttonTempoUp = document.getElementById('timeLeft');
+    buttonTempoUp.addEventListener('click', () => this.changeTempo(true));
+    let buttonTempoDown = document.getElementById('timeRight');
+    buttonTempoDown.addEventListener('click', () => this.changeTempo(false));
   }
 
   /**
@@ -53,17 +60,18 @@ class DrawECGCanvas extends GenericCanvas {
    * @param up up or down.
    */
   private changeAmplitude(up: boolean){
-    let ampliUp;
+    let ampli;
     if(up){
-      ampliUp = this.configuration.AMPLITUDE + 0.1; 
+      ampli = this.configuration.AMPLITUDE + this.changeValues; 
     }
     else{
-      ampliUp = this.configuration.AMPLITUDE - 0.1; 
+      ampli = this.configuration.AMPLITUDE - this.changeValues; 
     }
-    //Max 1.0 = 100mm/mV | min 0.1 = 10mm/mV
-    if(ampliUp <= 1.0 && ampliUp >= 0.1){
+    ampli = Math.round(ampli * 100) / 100
+    //Max 1.0 = 100mm/mV | min 0.05 = 5mm/mV
+    if(ampli <= 1.0 && ampli >= this.changeValues){
       //Change amplitude:
-      this.amplitude = ampliUp;
+      this.amplitude = ampli;
       //Clear ecg:
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       //New draw:
@@ -72,7 +80,36 @@ class DrawECGCanvas extends GenericCanvas {
 
       //Update text:
       let text = document.getElementById('textAmplitude');
-      text.innerText = " " + Math.round(ampliUp * 100) + "mm/mV "
+      text.innerText = " " + Math.round(ampli * 100) + "mm/mV "
+    }
+  }
+
+  /**
+   * Change tempo.
+   * @param left left or right 
+   */
+  private changeTempo(left: boolean){
+    let time;
+    if(left){
+      time = this.configuration.TIME - this.changeValues; 
+    }
+    else{
+      time = this.configuration.TIME + this.changeValues; 
+    }
+    time = Math.round(time * 100) / 100
+    //Max 1.0 = 100mm/ss | min 0.5 = 5mm/ss
+    if(time <= 1.0 && time >= this.changeValues){
+      //Change amplitude:
+      this.time = time;
+      //Clear ecg:
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      //New draw:
+      this.drawGrid();
+      this.drawECG();
+
+      //Update text:
+      let text = document.getElementById('textTime');
+      text.innerText = " " + Math.round(time * 100) + "mm/s "
     }
   }
 
@@ -211,7 +248,7 @@ class DrawECGCanvas extends GenericCanvas {
       while (i < data.length && time < this.canvas.width / 2 - middleColum) {
         //Line width:
         this.ctx.lineWidth = this.configuration.CURVE_WIDTH;
-
+        this.ctx.lineCap = 'round';
         //10mV/s:
         let point =
           ((data[i] * objPosition.height) / baseScale.deltaMain) *
@@ -230,7 +267,7 @@ class DrawECGCanvas extends GenericCanvas {
         //Positions:
         latestPosition = startY - point;
         //25mm/s:
-        time += this.configuration.TEMPO; //25mm/s Each square is 1 mm
+        time += this.configuration.TIME; //25mm/s Each square is 1 mm
         i++;
 
         //Reset to 0, complete width draw and repeat secuency:

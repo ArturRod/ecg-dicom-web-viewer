@@ -14,11 +14,9 @@
   font-weight: 700;
   color: #000000;
 }
-
 .divTableCell i {
   font-weight: normal;
 }
-
 .divTableHeading {
   background-color: #eee;
   display: table-header-group;
@@ -36,9 +34,6 @@
   display: table;
   padding: 10px;
 }
-.divTableCell .i {
-  font-weight: normal;
-}
 
 /** Buttons **/
 .toolsECG {
@@ -47,12 +42,13 @@
   display: flow-root;
   border-top: 2px solid rgb(0, 0, 0);
 }
-.divAmplitude {
+.divTools {
   float: right;
   font-size: 13px;
   font-weight: 700;
+  margin-left: 1.5rem;
 }
-.divAmplitude i {
+.divTools i {
   font-weight: normal;
 }
 .button {
