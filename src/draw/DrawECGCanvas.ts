@@ -211,6 +211,7 @@ class DrawECGCanvas extends GenericCanvas {
       let data = [];
       let time = 0;
       let i = 0;
+      let positionMaxPointFrec = 0;
       //Reference to draw:
       let startY = objPosition.height;
       let startX = objPosition.width + this.margin; //Margin left and right to draw:
@@ -221,6 +222,13 @@ class DrawECGCanvas extends GenericCanvas {
       channel.samples.forEach((element) => {
         data.push(element);
       });
+
+      //Position for the max point data:
+      let maxPoint =  Math.max(...data);
+      while(data[positionMaxPointFrec] < maxPoint){
+        positionMaxPointFrec++;
+      }
+      i = positionMaxPointFrec;
 
       //Scale mV, uV. mmHg...
       switch (channel.channelDefinition.channelSensitivityUnits.codeValue) {
@@ -243,7 +251,6 @@ class DrawECGCanvas extends GenericCanvas {
       if (startX != 10 + this.margin) {
         middleColum = 0;
       }
-
       //Draw line:
       while (i < data.length && time < this.canvas.width / 2 - middleColum) {
         //Line width:
@@ -270,9 +277,9 @@ class DrawECGCanvas extends GenericCanvas {
         time += this.configuration.TIME; //25mm/s Each square is 1 mm
         i++;
 
-        //Reset to 0, complete width draw and repeat secuency:
+        //Reset to start position, complete width draw and repeat secuency:
         if (i == data.length) {
-          i = 0;
+          i = positionMaxPointFrec - Math.round(positionMaxPointFrec * 0.05); //start - 5%
         }
       }
     });
