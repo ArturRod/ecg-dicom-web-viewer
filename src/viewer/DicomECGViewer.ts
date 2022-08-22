@@ -90,16 +90,20 @@ class DicomECGViewer {
     '<div class="toolsECG">' +
     '<div class="divTools">' +
         '<b>TIME: </b><i id="textTime"> 25mm/s </i>' +
-        '<button class="button" id="timeLeft">&#8592</button>' +
-        '<button class="button" id="timeRight">&#8594</button>' +
+        '<button id="timeLeft">&#8592</button>' +
+        '<button id="timeRight">&#8594</button>' +
       '</div>'+
       '<div class="divTools">' +
         '<b>AMPLITUDE: </b><i id="textAmplitude"> 10mm/mV </i>' +
-        '<button class="button" id="amplitudeDown">&#8595</button>' +
-        '<button class="button" id="amplitudeUp">&#8593</button>' +
+        '<button id="amplitudeDown">&#8595</button>' +
+        '<button id="amplitudeUp">&#8593</button>' +
       '</div>'+
     '</div>' +
-    '<canvas id="' + this.idView + this.nameView + '" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000;"></canvas>';
+    '<canvas id="' + this.idView + this.nameView + '" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000;"></canvas>' +
+    '<div id="zoomButons">'+
+      '<button id="plus">+</button>' +
+      '<button id="minus">-</button>'+
+    '</div>';
 
     document.getElementById(this.idView).innerHTML = view;
   }

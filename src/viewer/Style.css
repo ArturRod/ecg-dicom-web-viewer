@@ -51,9 +51,27 @@
 .divTools i {
   font-weight: normal;
 }
-.button {
+.divTools button {
   background-color: #dadada;
   color: black;
   padding: 5px 15px;
   margin: 4px 2px;
+  border-radius: 10%;
+}
+
+/*Zoom buttons*/
+#zoomButons {
+  position: absolute;
+  width: 30px;
+  top: 135px;
+  right: 2px;
+}
+
+#zoomButons button {
+  background-color: #dadada;
+  color: black;
+  padding: 5px;
+  width: 30px;
+  margin: 0px 0px 2px 0px;
+  border-radius: 10%;
 }

@@ -5,9 +5,10 @@ import GenericCanvas from "./GenericCanvas";
  * Draw grid canvas template.
  */
 class DrawECGCanvas extends GenericCanvas {
-  public margin = 25; //Margin to draw elements.
+  private margin = 25; //Margin to draw elements.
   private changeValues = 0.05; //Value of change up down, left o right graph.
-
+  private countZoom = 0; //Count zoom.
+  
   constructor(id_canvas: string, dataMg: any) {
     super(id_canvas, dataMg);
   }
@@ -53,6 +54,38 @@ class DrawECGCanvas extends GenericCanvas {
     buttonTempoUp.addEventListener('click', () => this.changeTempo(true));
     let buttonTempoDown = document.getElementById('timeRight');
     buttonTempoDown.addEventListener('click', () => this.changeTempo(false));
+
+    //Zoom:
+    let buttonZoomMax = document.getElementById("plus");
+    buttonZoomMax.addEventListener("click", () => this.changeZoom(false));
+    let buttonZoomMin = document.getElementById("minus");
+    buttonZoomMin.addEventListener("click", () => this.changeZoom(true));
+  }
+
+
+  /**
+   * Change zoom, scale canvas.
+   * @param min minimize or maximize
+   */
+  private changeZoom(min: boolean){
+    //Zoom:
+    let scale = 1.0;
+    let scaleMultiplier = 0.8;
+    if(min){
+      scale *= scaleMultiplier;
+      this.countZoom--;
+    }
+    else{
+      scale /= scaleMultiplier;
+      this.countZoom++;
+    }
+    //Max undefinded and min zoom = zoom base:
+    if(this.countZoom >= 0){
+      this.clearAndUpdateView(scale);
+    }
+    else{
+      this.countZoom = 0;
+    }
   }
 
   /**
@@ -72,11 +105,7 @@ class DrawECGCanvas extends GenericCanvas {
     if(ampli <= 1.0 && ampli >= this.changeValues){
       //Change amplitude:
       this.amplitude = ampli;
-      //Clear ecg:
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      //New draw:
-      this.drawGrid();
-      this.drawECG();
+      this.clearAndUpdateView(null);
 
       //Update text:
       let text = document.getElementById('textAmplitude');
@@ -101,16 +130,27 @@ class DrawECGCanvas extends GenericCanvas {
     if(time <= 1.0 && time >= this.changeValues){
       //Change amplitude:
       this.time = time;
-      //Clear ecg:
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      //New draw:
-      this.drawGrid();
-      this.drawECG();
+      this.clearAndUpdateView(null);
 
       //Update text:
       let text = document.getElementById('textTime');
       text.innerText = " " + Math.round(time * 100) + "mm/s "
     }
+  }
+
+
+  /**
+   * Clear and Update view.
+   */
+  private clearAndUpdateView(scale){
+    //Clear ecg:
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    if(scale != null){
+      this.ctx.scale(scale, scale);
+    }
+    //New draw:
+    this.drawGrid();
+    this.drawECG();
   }
 
   //#endregion
