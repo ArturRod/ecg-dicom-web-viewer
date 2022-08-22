@@ -49,8 +49,9 @@ class GenericCanvas {
     this.ctx = this.canvas.getContext("2d");
 
     //Canvas resize:
+    let restHeight = document.getElementById('divTableBody').clientHeight + document.getElementById('toolsECG').clientHeight;
     this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
+    this.canvas.height = window.innerHeight - restHeight; //Rest height information and buttons.
     this.canvas.style.width = "100%";
     this.canvas.style.height = "100%";
     this.canvas.width = Math.max(400, this.canvas.clientWidth);

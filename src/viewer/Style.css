@@ -27,7 +27,7 @@
   display: table-footer-group;
   font-weight: bold;
 }
-.divTableBody {
+#divTableBody {
   height: auto;
   background: #f9f8f2;
   width: 100%;
@@ -36,7 +36,7 @@
 }
 
 /** Buttons **/
-.toolsECG {
+#toolsECG {
   background: #f9f8f2;
   width: 100%;
   display: flow-root;

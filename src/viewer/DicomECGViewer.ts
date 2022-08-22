@@ -71,7 +71,7 @@ class DicomECGViewer {
     let view = "";
     document.getElementById(this.idView).innerHTML = view;
     view = 
-    '<div class="divTableBody">' +
+    '<div id="divTableBody">' +
       '<div class="divTableRow">' +
         '<div class="divTableCell">NAME: <i>' + name + "</i></div>" +
         '<div class="divTableCell">SEX: <i>' + sex + "</i></div>" +
@@ -87,7 +87,7 @@ class DicomECGViewer {
         '<div class="divTableCell">BIRTH: <i>' + birth + "</i></div>" +
       "</div>" +
     "</div>" + 
-    '<div class="toolsECG">' +
+    '<div id="toolsECG">' +
     '<div class="divTools">' +
         '<b>TIME: </b><i id="textTime"> 25mm/s </i>' +
         '<button id="timeLeft">&#8592</button>' +
