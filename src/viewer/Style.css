@@ -1,5 +1,7 @@
 /*Table Data Study*/
-
+#infoECG {
+  height: auto;
+}
 .divTableRow {
   display: table-row;
 }

@@ -53,7 +53,7 @@ class GenericCanvas {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight - restHeight; //Rest height information and buttons.
     this.canvas.style.width = "100%";
-    this.canvas.style.height = "100%";
+    this.canvas.style.height = "85%"; //Aprox infoECG 15%
     this.canvas.width = Math.max(400, this.canvas.clientWidth);
     this.canvas.height = this.canvas.clientHeight;
 

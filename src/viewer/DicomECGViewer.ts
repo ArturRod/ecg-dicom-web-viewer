@@ -71,35 +71,37 @@ class DicomECGViewer {
     let view = "";
     document.getElementById(this.idView).innerHTML = view;
     view = 
-    '<div id="divTableBody">' +
-      '<div class="divTableRow">' +
-        '<div class="divTableCell">NAME: <i>' + name + "</i></div>" +
-        '<div class="divTableCell">SEX: <i>' + sex + "</i></div>" +
-        '<div class="divTableCell">PATIENT SIZE: <i>' + size + "</i></div>" +
-      "</div>" +
-      '<div class="divTableRow">' +
-        '<div class="divTableCell">PATIENT ID: <i>' + id + "</i></div>" +
-        '<div class="divTableCell">PATIENT AGE: <i>' + age + "</i></div>" +
-        '<div class="divTableCell">PATIENT WEIGHT: <i>' + weight + "</i></div>" +
-      "</div>" +
-      '<div class="divTableRow">' +
-        '<div class="divTableCell">DATE: <i>' + study + "</i></div>" +
-        '<div class="divTableCell">BIRTH: <i>' + birth + "</i></div>" +
-      "</div>" +
-    "</div>" + 
-    '<div id="toolsECG">' +
-    '<div class="divTools">' +
-        '<b>TIME: </b><i id="textTime"> 25mm/s </i>' +
-        '<button id="timeLeft">&#8592</button>' +
-        '<button id="timeRight">&#8594</button>' +
-      '</div>'+
-      '<div class="divTools">' +
-        '<b>AMPLITUDE: </b><i id="textAmplitude"> 10mm/mV </i>' +
-        '<button id="amplitudeDown">&#8595</button>' +
-        '<button id="amplitudeUp">&#8593</button>' +
-      '</div>'+
-    '</div>' +
-    '<canvas id="' + this.idView + this.nameView + '" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000;"></canvas>' +
+    '<div id="infoECG">' +
+      '<div id="divTableBody">' +
+        '<div class="divTableRow">' +
+          '<div class="divTableCell">NAME: <i>' + name + "</i></div>" +
+          '<div class="divTableCell">SEX: <i>' + sex + "</i></div>" +
+          '<div class="divTableCell">PATIENT SIZE: <i>' + size + "</i></div>" +
+        "</div>" +
+        '<div class="divTableRow">' +
+          '<div class="divTableCell">PATIENT ID: <i>' + id + "</i></div>" +
+          '<div class="divTableCell">PATIENT AGE: <i>' + age + "</i></div>" +
+          '<div class="divTableCell">PATIENT WEIGHT: <i>' + weight + "</i></div>" +
+        "</div>" +
+        '<div class="divTableRow">' +
+          '<div class="divTableCell">DATE: <i>' + study + "</i></div>" +
+          '<div class="divTableCell">BIRTH: <i>' + birth + "</i></div>" +
+        "</div>" +
+      "</div>" + 
+      '<div id="toolsECG">' +
+        '<div class="divTools">' +
+          '<b>TIME: </b><i id="textTime"> 25mm/s </i>' +
+          '<button id="timeLeft">&#8592</button>' +
+          '<button id="timeRight">&#8594</button>' +
+        '</div>'+
+        '<div class="divTools">' +
+          '<b>AMPLITUDE: </b><i id="textAmplitude"> 10mm/mV </i>' +
+          '<button id="amplitudeDown">&#8595</button>' +
+          '<button id="amplitudeUp">&#8593</button>' +
+        '</div>'+
+      '</div>' +
+    '</div>' + 
+    '<canvas id="' + this.idView + this.nameView + '" style="border-top: 2px solid #000000;"></canvas>' +
     '<div id="zoomButons">'+
       '<button id="plus">+</button>' +
       '<button id="minus">-</button>'+
