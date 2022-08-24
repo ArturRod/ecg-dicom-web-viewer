@@ -1,0 +1,80 @@
+/*Table Data Study*/
+#infoECG {
+  height: auto;
+}
+.divTableRow {
+  display: table-row;
+}
+.divTableHeading {
+  background-color: #eee;
+  display: table-header-group;
+}
+.divTableCell,
+.divTableHead {
+  display: table-cell;
+  font-size: 13px;
+  font-weight: 700;
+  color: #000000;
+}
+.divTableCell i {
+  font-weight: normal;
+}
+.divTableHeading {
+  background-color: #eee;
+  display: table-header-group;
+  font-weight: bold;
+}
+.divTableFoot {
+  background-color: #eee;
+  display: table-footer-group;
+  font-weight: bold;
+}
+#divTableBody {
+  height: auto;
+  background: #f9f8f2;
+  width: 100%;
+  display: table;
+  padding: 10px;
+}
+
+/** Buttons **/
+#toolsECG {
+  background: #f9f8f2;
+  width: 100%;
+  display: flow-root;
+  border-top: 2px solid rgb(0, 0, 0);
+}
+.divTools {
+  float: right;
+  font-size: 13px;
+  font-weight: 700;
+  margin-left: 1.5rem;
+}
+.divTools i {
+  font-weight: normal;
+}
+.divTools button {
+  background-color: #dadada;
+  color: black;
+  padding: 5px 15px;
+  margin: 4px 2px;
+  border-radius: 10%;
+}
+
+/*Zoom buttons*/
+#zoomButons {
+  position: absolute;
+  width: 30px;
+  top: 125px;
+  right: 2px;
+}
+
+#zoomButons button {
+  background-color: #dadada;
+  color: black;
+  padding: 5px;
+  width: 30px;
+  height: 30px;
+  margin: 0px 0px 2px 0px;
+  border-radius: 10%;
+}
