@@ -324,16 +324,18 @@ class DrawECGCanvas extends GenericCanvas {
           break;
       }
 
-      //Colum calculator:
-      let middleColum = startX + this.margin; // Margin Right.
+      //Colum calculator margins left and right:
+      let space = this.canvas.width / 2 - (startX + this.margin);
       if (startX != 10 + this.margin) {
-        middleColum = 0;
+        space = (this.canvas.width / 2) - (this.margin + 10);
       }
+
+      //Line options:
+      this.ctx.lineWidth = this.configuration.CURVE_WIDTH;
+      this.ctx.lineCap = 'round';
+      
       //Draw line:
-      while (i < data.length && time < this.canvas.width / 2 - middleColum) {
-        //Line width:
-        this.ctx.lineWidth = this.configuration.CURVE_WIDTH;
-        this.ctx.lineCap = 'round';
+      while (i < data.length && time < space) {
         //10mV/s:
         let point =
           ((data[i] * objPosition.height) / baseScale.deltaMain) *
