@@ -21,34 +21,22 @@ npm install --save ecg-dicom-web-viewer
 ```js
 // Import
 import {
-  ReadECGData,
-  DrawGraphs,
-  Constants,
-  DicomECGViewer,
+  ReadECGData, //Optional.
+  Constants, //Optional.
+  DicomECGViewer, //Principal.
 } from "ecg-dicom-web-viewer";
 ```
 
 2. Instantiate the new class with the necessary data and create the view.
 
 ```js
-//User data (optional)
-let userData = {
-  NAME: name,
-  SEX: sex,
-  DATE: date,
-  PATIENT_ID: patientID,
-  DESCRIPTION: desciption,
-  BIRTH: birth,
-};
-
 //Load view:
 let viewer = new DicomECGViewer(
   byteArray, //Data array ECG (XMLHttpRequest response array or...local open data)
   divView, //Div where to draw the view
-  userData, //Optional
   viewportIndex //View number, since you can have several views.
 );
-viewer.createView(); // Create graph.
+viewer.loadCanvas(); // Load canvas view.
 ```
 
 ## Result
@@ -66,38 +54,30 @@ Currently it works:</br>
   <li><strong>HemodynamicWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.2.1', --> YES</strong></li>
 </ul>
 The next available classes are as follows:
+<li><strong>Class DicomECGViewer</strong></li>
+  <h6> - <strong>constructor(dataDICOMarrayBuffer, idView, nameView)</strong></h4>
+  <p><strong>dataDICOMarrayBuffer</strong> DICOM DCM ECG Array Buffer.</p>
+  <p><strong>idView</strong> Draw ID View. Recomended a div.</p>
+  <p><strong>nameView</strong> Identifier of the view you want to put, in case you have several views, default 0.</p>
+  <h6> - <strong>loadCanvas()</strong></h4>
+  <p>Main method, draws the canvas and its entire view.</p>
 <li><strong>Class ReadECGData</strong></li>
   <h6> - <strong>readData(dataSet)</strong></h4>
   <p>Receives a dataSet data structure and returns a readable array.</p>
   <h6> - <strong>getDataSet(dataDICOMarrayBuffer)</strong></h4>
   <p>Read the arraydicombuffer and return dataSet.</p>
-<li><strong>Class DrawGraphs</strong></li>
-  <h6> - <strong>drawData()</strong></h6>
-  <p>Allows you to draw the ECG graph.</p>
-  <h6> - <strong>noCompatible()</strong></h6>
-  <p>If the ECG is not compatible it will draw an incompatibility view.</p>
-  <h6> - <strong>drawLoader() & removeLoader()</strong></h6>
-  <p>Draw or erase a spinner while loading data.</p>
-  <h6> - <strong>addDOMChart()</strong></h6>
-  <p>Draws the data structure in the DOM.</p>
-  <h6> - <strong>drawLine()</strong></h6>
-  <p>Draw the lines of the ECG.</p>
-  <h6> - <strong>bindChart(chartId, channelData, yAxis)</strong></h6>
-  <p>Create and generate the line with the c3 library.</p>
 <li><strong>Static Constants</strong></li>
   <p>SOP UID of ECG types and graph measurements.</p>
-<li><strong>Class DicomECGViewer</strong></li>
-  <h6> - <strong>constructor(dataDICOMarrayBuffer, canvas, patientData, nameView)</strong></h4>
-  <p><strong>dataDICOMarrayBuffer</strong> DICOM DCM ECG Array Buffer.</p>
-  <p><strong>canvas</strong> Draw ID View.</p>
-  <p><strong>patientData</strong> Patient Data, default null: patientData = { NAME, PATIENT_ID, BIRTH, SEX, DATE, DESCRIPTION }</p>
-  <p><strong>nameView</strong> Identifier of the view you want to put, in case you have several views, default 0.</p>
-  <h6> - <strong>createView()</strong></h4>
-  <p>Creates the ECG view from the data passed to it in the constructor.This is the main method to use in your project.</p>
-  <h6> - <strong>loadInstance()</strong></h4>
-  <p>Load the view according to the SOP UID.</p>
-  
+  <p>ECG references, maximum and minimum amplitudes.</p>
+<li><strong>Class GenericCanvas</strong></li>
+  <p>It is the generic class for the canvas, it contains the values ​​of the number of views, canvas size, rows, columns, grid size...</p>
+<li><strong>Class DrawECGCanvas extends GenericCanvas</strong></li>
+  <p>This class renders the data, both the grid and the view, it also contains the button events.</p>
+
 ## Features
+
 <ul>
-  <li><strong>Generate the graph instead of using the c3 library (since it takes time to load), generate a canvas with the most personalized graph and actions such as scrolling or others.
-Calibrate Sop12LeadECGWaveformStorage and GeneralECGWaveformStorage to make it look good.
+  <li><strong>Display more information such as beats per minute.</strong></li>
+  <li><strong>Improve canvas scrolling performance.</strong></li>
+  <li><strong>Support SOP AmbulatoryECGWaveformStorage.</strong></li>
+</ul>

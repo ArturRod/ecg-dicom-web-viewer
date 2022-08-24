@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.0](https://github.com/ArturRod/ecg-dicom-web-viewer) (2022-08-24)
+
+**Note:** The view and rendering with canvas is implemented. This allows to change the amplitude and the time (mm/mV, mm/s) It is also allowed to pan, and zoom.
+Rendering is faster and allows more options for the future. The project is passed to Typescript.
+
 ## [1.0.6](https://github.com/ArturRod/ecg-dicom-web-viewer) (2022-08-09)
 
 **Note:** It is no longer necessary to pass the user data, these will be read from the arraybyte file itself.

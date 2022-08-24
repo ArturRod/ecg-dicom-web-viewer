@@ -25,10 +25,10 @@ class DicomECGViewer {
     this.nameView = nameView;
   }
 
-/**
+  /**
    * Load canvas data.
    */
-  loadCanvas() {
+  public loadCanvas() {
     try{
       //DataSet:
       let dataSet = ReadECGData.getDataSet(this.dataDICOMarrayBuffer);
@@ -67,7 +67,7 @@ class DicomECGViewer {
   /**
    * Create struct of view.
    */
-  loadCanvasDOM(name, id, sex, birth, study, age, size, weight) {
+  private loadCanvasDOM(name, id, sex, birth, study, age, size, weight) {
     let view = "";
     document.getElementById(this.idView).innerHTML = view;
     view = 
