@@ -20,6 +20,13 @@ class DrawECGCanvas extends GenericCanvas {
   
   constructor(id_canvas: string, dataMg: any) {
     super(id_canvas, dataMg);
+    //Reset values pan:
+    pan.start.x = null;
+    pan.start.y = null;
+    pan.offset.x = 0;
+    pan.offset.y = 0;
+    pan.globaloffset.x = 0;
+    pan.globaloffset.y = 0;
     //Event buttons:
     this.buttonsEvents();
   }
