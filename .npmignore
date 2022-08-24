@@ -3,3 +3,4 @@ src
 example
 .webpack
 .gitignore
+tsconfig.json
