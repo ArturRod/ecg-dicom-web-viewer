@@ -1,30 +1,48 @@
 import Constants from "../constants/Constants";
 import GenericCanvas from "./GenericCanvas";
 
+//Global variable for pan and drag:
+//The global variable is necessary since we have to remove an event listener that we call from 2 places in the same class.
+var pan = {
+  start: { x: null, y: null, },
+  offset: { x: 0, y: 0, },
+  globaloffset: { x: 0, y: 0,},
+};
+
 /**
  * Draw grid canvas template.
  */
 class DrawECGCanvas extends GenericCanvas {
   private margin = 25; //Margin to draw elements.
   private changeValues = 0.05; //Value of change up down, left o right graph.
-  private countZoom = 0; //Count zoom.
+  private scale	= 1;
+  private scaleFactor = 0.8;
   
   constructor(id_canvas: string, dataMg: any) {
     super(id_canvas, dataMg);
+    //Event buttons:
+    this.buttonsEvents();
   }
 
   //--------------------------------------------------------
   //------------------ DRAW AND EVENTS ---------------------
   //--------------------------------------------------------
  //#region DRAW AND EVENTS:
+
   /**
-   * Draw grid and views:
+   * Draw grid and views.
+   * We don't put requestAnimationFrame since it only renders when we zoom, redraw or move, that's why I don't put the method to be loading all the time without need.
    */
-  public draw(){
+  public draw(){      
+    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    //Zoom:
+    this.ctx.scale(this.scale, this.scale);
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    //Pan:
+    this.ctx.translate(pan.offset.x, pan.offset.y);
+    //Draw:
     this.drawGrid();
     this.drawECG();
-    //Event buttons:
-    this.buttonsEvents();
   }
 
   /**
@@ -60,8 +78,46 @@ class DrawECGCanvas extends GenericCanvas {
     buttonZoomMax.addEventListener("click", () => this.changeZoom(false));
     let buttonZoomMin = document.getElementById("minus");
     buttonZoomMin.addEventListener("click", () => this.changeZoom(true));
+
+    //Drag/Pan:
+    this.canvas.addEventListener('mousedown', (e)=> this.startPan(e));
+    this.canvas.addEventListener('mouseleave',()=> this.endPan());
+    this.canvas.addEventListener('mouseup', ()=> this.endPan());
   }
 
+  /**
+   * Start pan.
+   * @param e event.
+   */
+  private startPan(e){
+    this.canvas.addEventListener("mousemove", this.trackMouse);    
+    this.canvas.addEventListener("mousemove", ()=> this.draw());    
+    pan.start.x = e.clientX;
+    pan.start.y = e.clientY;
+  }
+  
+
+  /**
+   * End pan.
+   */
+  private endPan(){
+    this.canvas.removeEventListener("mousemove", this.trackMouse);    
+    pan.start.x = null;
+    pan.start.y = null;
+    pan.globaloffset.x = pan.offset.x;
+    pan.globaloffset.y = pan.offset.y;
+  }
+
+  /**
+   * Track mose x & y.
+   * @param e event.
+   */
+  private trackMouse(e) {
+    var offsetX	 = e.clientX - pan.start.x;
+    var offsetY	 = e.clientY - pan.start.y;
+    pan.offset.x = pan.globaloffset.x + offsetX;
+    pan.offset.y = pan.globaloffset.y + offsetY;    
+  }
 
   /**
    * Change zoom, scale canvas.
@@ -69,22 +125,18 @@ class DrawECGCanvas extends GenericCanvas {
    */
   private changeZoom(min: boolean){
     //Zoom:
-    let scale = 1.0;
-    let scaleMultiplier = 0.8;
     if(min){
-      scale *= scaleMultiplier;
-      this.countZoom--;
+      this.scale *= this.scaleFactor;
     }
     else{
-      scale /= scaleMultiplier;
-      this.countZoom++;
+      this.scale /= this.scaleFactor;
     }
     //Max undefinded and min zoom = zoom base:
-    if(this.countZoom >= 0){
-      this.clearAndUpdateView(scale);
+    if(this.scale <= 1){
+      this.scale = 1;
     }
     else{
-      this.countZoom = 0;
+      this.draw();
     }
   }
 
@@ -105,7 +157,7 @@ class DrawECGCanvas extends GenericCanvas {
     if(ampli <= 1.0 && ampli >= this.changeValues){
       //Change amplitude:
       this.amplitude = ampli;
-      this.clearAndUpdateView(null);
+      this.draw();
 
       //Update text:
       let text = document.getElementById('textAmplitude');
@@ -130,7 +182,7 @@ class DrawECGCanvas extends GenericCanvas {
     if(time <= 1.0 && time >= this.changeValues){
       //Change amplitude:
       this.time = time;
-      this.clearAndUpdateView(null);
+      this.draw();
 
       //Update text:
       let text = document.getElementById('textTime');
@@ -138,20 +190,6 @@ class DrawECGCanvas extends GenericCanvas {
     }
   }
 
-
-  /**
-   * Clear and Update view.
-   */
-  private clearAndUpdateView(scale){
-    //Clear ecg:
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    if(scale != null){
-      this.ctx.scale(scale, scale);
-    }
-    //New draw:
-    this.drawGrid();
-    this.drawECG();
-  }
 
   //#endregion
 
@@ -200,12 +238,12 @@ class DrawECGCanvas extends GenericCanvas {
 
   //Draw I, II, III, aVR, aVL, aVF, V1, V2, V3, V4, V5, V6
   private drawECGIndicators() {
-    let h = this.canvas.height;
     let gridWidth = this.canvas.width / this.configuration.COLUMNS;
-    let gridHeight = h / this.configuration.ROWS;
+    let gridHeight = this.canvas.height / this.configuration.ROWS;
     let marginWidth = 10;
     this.ctx.font = "small-caps 800 25px Times New Roman";
-
+    //Inicialize array:
+    this.positionsDraw = new Array();
     //COLUMNS:
     for (let e = 0; e < this.configuration.COLUMNS; e++) {
       let middleHeight = gridHeight / 2;
@@ -323,6 +361,8 @@ class DrawECGCanvas extends GenericCanvas {
         }
       }
     });
+    //Clear data:
+    this.positionsDraw = null;
   }
 
   //#endregion

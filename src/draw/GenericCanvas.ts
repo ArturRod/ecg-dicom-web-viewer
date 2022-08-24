@@ -54,8 +54,6 @@ class GenericCanvas {
     this.canvas.height = window.innerHeight - restHeight; //Rest height information and buttons.
     this.canvas.style.width = "100%";
     this.canvas.style.height = "85%"; //Aprox infoECG 15%
-    this.canvas.width = Math.max(400, this.canvas.clientWidth);
-    this.canvas.height = this.canvas.clientHeight;
 
     //Color canvas:
     this.canvas.style.backgroundColor = this.configuration.BACKGROUND_COLOR;
@@ -66,8 +64,6 @@ class GenericCanvas {
     //Frequency data dcm:
     this.configuration.FREQUENCY = dataMg.samplingFrequency;
 
-    //Star Array:
-    this.positionsDraw = new Array();
   }
   
   /**
