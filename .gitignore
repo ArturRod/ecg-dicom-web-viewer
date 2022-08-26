@@ -1,2 +1,5 @@
+## Directories
 node_modules
-dist
+
+## Output
+dist/
