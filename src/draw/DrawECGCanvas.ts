@@ -13,7 +13,7 @@ var pan = {
  * Draw grid canvas template.
  */
 class DrawECGCanvas extends GenericCanvas {
-  private margin = 25; //Margin to draw elements.
+  private margin = 20; //Margin to draw elements.
   private changeValues = 0.05; //Value of change up down, left o right graph.
   private scale	= 1;
   private scaleFactor = 0.8;
@@ -127,16 +127,22 @@ class DrawECGCanvas extends GenericCanvas {
   }
 
   /**
-   * Change zoom, scale canvas.
+   * Change zoom, scale canvas, and adjust line stroke.
    * @param min minimize or maximize
    */
   private changeZoom(min: boolean){
     //Zoom:
     if(min){
       this.scale *= this.scaleFactor;
+      if(this.configuration.CURVE_WIDTH < 1.5 && this.scale < 3.80){
+        this.configuration.CURVE_WIDTH += 0.2;
+      }
     }
     else{
       this.scale /= this.scaleFactor;
+      if(this.configuration.CURVE_WIDTH > 0.5) {   
+        this.configuration.CURVE_WIDTH -= 0.2;
+      }
     }
     //Max undefinded and min zoom = zoom base:
     if(this.scale <= 1){
