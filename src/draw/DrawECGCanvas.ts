@@ -294,7 +294,9 @@ class DrawECGCanvas extends GenericCanvas {
     this.dataMg.channels.forEach((channel) => {
       //code:
       let code =
-        channel.channelDefinition.channelSource.codeMeaning.split(" ")[1];
+        channel.channelDefinition.channelSource.codeMeaning.split(" ").length === 2 ?
+        channel.channelDefinition.channelSource.codeMeaning.split(" ")[1] : 
+        channel.channelDefinition.channelSource.codeMeaning.split(" ")[0];
       let objPosition = this.positionsDraw.find((obj) => {
         return obj.name === code;
       });
