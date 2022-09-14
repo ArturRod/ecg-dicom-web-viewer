@@ -7,3 +7,4 @@ example/
 ## Root Files
 .gitignore
 tsconfig.json
+CONTRIBUTING.md
