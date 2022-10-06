@@ -2,6 +2,8 @@ import Constants from "../constants/Constants";
 import ReadECGData from "../utils/ReadECGData";
 import DrawECGCanvas from "../draw/DrawECGCanvas";
 import './Style.css';
+import * as DOMPurify from 'dompurify';
+
 /**
  * Principal Class to render ECG viewer.
  */
@@ -21,8 +23,9 @@ class DicomECGViewer {
     nameView: "0"
   ) {
     this.dataDICOMarrayBuffer = dataDICOMarrayBuffer;
-    this.idView = idView;
-    this.nameView = nameView;
+    //Sanitize string for posivility attacks XSS:
+    this.idView = DOMPurify.sanitize(idView);
+    this.nameView = DOMPurify.sanitize(nameView);
   }
 
   /**

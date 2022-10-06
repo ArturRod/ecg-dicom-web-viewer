@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2](https://github.com/ArturRod/ecg-dicom-web-viewer) (2022-10-06)
+
+**Note:** The DOMPurify library is implemented to prevent XSS attacks on data entry idView and nameView.
+
 ## [2.0.1](https://github.com/ArturRod/ecg-dicom-web-viewer) (2022-08-24)
 
 **Note:** Repair bug -> https://github.com/ArturRod/ecg-dicom-web-viewer/issues/2
