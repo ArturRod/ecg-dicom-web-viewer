@@ -37,6 +37,7 @@ const SOP_CLASS_UIDS = {
   GeneralECGWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.1.2',  //YES
   AmbulatoryECGWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.1.3', //NO
   HemodynamicWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.2.1', //YES
+  CardiacElectrophysiologyWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.2.1', //YES
 };
 
 export default { uV, mV, mmHg, def, SOP_CLASS_UIDS };

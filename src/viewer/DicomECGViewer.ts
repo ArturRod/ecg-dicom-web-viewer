@@ -1,6 +1,7 @@
 import Constants from "../constants/Constants";
 import ReadECGData from "../utils/ReadECGData";
 import DrawECGCanvas from "../draw/DrawECGCanvas";
+import ReadECG from "../utils/ReadECG"; //Development
 import './Style.css';
 import * as DOMPurify from 'dompurify';
 
@@ -29,8 +30,97 @@ class DicomECGViewer {
   }
 
   /**
-   * Load canvas data.
+   * Development new read and render.
    */
+/*
+  public loadCanvas(){
+    debugger;
+    let readECG = new ReadECG(this.dataDICOMarrayBuffer, '');
+    if(readECG != null){
+      let opts = {
+        speed: 25,
+        amplitude: 5,
+        applyLowPassFilter: true,
+      };
+      readECG.setOpts(opts);
+      let waveform = readECG.getWaveform(opts);
+      let waveinformation = readECG.getInfo(opts);
+
+      //Load canvas structure:
+      if(waveform != null && waveinformation != null){
+        let information = {
+          Name: readECG.elements.PatientName,
+          Sex: readECG.elements.Sex,
+          Size: readECG.elements.PatientSize,
+          Id: readECG.elements.PatientID,
+          Age: readECG.elements.PatientAge,
+          Weight: readECG.elements.PatientWeight,
+          Date: readECG.elements.StudyDate,
+          Birth: readECG.elements.PatientBirthDate,
+          Duration: waveinformation[10].value + waveinformation[10].unit,
+          BPM: waveinformation[8].value,
+        }
+        this.loadCanvasDOM(information);
+      }
+    }
+    else{
+
+    }
+  }
+
+
+   /**
+   * Create struct of view.
+   
+   private loadCanvasDOM(information) {
+    let view = "";
+    document.getElementById(this.idView).innerHTML = view;
+    view = 
+    '<div id="infoECG">' +
+      '<div id="divTableBody">' +
+        '<div class="divTableRow">' +
+          '<div class="divTableCell">NAME: <i>' + information.Name + "</i></div>" +
+          '<div class="divTableCell">SEX: <i>' + information.Sex + "</i></div>" +
+          '<div class="divTableCell">PATIENT SIZE: <i>' + information.Size + "</i></div>" +
+          '<div class="divTableCell">BPM: <i>' + information.BPM + "</i></div>" +
+        "</div>" +
+        '<div class="divTableRow">' +
+          '<div class="divTableCell">PATIENT ID: <i>' + information.Id + "</i></div>" +
+          '<div class="divTableCell">PATIENT AGE: <i>' + information.Age + "</i></div>" +
+          '<div class="divTableCell">PATIENT WEIGHT: <i>' + information.Weight + "</i></div>" +
+        "</div>" +
+        '<div class="divTableRow">' +
+          '<div class="divTableCell">DATE: <i>' + information.Date + "</i></div>" +
+          '<div class="divTableCell">BIRTH: <i>' + information.Birth + "</i></div>" +
+          '<div class="divTableCell">DURATION: <i>' + information.Duration + "</i></div>" +
+        "</div>" +
+      "</div>" + 
+      '<div id="toolsECG">' +
+        '<div class="divTools">' +
+          '<b>TIME: </b><i id="textTime"> 25mm/s </i>' +
+          '<button id="timeLeft">&#8592</button>' +
+          '<button id="timeRight">&#8594</button>' +
+        '</div>'+
+        '<div class="divTools">' +
+          '<b>AMPLITUDE: </b><i id="textAmplitude"> 10mm/mV </i>' +
+          '<button id="amplitudeDown">&#8595</button>' +
+          '<button id="amplitudeUp">&#8593</button>' +
+        '</div>'+
+      '</div>' +
+    '</div>' + 
+    '<canvas id="' + this.idView + this.nameView + '" style="border-top: 2px solid #000000;"></canvas>' +
+    '<div id="zoomButons">'+
+      '<button id="plus">+</button>' +
+      '<button id="minus">-</button>'+
+    '</div>';
+
+    document.getElementById(this.idView).innerHTML = view;
+  }
+*/
+
+  /**
+   * Load canvas data.
+  */
   public loadCanvas() {
     try{
       //DataSet:
@@ -69,7 +159,7 @@ class DicomECGViewer {
 
   /**
    * Create struct of view.
-   */
+  */
   private loadCanvasDOM(name, id, sex, birth, study, age, size, weight) {
     let view = "";
     document.getElementById(this.idView).innerHTML = view;

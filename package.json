@@ -22,13 +22,15 @@
   "keywords": [
     "DICOM",
     "ECG",
-    "MEDICAL"
+    "MEDICAL",
+    "DCMJS"
   ],
   "bugs": {
     "url": "https://github.com/ArturRod/ecg-dicom-web-viewer/issues"
   },
   "homepage": "https://github.com/ArturRod/ecg-dicom-web-viewer#readme",
   "dependencies": {
+    "dcmjs": "^0.29.6",
     "dicom-parser": "^1.8.21",
     "dompurify": "^3.0.3"
   },
