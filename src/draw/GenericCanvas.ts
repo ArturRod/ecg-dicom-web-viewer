@@ -63,7 +63,6 @@ class GenericCanvas {
 
     //Frequency data dcm:
     this.configuration.FREQUENCY = dataMg.samplingFrequency;
-
   }
   
   /**

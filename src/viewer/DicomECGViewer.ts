@@ -1,5 +1,4 @@
 import Constants from "../constants/Constants";
-import ReadECGData from "../utils/ReadECGData";
 import DrawECGCanvas from "../draw/DrawECGCanvas";
 import ReadECG from "../utils/ReadECG"; //Development
 import './Style.css';
@@ -32,22 +31,34 @@ class DicomECGViewer {
   /**
    * Development new read and render.
    */
-/*
   public loadCanvas(){
-    debugger;
-    let readECG = new ReadECG(this.dataDICOMarrayBuffer, '');
+    //Optiones default:
+    let opts = {
+      speed: 25, //Default
+      amplitude: 10, //Defualt
+      applyLowPassFilter: true,
+    };
+    let readECG = new ReadECG(this.dataDICOMarrayBuffer, '', opts);
+    //Correct data:
     if(readECG != null){
-      let opts = {
-        speed: 25,
-        amplitude: 5,
-        applyLowPassFilter: true,
-      };
-      readECG.setOpts(opts);
-      let waveform = readECG.getWaveform(opts);
-      let waveinformation = readECG.getInfo(opts);
+      let waveform = readECG.getWaveform();
+      let waveinformation = readECG.getInfo();
 
       //Load canvas structure:
       if(waveform != null && waveinformation != null){
+        //Duration:
+        let duration = waveinformation.find(o => o.key === 'Duration');
+        let durationText = '';
+        if(duration != undefined){
+          durationText = duration.value + duration.unit;
+        }
+        //BPM:
+        let bpm = waveinformation.find(o => o.key === 'VRate');
+        let bpmText = '';
+        if(bpm != undefined){
+          bpmText = bpm.value;
+        }
+
         let information = {
           Name: readECG.elements.PatientName,
           Sex: readECG.elements.Sex,
@@ -57,21 +68,25 @@ class DicomECGViewer {
           Weight: readECG.elements.PatientWeight,
           Date: readECG.elements.StudyDate,
           Birth: readECG.elements.PatientBirthDate,
-          Duration: waveinformation[10].value + waveinformation[10].unit,
-          BPM: waveinformation[8].value,
+          Duration: durationText,
+          BPM: bpmText
         }
+        //Load information:
         this.loadCanvasDOM(information);
+        //Draw ECG:
+        let ecgCanvas = new DrawECGCanvas(this.idView + this.nameView, waveform);
+        ecgCanvas.draw();
       }
     }
     else{
-
+      //ecgCanvas.drawNoCompatible();
     }
   }
 
 
    /**
    * Create struct of view.
-   
+   */
    private loadCanvasDOM(information) {
     let view = "";
     document.getElementById(this.idView).innerHTML = view;
@@ -116,11 +131,9 @@ class DicomECGViewer {
 
     document.getElementById(this.idView).innerHTML = view;
   }
-*/
 
   /**
    * Load canvas data.
-  */
   public loadCanvas() {
     try{
       //DataSet:
@@ -159,7 +172,6 @@ class DicomECGViewer {
 
   /**
    * Create struct of view.
-  */
   private loadCanvasDOM(name, id, sex, birth, study, age, size, weight) {
     let view = "";
     document.getElementById(this.idView).innerHTML = view;
@@ -202,6 +214,6 @@ class DicomECGViewer {
 
     document.getElementById(this.idView).innerHTML = view;
   }
-
+  */
 }
 export default DicomECGViewer;

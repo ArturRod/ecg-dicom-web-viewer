@@ -1,26 +1,36 @@
-//Development.
-//Part of the project code is implemented: (https://github.com/PantelisGeorgiadis/dcmjs-ecg) whose author is: (PantelisGeorgiadis)
-
 const dcmjs = require('dcmjs');
 const { DicomMetaDictionary, DicomMessage, ReadBufferStream, WriteBufferStream } = dcmjs.data;
 
 const RenderingDefaults = {
-    DefaultSpeed: 25.0,
-    DefaultAmplitude: 5.0,
+    DefaultSpeed: 25.0, //25mm/s
+    DefaultAmplitude: 10.0, //10mm/mV
 };
 
+/**
+ * ReadECG.
+ * --> https://dicom.nema.org/medical/dicom/current/output/html/part16.html
+ * --> https://dicom.nema.org/medical/dicom/2017e/output/chtml/part06/chapter_6.html
+ * Thanks to the author PantelisGeorgiadis in his project https://github.com/PantelisGeorgiadis/dcmjs-ecg since it is an adaptation of what has been done.
+ */
 class DicomEcg {
 	public transferSyntaxUid: any;
 	public elements: any;
-
+  public opts: {
+    speed: any,
+    amplitude: any,
+    applyLowPassFilter: any,
+  };
+  
   /**
    * Creates an instance of DicomEcg.
    * @constructor
    * @param {Object|ArrayBuffer} [elementsOrBuffer] - Dataset elements as object or encoded as a DICOM dataset buffer.
    * @param {string} [transferSyntaxUid] - Dataset transfer syntax.
+   * @param {Object} [opts] - Rendering options.
    */
-  constructor(elementsOrBuffer, transferSyntaxUid) {
-
+  constructor(elementsOrBuffer, transferSyntaxUid, opts) {
+    //Load options:
+    this._setOpts(opts);
     this.transferSyntaxUid = transferSyntaxUid || '1.2.840.10008.1.2';
     if (elementsOrBuffer instanceof ArrayBuffer) {
       if (transferSyntaxUid) {
@@ -101,18 +111,19 @@ class DicomEcg {
     /**
      * Load options.
      * @method
+     * @private
      */
-    setOpts(opts){
-        opts = opts || {};
-        opts.speed = opts.speed || RenderingDefaults.DefaultSpeed;
-        opts.amplitude = opts.amplitude || RenderingDefaults.DefaultAmplitude;
-        opts.applyLowPassFilter = opts.applyLowPassFilter || false;
+    _setOpts(opts){
+        this.opts = opts || {};
+        this.opts.speed = opts.speed || RenderingDefaults.DefaultSpeed;
+        this.opts.amplitude = opts.amplitude || RenderingDefaults.DefaultAmplitude;
+        this.opts.applyLowPassFilter = opts.applyLowPassFilter || false;
 
         if (opts.millimeterPerSecond) {
-            opts.speed = opts.millimeterPerSecond;
+          this.opts.speed = opts.millimeterPerSecond;
         }
         if (opts.millimeterPerMillivolt) {
-            opts.amplitude = opts.millimeterPerMillivolt;
+          this.opts.amplitude = opts.millimeterPerMillivolt;
         }
     }
 
@@ -121,20 +132,9 @@ class DicomEcg {
    * @method
    * @returns {Waveform} DICOM Waveform.
    */
-  getWaveform(opts) {
-    opts = opts || {};
-    opts.speed = opts.speed || RenderingDefaults.DefaultSpeed;
-    opts.amplitude = opts.amplitude || RenderingDefaults.DefaultAmplitude;
-    opts.applyLowPassFilter = opts.applyLowPassFilter || false;
-
-    if (opts.millimeterPerSecond) {
-      opts.speed = opts.millimeterPerSecond;
-    }
-    if (opts.millimeterPerMillivolt) {
-      opts.amplitude = opts.millimeterPerMillivolt;
-    }
+  getWaveform() {
     // Extract waveform
-    const waveform = this._extractWaveform(opts);
+    const waveform = this._extractWaveform();
     return waveform;
   }
 
@@ -143,8 +143,8 @@ class DicomEcg {
    * @method
    * @returns {WaveformInfo} DICOM Waveform.
    */
-  getInfo(opts) {
-    const waveform = this.getWaveform(opts);
+  getInfo() {
+    const waveform = this.getWaveform();
       // Extract waveform info
     const info = this._extractInformation(waveform);
 
@@ -161,8 +161,8 @@ class DicomEcg {
       value: waveform.samples / waveform.samplingFrequency,
       unit: 'sec',
     });
-    info.push({ key: 'Speed', value: opts.speed, unit: 'mm/sec' });
-    info.push({ key: 'Amplitude', value: opts.amplitude, unit: 'mm/mV' });
+    info.push({ key: 'Speed', value: this.opts.speed, unit: 'mm/sec' });
+    info.push({ key: 'Amplitude', value: this.opts.amplitude, unit: 'mm/mV' });
     return info;
   }
 
@@ -221,13 +221,11 @@ class DicomEcg {
    * Extracts waveform.
    * @method
    * @private
-   * @param {Object} [opts] - Rendering options.
-   * @param {boolean} [opts.applyLowPassFilter] - Apply a Butterworth low pass filter with 40Hz cut off frequency.
    * @returns {Object} Waveform.
    * @throws Error if WaveformSequence is empty and sample interpretation
    * or bits allocated values are not supported.
    */
-  _extractWaveform(opts) {
+  _extractWaveform() {
     const waveformSequence = this.getElement('WaveformSequence');
     if (
       waveformSequence === undefined ||
@@ -258,7 +256,7 @@ class DicomEcg {
       duration:
         waveformSequenceItem.NumberOfWaveformSamples / waveformSequenceItem.SamplingFrequency,
     };
-    this._calculateLeads(waveform, opts);
+    this._calculateLeads(waveform);
     this._sortLeads(waveform);
 
     return waveform;
@@ -269,11 +267,9 @@ class DicomEcg {
    * @method
    * @private
    * @param {Object} waveform - Waveform.
-   * @param {Object} [opts] - Rendering options.
-   * @param {boolean} [opts.applyLowPassFilter] - Apply a Butterworth low pass filter with 40Hz cut off frequency.
    * @throws Error if waveform bits stored definition value is not supported.
    */
-  _calculateLeads(waveform, opts) {
+  _calculateLeads(waveform) {
     const channelDefinitionSequence = waveform.channelDefinitionSequence;
     if (
       channelDefinitionSequence === undefined ||
@@ -407,8 +403,8 @@ class DicomEcg {
       }
     }
 
-    // Filter
-    if (opts.applyLowPassFilter === true) {
+    // Filter 40hz:
+    if (this.opts.applyLowPassFilter === true) {
       const cutoffFrequency = 40.0;
       for (let i = 0; i < channels; i++) {
         this._lowPassFilter(signals[i], cutoffFrequency, waveform.samplingFrequency);
@@ -417,7 +413,7 @@ class DicomEcg {
 
     // Convert to millivolts
     if (units.length === channels) {
-      const millivolts = { uV: 1000.0, mV: 1.0 };
+      const millivolts = { uV: 1000.0, mV: 1.0, mmHg: 200.0 };
       for (let i = 0; i < channels; i++) {
         for (let j = 0; j < signals[i].length; j++) {
           signals[i][j] = signals[i][j] / millivolts[units[i]];

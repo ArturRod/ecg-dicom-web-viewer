@@ -286,102 +286,85 @@ class DrawECGCanvas extends GenericCanvas {
   //--------------------------------------------------------
   //#region DRAW ECG
 
+
   /**
    * Draw lines.
    */
-  private drawECG() {
-    //CHANNELS:
-    this.dataMg.channels.forEach((channel) => {
-      //code:
-      let code =
-        channel.channelDefinition.channelSource.codeMeaning.split(" ").length === 2 ?
-        channel.channelDefinition.channelSource.codeMeaning.split(" ")[1] : 
-        channel.channelDefinition.channelSource.codeMeaning.split(" ")[0];
-      let objPosition = this.positionsDraw.find((obj) => {
-        return obj.name === code;
-      });
-      //Variables:
-      let data = [];
-      let time = 0;
-      let i = 0;
-      let positionMaxPointFrec = 0;
-      //Reference to draw:
-      let startY = objPosition.height;
-      let startX = objPosition.width + this.margin; //Margin left and right to draw:
-      let latestPosition = startY;
-      let baseScale: any;
+    private drawECG() {
+      //CHANNELS:
+      for(let ileads = 0; ileads < this.dataMg.leads.length; ileads++){
+        let code = this.dataMg.channelDefinitionSequence[ileads].ChannelLabel;
 
-      //Load data:
-      channel.samples.forEach((element) => {
-        data.push(element);
-      });
-
-      //Position for the max point data:
-      let maxPoint =  Math.max(...data);
-      while(data[positionMaxPointFrec] < maxPoint){
-        positionMaxPointFrec++;
-      }
-      i = positionMaxPointFrec;
-
-      //Scale mV, uV. mmHg...
-      switch (channel.channelDefinition.channelSensitivityUnits.codeValue) {
-        case Constants.mV.name:
-          baseScale = Constants.mV;
-          break;
-        case Constants.uV.name:
-          baseScale = Constants.uV;
-          break;
-        case Constants.mmHg.name:
-          baseScale = Constants.mmHg;
-          break;
-        default:
-          baseScale = Constants.def;
-          break;
-      }
-
-      //Colum calculator margins left and right:
-      let space = this.canvas.width / 2 - (startX + this.margin);
-      if (startX != 10 + this.margin) {
-        space = (this.canvas.width / 2) - (this.margin + 10);
-      }
-
-      //Line options:
-      this.ctx.lineWidth = this.configuration.CURVE_WIDTH;
-      this.ctx.lineCap = 'round';
-      
-      //Draw line:
-      while (i < data.length && time < space) {
-        //10mV/s:
-        let point =
-          ((data[i] * objPosition.height) / baseScale.deltaMain) *
-          this.configuration.AMPLITUDE; //Rescalate. 10mV/s Each square is 1 mm.
-
-        //Draw line:
-        this.ctx.beginPath();
-        this.drawLine(
-          startX + time,
-          latestPosition,
-          startX + time,
-          startY - point
-        );
-        this.ctx.stroke();
-
-        //Positions:
-        latestPosition = startY - point;
-        //25mm/s:
-        time += this.configuration.TIME; //25mm/s Each square is 1 mm
-        i++;
-
-        //Reset to start position, complete width draw and repeat secuency:
-        if (i == data.length) {
-          i = positionMaxPointFrec - Math.round(positionMaxPointFrec * 0.05); //start - 5%
+        //No exist ChannelLabel code: 
+        if(code == undefined){
+          let codeMeaning = this.dataMg.channelDefinitionSequence[ileads].ChannelSourceSequence[0].CodeMeaning;
+          if(codeMeaning.split(" ").length === 2 || codeMeaning.split(" ").length === 3){  //3 text + Bethoven:
+            code = codeMeaning.split(" ")[1];
+          }
         }
-      }
-    });
-    //Clear data:
-    this.positionsDraw = null;
-  }
+        else{
+          if(code.split(" ").length === 2 || code.split(" ").length === 3){  //3 text + Bethoven:
+            code = code.split(" ")[1];
+          }
+          else if(code.split("_").length === 2 || code.split("_").length === 3){  //3 text + Bethoven or _ separator:
+            code = code.split("_")[1];
+          }
+        }
 
+        let objPosition = this.positionsDraw.find((obj) => {
+          return obj.name === code;
+        })
+
+        //Variables:
+        let data = [];
+        let time = 0;
+        let i = 0;
+        let positionMaxPointFrec = 0;
+        //Reference to draw:
+        let startY = objPosition.height;
+        let startX = objPosition.width + this.margin; //Margin left and right to draw:
+        let latestPosition = startY;
+  
+        //Load data:
+        this.dataMg.leads[ileads].signal.forEach((element) => {
+          data.push(element);
+        });
+  
+        //Colum calculator margins left and right:
+        let space = this.canvas.width / 2 - (startX + this.margin);
+        if (startX != 10 + this.margin) {
+          space = (this.canvas.width / 2) - (this.margin + 10);
+        }
+  
+        //Line options:
+        this.ctx.lineWidth = this.configuration.CURVE_WIDTH;
+        this.ctx.lineCap = 'round';
+        
+        //Draw line:
+        while (i < data.length && time < space) {
+          //10mV/s:
+          let point = ((data[i] * objPosition.height) * this.configuration.AMPLITUDE);  //Rescalate. 10mV/s Each square is 1 mm.
+          //Draw line:
+          this.ctx.beginPath();
+          this.drawLine(
+            startX + time,
+            latestPosition,
+            startX + time,
+            startY - point
+          );
+          this.ctx.stroke();
+  
+          //Positions:
+          latestPosition = startY - point;
+          //Duration / time / 100
+          //25mm/s Each square is 1 mm
+          time += (this.dataMg.duration / this.configuration.TIME) / 100; 
+          i++;
+        }
+      };
+      //Clear data:
+      this.positionsDraw = null;
+    }
   //#endregion
 }
 
