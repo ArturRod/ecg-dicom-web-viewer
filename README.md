@@ -21,7 +21,7 @@ npm install --save ecg-dicom-web-viewer
 ```js
 // Import
 import {
-  ReadECGData, //Optional.
+  ReadECG, //Optional.
   Constants, //Optional.
   DicomECGViewer, //Principal.
 } from "ecg-dicom-web-viewer";
@@ -50,8 +50,9 @@ Currently it works:</br>
 <ul>
   <li><strong>Sop12LeadECGWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.1.1', --> YES</strong></li>
   <li><strong>GeneralECGWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.1.2', --> YES</strong></li>
-  <li><strong>AmbulatoryECGWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.1.3', --> NO SUPPORT</strong></li>
+  <li><strong>AmbulatoryECGWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.1.3', --> YES</strong></li>
   <li><strong>HemodynamicWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.2.1', --> YES</strong></li>
+  <li><strong>CardiacElectrophysiologyWaveformStorage: '1.2.840.10008.5.1.4.1.1.9.2.1', --> YES</strong></li>
 </ul>
 The next available classes are as follows:
 <li><strong>Class DicomECGViewer</strong></li>
@@ -61,14 +62,16 @@ The next available classes are as follows:
   <p><strong>nameView</strong> Identifier of the view you want to put, in case you have several views, default 0.</p>
   <h6> - <strong>loadCanvas()</strong></h4>
   <p>Main method, draws the canvas and its entire view.</p>
-<li><strong>Class ReadECGData</strong></li>
-  <h6> - <strong>readData(dataSet)</strong></h4>
+<li><strong>Class ReadECG</strong></li>
+  <h6> - <strong>ReadECG(this.dataDICOMarrayBuffer, '', opts)</strong></h4>
   <p>Receives a dataSet data structure and returns a readable array.</p>
-  <h6> - <strong>getDataSet(dataDICOMarrayBuffer)</strong></h4>
-  <p>Read the arraydicombuffer and return dataSet.</p>
+  <p><strong>opts</strong>speed: 25, amplitude: 10, applyLowPassFilter: true</p>
+  <h6> - <strong>getWaveform()</strong></h4>
+  <p>Read the arraydicombuffer and return legible data.</p>
+  <h6> - <strong>getInfo()</strong></h4>
+  <p>Read the arraydicombuffer and return information data, example: BPM, Name, Duration ECG...</p>
 <li><strong>Static Constants</strong></li>
   <p>SOP UID of ECG types and graph measurements.</p>
-  <p>ECG references, maximum and minimum amplitudes.</p>
 <li><strong>Class GenericCanvas</strong></li>
   <p>It is the generic class for the canvas, it contains the values ​​of the number of views, canvas size, rows, columns, grid size...</p>
 <li><strong>Class DrawECGCanvas extends GenericCanvas</strong></li>
@@ -77,7 +80,5 @@ The next available classes are as follows:
 ## Features
 
 <ul>
-  <li><strong>Display more information such as beats per minute.</strong></li>
   <li><strong>Improve canvas scrolling performance.</strong></li>
-  <li><strong>Support SOP AmbulatoryECGWaveformStorage.</strong></li>
 </ul>

@@ -319,7 +319,6 @@ class DrawECGCanvas extends GenericCanvas {
         let data = [];
         let time = 0;
         let i = 0;
-        let positionMaxPointFrec = 0;
         //Reference to draw:
         let startY = objPosition.height;
         let startX = objPosition.width + this.margin; //Margin left and right to draw:

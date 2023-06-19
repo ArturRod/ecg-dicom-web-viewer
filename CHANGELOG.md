@@ -3,7 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.3](https://github.com/ArturRod/ecg-dicom-web-viewer) (2022-10-06)
+## [2.0.4](https://github.com/ArturRod/ecg-dicom-web-viewer) (2023-06-19)
+
+**Note:** It corrects errors, a new way of displaying the data is generated based on dcmjs instead of dicom-parse. More data is shown and legibility is more complete.
+Part of the project code is implemented: (https://github.com/PantelisGeorgiadis/dcmjs-ecg) whose author is: (PantelisGeorgiadis)
+
+## [2.0.3](https://github.com/ArturRod/ecg-dicom-web-viewer) (2023-05-29)
 
 **Note:** Update packages.
 

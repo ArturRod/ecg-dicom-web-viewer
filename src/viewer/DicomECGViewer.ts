@@ -59,6 +59,7 @@ class DicomECGViewer {
           bpmText = bpm.value;
         }
 
+        //Load information:
         let information = {
           Name: readECG.elements.PatientName,
           Sex: readECG.elements.Sex,
@@ -71,15 +72,22 @@ class DicomECGViewer {
           Duration: durationText,
           BPM: bpmText
         }
-        //Load information:
         this.loadCanvasDOM(information);
+
         //Draw ECG:
         let ecgCanvas = new DrawECGCanvas(this.idView + this.nameView, waveform);
-        ecgCanvas.draw();
+        //SOP CLASS UID COMPATIBLE:
+        if(Constants.SOP_CLASS_UIDS.includes(readECG.elements.SOPClassUID)){
+          ecgCanvas.draw();
+        }
+        else{
+          ecgCanvas.drawNoCompatible();
+        }
+      
       }
     }
     else{
-      //ecgCanvas.drawNoCompatible();
+      alert("ECG NO COMPATIBLE")
     }
   }
 
@@ -131,89 +139,5 @@ class DicomECGViewer {
 
     document.getElementById(this.idView).innerHTML = view;
   }
-
-  /**
-   * Load canvas data.
-  public loadCanvas() {
-    try{
-      //DataSet:
-      let dataSet = ReadECGData.getDataSet(this.dataDICOMarrayBuffer);
-      //Read data from dataSet:
-      let dataMg = ReadECGData.readData(dataSet);
-
-      //Load DOM canva and load user information:
-      this.loadCanvasDOM(dataMg.patientName, dataMg.patientID, dataMg.sex, dataMg.birthDate, dataMg.studyDate, dataMg.patientAge, dataMg.patientSize, dataMg.patientWeight); 
-
-      //Draw template:
-      let ecgCanvas = new DrawECGCanvas(this.idView + this.nameView, dataMg);
-
-      //Draw compatible:
-      switch (dataMg.sopClassUID) {
-        case Constants.SOP_CLASS_UIDS.HemodynamicWaveformStorage: //Hemodynamic Waveform Storage
-          ecgCanvas.draw();
-          break;
-        case Constants.SOP_CLASS_UIDS.AmbulatoryECGWaveformStorage: //Ambulatory
-          ecgCanvas.drawNoCompatible();
-          break;
-        case Constants.SOP_CLASS_UIDS.GeneralECGWaveformStorage: //General ECG Waveform Storage
-          ecgCanvas.draw();
-          break;
-        case Constants.SOP_CLASS_UIDS.Sop12LeadECGWaveformStorage: //12-lead ECG Waveform Storage
-          ecgCanvas.draw();
-          break;
-        default:
-          ecgCanvas.drawNoCompatible();
-          console.log("Unsupported SOP Class UID: " + dataMg.sopClassUID);
-      }
-    } catch (err) {
-      //gridCanvas.drawNoCompatible();
-    }
-  }
-
-  /**
-   * Create struct of view.
-  private loadCanvasDOM(name, id, sex, birth, study, age, size, weight) {
-    let view = "";
-    document.getElementById(this.idView).innerHTML = view;
-    view = 
-    '<div id="infoECG">' +
-      '<div id="divTableBody">' +
-        '<div class="divTableRow">' +
-          '<div class="divTableCell">NAME: <i>' + name + "</i></div>" +
-          '<div class="divTableCell">SEX: <i>' + sex + "</i></div>" +
-          '<div class="divTableCell">PATIENT SIZE: <i>' + size + "</i></div>" +
-        "</div>" +
-        '<div class="divTableRow">' +
-          '<div class="divTableCell">PATIENT ID: <i>' + id + "</i></div>" +
-          '<div class="divTableCell">PATIENT AGE: <i>' + age + "</i></div>" +
-          '<div class="divTableCell">PATIENT WEIGHT: <i>' + weight + "</i></div>" +
-        "</div>" +
-        '<div class="divTableRow">' +
-          '<div class="divTableCell">DATE: <i>' + study + "</i></div>" +
-          '<div class="divTableCell">BIRTH: <i>' + birth + "</i></div>" +
-        "</div>" +
-      "</div>" + 
-      '<div id="toolsECG">' +
-        '<div class="divTools">' +
-          '<b>TIME: </b><i id="textTime"> 25mm/s </i>' +
-          '<button id="timeLeft">&#8592</button>' +
-          '<button id="timeRight">&#8594</button>' +
-        '</div>'+
-        '<div class="divTools">' +
-          '<b>AMPLITUDE: </b><i id="textAmplitude"> 10mm/mV </i>' +
-          '<button id="amplitudeDown">&#8595</button>' +
-          '<button id="amplitudeUp">&#8593</button>' +
-        '</div>'+
-      '</div>' +
-    '</div>' + 
-    '<canvas id="' + this.idView + this.nameView + '" style="border-top: 2px solid #000000;"></canvas>' +
-    '<div id="zoomButons">'+
-      '<button id="plus">+</button>' +
-      '<button id="minus">-</button>'+
-    '</div>';
-
-    document.getElementById(this.idView).innerHTML = view;
-  }
-  */
 }
 export default DicomECGViewer;
