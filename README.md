@@ -65,7 +65,7 @@ The next available classes are as follows:
 <li><strong>Class ReadECG</strong></li>
   <h6> - <strong>ReadECG(this.dataDICOMarrayBuffer, '', opts)</strong></h4>
   <p>Receives a dataSet data structure and returns a readable array.</p>
-  <p><strong>opts</strong>speed: 25, amplitude: 10, applyLowPassFilter: true</p>
+  <p><strong>opts: </strong>speed: 25, amplitude: 10, applyLowPassFilter: true</p>
   <h6> - <strong>getWaveform()</strong></h4>
   <p>Read the arraydicombuffer and return legible data.</p>
   <h6> - <strong>getInfo()</strong></h4>
