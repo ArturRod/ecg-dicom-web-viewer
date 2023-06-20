@@ -98,7 +98,7 @@ class DicomECGViewer {
    private loadCanvasDOM(information) {
     let view = "";
     document.getElementById(this.idView).innerHTML = view;
-    view = 
+    view = DOMPurify.sanitize(
     '<div id="infoECG">' +
       '<div id="divTableBody">' +
         '<div class="divTableRow">' +
@@ -135,7 +135,7 @@ class DicomECGViewer {
     '<div id="zoomButons">'+
       '<button id="plus">+</button>' +
       '<button id="minus">-</button>'+
-    '</div>';
+    '</div>');
 
     document.getElementById(this.idView).innerHTML = view;
   }

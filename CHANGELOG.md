@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.5](https://github.com/ArturRod/ecg-dicom-web-viewer) (2023-06-20)
+
+**Note:** The DOMPurify library is implemented to prevent XSS attacks on information div.
+
 ## [2.0.4](https://github.com/ArturRod/ecg-dicom-web-viewer) (2023-06-19)
 
 **Note:** It corrects errors, a new way of displaying the data is generated based on dcmjs instead of dicom-parse. More data is shown and legibility is more complete.

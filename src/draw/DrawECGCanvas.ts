@@ -1,4 +1,3 @@
-import Constants from "../constants/Constants";
 import GenericCanvas from "./GenericCanvas";
 
 //Global variable for pan and drag:
