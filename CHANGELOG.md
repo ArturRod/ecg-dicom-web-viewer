@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.6](https://github.com/ArturRod/ecg-dicom-web-viewer) (2023-06-20)
+
+**Note:** Resolve fix: https://github.com/ArturRod/ecg-dicom-web-viewer/issues/8#issue-1765695154, remove white spaces and special characters: u\0000, \x00..., and update packages.
+
 ## [2.0.5](https://github.com/ArturRod/ecg-dicom-web-viewer) (2023-06-20)
 
 **Note:** The DOMPurify library is implemented to prevent XSS attacks on information div.
