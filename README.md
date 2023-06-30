@@ -41,7 +41,7 @@ viewer.loadCanvas(); // Load canvas view.
 
 ## Result
 
-<img src="https://user-images.githubusercontent.com/86238895/186395831-a460b9b7-89d9-4ba7-a4b6-c12867bd5a4d.png"/>
+<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/86238895/247515793-53009cc0-8aa8-4e91-bfb1-95ee89ff3d94.png"/>
 
 ## Documentation
 
