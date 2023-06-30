@@ -48,7 +48,9 @@ class DrawECGCanvas extends GenericCanvas {
     this.ctx.translate(pan.offset.x, pan.offset.y);
     //Draw:
     this.drawGrid();
-    this.drawECG();
+    if(!this.drawECG()){
+      alert("AN ERROR HAS OCCURRED, THE DICOM INFORMATION IS NOT CORRECT.")
+    }
   }
 
   /**
@@ -295,7 +297,10 @@ class DrawECGCanvas extends GenericCanvas {
         //Read position to start draw:
         let objPosition: any;
         objPosition = this.ReadObjPosition(ileads);
-
+        //There is no correct information.
+        if(objPosition == null){
+          return false; //No draw, show error mensaje.
+        }
         //Variables:
         let data = [];
         let time = 0;
@@ -344,16 +349,25 @@ class DrawECGCanvas extends GenericCanvas {
       };
       //Clear data:
       this.positionsDraw = null;
+      return true; //Draw nice.
     }
 
     //Read object position to start draw:
     private ReadObjPosition(position){
-      let code = this.dataMg.channelDefinitionSequence[position].ChannelLabel;
+      let code = this.dataMg.channelDefinitionSequence[position].ChannelLabel; //Comes in correct format split === 1
       //No exist ChannelLabel code: 
       if(code == undefined){
         let codeMeaning = this.dataMg.channelDefinitionSequence[position].ChannelSourceSequence[0].CodeMeaning;
-        if(codeMeaning.split(" ").length === 2 || codeMeaning.split(" ").length === 3){  //3 text + Bethoven:
-          code = codeMeaning.split(" ")[1];
+        if(codeMeaning != undefined){
+          if(codeMeaning.split(" ").length === 1){ //Comes in correct format
+            code = codeMeaning;
+          }
+          else if(codeMeaning.split(" ").length === 2 || codeMeaning.split(" ").length === 3){  //3 text + Bethoven:
+            code = codeMeaning.split(" ")[1];
+          }
+          }
+        else{
+          return null; //There is no correct information.
         }
       }
       else{
@@ -370,6 +384,7 @@ class DrawECGCanvas extends GenericCanvas {
       code = code.replace('\0', '');
       code = code.replace(/\0/g, '');
 
+      //Search position to draw:
       let objPosition = this.positionsDraw.find((obj) => {
         return obj.name.toUpperCase() === code.toUpperCase(); //All mayus compare.
       });
