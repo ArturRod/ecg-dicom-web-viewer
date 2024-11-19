@@ -413,7 +413,7 @@ class DicomEcg {
 
     // Convert to millivolts
     if (units.length === channels) {
-      const millivolts = { uV: 1000.0, mV: 1.0, mmHg: 200.0 };
+      const millivolts = { uV: 1000.0, uv: 1000.0, mV: 1.0, mv: 1000.0, mmHg: 200.0, mmhg: 200.0};
       for (let i = 0; i < channels; i++) {
         for (let j = 0; j < signals[i].length; j++) {
           signals[i][j] = signals[i][j] / millivolts[units[i]];
