@@ -49,23 +49,23 @@ class DicomECGViewer {
         let informationWave = this.ReadInformationWave(waveinformation);
         let information = {
           //Study Information:
-          Name: readECG.elements.PatientName,
-          Sex: readECG.elements.Sex,
-          Size: readECG.elements.PatientSize,
-          Id: readECG.elements.PatientID,
-          Age: readECG.elements.PatientAge,
-          Weight: readECG.elements.PatientWeight,
-          Date: readECG.elements.StudyDate,
-          Birth: readECG.elements.PatientBirthDate,
+          Name: readECG.elements.PatientName || '',
+          Sex: readECG.elements.Sex || '',
+          Size: readECG.elements.PatientSize || '',
+          Id: readECG.elements.PatientID || '',
+          Age: readECG.elements.PatientAge || '',
+          Weight: readECG.elements.PatientWeight || '',
+          Date: readECG.elements.StudyDate || '',
+          Birth: readECG.elements.PatientBirthDate || '',
           //Wave Information:
-          Duration: informationWave.Duration,
-          VRate: informationWave.VRate,
-          PR: informationWave.PR,
-          QR: informationWave.QR,
-          QTQTC: informationWave.QTQTC,
-          prtAxis: informationWave.prtAxis,
-          frequency: informationWave.frequency,
-          annotations: informationWave.annotations
+          Duration: informationWave.Duration || '',
+          VRate: informationWave.VRate || '',
+          PR: informationWave.PR || '',
+          QR: informationWave.QR || '',
+          QTQTC: informationWave.QTQTC || '',
+          prtAxis: informationWave.prtAxis || '',
+          frequency: informationWave.frequency || '',
+          annotations: informationWave.annotations || ''
         }
         //Load information:
         this.loadCanvasDOM(information);
@@ -78,7 +78,7 @@ class DicomECGViewer {
         else{
           ecgCanvas.drawNoCompatible();
         }
-      
+
       }
     }
     else{
@@ -135,7 +135,7 @@ class DicomECGViewer {
       frequencyText = frequency.value + ' ' + frequency.unit;
     }
     //Annotations:
-    let annotations = waveinformation.find(o => o.key === 'Annotation'); 
+    let annotations = waveinformation.find(o => o.key === 'Annotation');
     let annotationsArray = []; //Array
     if(annotations != undefined){
       annotationsArray = annotations.value; //Array
@@ -151,7 +151,7 @@ class DicomECGViewer {
       frequency: frequencyText,
       annotations: annotationsArray
     }
-    
+
     //Return information:
     return information;
   }
@@ -187,7 +187,7 @@ class DicomECGViewer {
           '<div class="divTableCell">QRS DURATION: <i>' + information.QR + "</i></div>" +
           '<div class="divTableCell">FREQUENCY: <i>' + information.frequency + "</i></div>" +
         "</div>" +
-      "</div>" + 
+      "</div>" +
       '<div id="toolsECG">' +
         '<div class="divTools">' +
           '<b>TIME: </b><i id="textTime"> 25mm/s </i>' +
@@ -200,7 +200,7 @@ class DicomECGViewer {
           '<button id="amplitudeUp">&#8593</button>' +
         '</div>'+
       '</div>' +
-    '</div>' + 
+    '</div>' +
     '<canvas id="' + this.idView + this.nameView + '" style="border-top: 2px solid #000000;"></canvas>' +
     '<div id="zoomButons">'+
       '<button id="plus">+</button>' +
