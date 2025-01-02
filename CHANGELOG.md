@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [2.1.0](https://github.com/ArturRod/ecg-dicom-web-viewer) (2025-01-02)
+
+**Note:** Added in constants WAVE_FORM_BITS_STORED - ECG bits (Accuracy and quality of the recorded signal), can be 8 (missing test), 12 (missing test), 16 (OK) and 24 (missing test). This is done to support different ECG qualities. Update packages.
+
 ## [2.0.9](https://github.com/ArturRod/ecg-dicom-web-viewer) (2024-11-19)
 
 **Note:** Update packages and correct small error when analyzing millivolts.

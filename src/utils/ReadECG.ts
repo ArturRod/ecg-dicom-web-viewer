@@ -1,3 +1,5 @@
+import { WAVE_FORM_BITS_STORED } from "../constants/Constants";
+
 const dcmjs = require('dcmjs');
 const { DicomMetaDictionary, DicomMessage, ReadBufferStream, WriteBufferStream } = dcmjs.data;
 
@@ -291,7 +293,8 @@ class DicomEcg {
     const sources = [];
     channelDefinitionSequence.forEach((channelDefinitionSequenceItem, i) => {
       if (channelDefinitionSequenceItem !== undefined) {
-        if (channelDefinitionSequenceItem.WaveformBitsStored !== 16) {
+        //Bits:
+        if (!WAVE_FORM_BITS_STORED.includes(channelDefinitionSequenceItem.WaveformBitsStored)) {
           throw new Error(
             `Waveform bits stored definition is not supported [${channelDefinitionSequenceItem.WaveformBitsStored}]`
           );

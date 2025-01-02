@@ -1,4 +1,4 @@
-import Constants from "../constants/Constants";
+import { SOP_CLASS_UIDS } from "../constants/Constants";
 import DrawECGCanvas from "../draw/DrawECGCanvas";
 import ReadECG from "../utils/ReadECG"; //Development
 import './Style.css';
@@ -72,7 +72,7 @@ class DicomECGViewer {
         //Draw ECG:
         let ecgCanvas = new DrawECGCanvas(this.idView + this.nameView, waveform);
         //SOP CLASS UID COMPATIBLE:
-        if(Constants.SOP_CLASS_UIDS.includes(readECG.elements.SOPClassUID)){
+        if(SOP_CLASS_UIDS.includes(readECG.elements.SOPClassUID)){
           ecgCanvas.draw();
         }
         else{

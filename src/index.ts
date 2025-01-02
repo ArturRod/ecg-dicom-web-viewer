@@ -1,5 +1,5 @@
 import ReadECG from "./utils/ReadECG"; //Development
-import Constants from "./constants/Constants";
+import { SOP_CLASS_UIDS, WAVE_FORM_BITS_STORED } from "./constants/Constants";
 import DicomECGViewer from "./viewer/DicomECGViewer";
 
-export { ReadECG, DicomECGViewer, Constants };
+export { ReadECG, DicomECGViewer, SOP_CLASS_UIDS, WAVE_FORM_BITS_STORED };

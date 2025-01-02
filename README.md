@@ -22,7 +22,8 @@ npm install --save ecg-dicom-web-viewer
 // Import
 import {
   ReadECG, //Optional.
-  Constants, //Optional.
+  SOP_CLASS_UIDS, //Optional.
+  WAVE_FORM_BITS_STORED, //Optional.
   DicomECGViewer, //Principal.
 } from "ecg-dicom-web-viewer";
 ```
@@ -71,7 +72,8 @@ The next available classes are as follows:
   <h6> - <strong>getInfo()</strong></h4>
   <p>Read the arraydicombuffer and return information data, example: BPM, Name, Duration ECG...</p>
 <li><strong>Static Constants</strong></li>
-  <p>SOP UID of ECG types and graph measurements.</p>
+  <p>SOP_CLASS_UIDS - SOP UID of ECG types and graph measurements.</p>
+  <p>WAVE_FORM_BITS_STORED - Accuracy and quality of the recorded signal.</p>
 <li><strong>Class GenericCanvas</strong></li>
   <p>It is the generic class for the canvas, it contains the values ​​of the number of views, canvas size, rows, columns, grid size...</p>
 <li><strong>Class DrawECGCanvas extends GenericCanvas</strong></li>
