@@ -15,4 +15,25 @@ const WAVE_FORM_BITS_STORED = [
   24, //Very high resolution, 16777216 different voltage levels. (Advanced Applications)
 ];
 
-export { SOP_CLASS_UIDS, WAVE_FORM_BITS_STORED};
+//Data to look for in the ECG, capital letters:
+const KEY_UNIT_INFO = [
+  { key: 'HEART RATE', unit: 'BPM' },
+  { key: 'HR', unit: 'BPM' },
+  { key: 'P DURATION', unit: 'ms' },
+  { key: 'QT INTERVAL', unit: 'ms' },
+  { key: 'QTC INTERVAL', unit: 'ms' },
+  { key: 'RR INTERVAL', unit: 'ms' },
+  { key: 'VRATE', unit: 'BPM' },
+  { key: 'QRS DURATION', unit: 'ms' },
+  { key: 'QRS AXIS', unit: '°' },
+  { key: 'T AXIS', unit: '°' },
+  { key: 'P AXIS', unit: '°' },
+  { key: 'PR INTERVAL', unit: 'ms' },
+  { key: 'ANNOTATION', unit: '' }, //Always ? 
+  { key: 'SAMPLING FREQUENCY', unit: 'Hz' }, //Always.
+  { key: 'DURATION', unit: 'sec' }, //Always.
+  { key: 'SPEED', unit: 'mm/sec' }, //Always.
+  { key: 'AMPLITUDE', unit: 'mm/mV' }, //Always.
+];
+
+export { SOP_CLASS_UIDS, WAVE_FORM_BITS_STORED, KEY_UNIT_INFO};

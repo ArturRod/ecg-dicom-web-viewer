@@ -1,7 +1,11 @@
 # Change Log
 
 All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+See [Conventional Commits](https://conventionalcommits.org) for commit guideline
+s.
+## [2.1.1](https://github.com/ArturRod/ecg-dicom-web-viewer) (2025-01-02)
+
+**Note:** Added in constants KEY_UNIT_INFO - These are the data to be displayed/read from the ECG. Only the data that has values ​​will be shown, otherwise nothing will appear. They must always be in capital letters so that they are detected well. It can be customized according to the needs to be displayed in the ECG view. 
 
 ## [2.1.0](https://github.com/ArturRod/ecg-dicom-web-viewer) (2025-01-02)
 

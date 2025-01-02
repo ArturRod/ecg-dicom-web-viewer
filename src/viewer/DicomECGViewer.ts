@@ -1,4 +1,4 @@
-import { SOP_CLASS_UIDS } from "../constants/Constants";
+import { SOP_CLASS_UIDS, KEY_UNIT_INFO } from "../constants/Constants";
 import DrawECGCanvas from "../draw/DrawECGCanvas";
 import ReadECG from "../utils/ReadECG"; //Development
 import './Style.css';
@@ -46,8 +46,8 @@ class DicomECGViewer {
       //Load canvas structure:
       if(waveform != null && waveinformation != null){
         //Read wave information disponibility:
-        let informationWave = this.ReadInformationWave(waveinformation);
-        let information = {
+        //Read information Patient:
+        let informationPatient = {
           //Study Information:
           Name: readECG.elements.PatientName || '',
           Sex: readECG.elements.Sex || '',
@@ -56,19 +56,18 @@ class DicomECGViewer {
           Age: readECG.elements.PatientAge || '',
           Weight: readECG.elements.PatientWeight || '',
           Date: readECG.elements.StudyDate || '',
-          Birth: readECG.elements.PatientBirthDate || '',
-          //Wave Information:
-          Duration: informationWave.Duration || '',
-          VRate: informationWave.VRate || '',
-          PR: informationWave.PR || '',
-          QR: informationWave.QR || '',
-          QTQTC: informationWave.QTQTC || '',
-          prtAxis: informationWave.prtAxis || '',
-          frequency: informationWave.frequency || '',
-          annotations: informationWave.annotations || ''
+          Birth: readECG.elements.PatientBirthDate || ''
         }
+
+        //Read information Wave:
+        let informationWave = {};
+        waveinformation.forEach(item => {
+          informationWave[item.key] = `${item.value || ''} ${item.unit}`;
+        });
+
         //Load information:
-        this.loadCanvasDOM(information);
+        this.loadCanvasDOM(informationPatient, informationWave);
+
         //Draw ECG:
         let ecgCanvas = new DrawECGCanvas(this.idView + this.nameView, waveform);
         //SOP CLASS UID COMPATIBLE:
@@ -86,107 +85,51 @@ class DicomECGViewer {
     }
   }
 
-
-  //Read Waveforminformation to html:
-  private ReadInformationWave(waveinformation){
-    //Duration:
-    let duration = waveinformation.find(o => o.key === 'Duration');
-    let durationText = 'undefined';
-    if(duration != undefined){
-      durationText = duration.value + ' ' + duration.unit;
+  //Load the data according to the view of the elements to be displayed configured in KEY_UNIT_INFO, return string html:
+  //It will only show the information that contains data, if it is empty it will not be shown KEY: VALUE
+  private loadKey_Unit(informationWave){
+    //First new row:
+    let html = "<div class='divTableRow'>";
+    let count = 0;
+    for (let i = 0; i < KEY_UNIT_INFO.length; i++) {
+      const key = KEY_UNIT_INFO[i].key;
+      const value = informationWave[key];
+      if (value !== undefined) {
+        html += `<div class="divTableCell">${key}: <i>${value}</i></div>`;
+        count += 1;
+        //If it has 8 elements we create a new divTableRow
+        if(count == 8){
+          html += "</div><div class='divTableRow'>";
+          count = 0;
+        }
+      }
     }
-    //VRate BPM:
-    let vRate = waveinformation.find(o => o.key === 'VRate');
-    let vRateText = 'undefined';
-    if(vRate != undefined){
-      vRateText = vRate.value + ' ' + vRate.unit;
-    }
-    //PR Intrerval:
-    let prInterval = waveinformation.find(o => o.key === 'PR Interval');
-    let prIntervalText = 'undefined';
-    if(prInterval != undefined){
-      prIntervalText = prInterval.value + ' ' + prInterval.unit;
-    }
-    //QR Duration:
-    let qrDuration = waveinformation.find(o => o.key === 'QRS Duration');
-    let qrDurationText = 'undefined';
-    if(qrDuration != undefined){
-      qrDurationText = qrDuration.value + ' ' + qrDuration.unit;
-    }
-    //QT/QTc:
-    let qt = waveinformation.find(o => o.key === 'QT Interval');
-    let qtc = waveinformation.find(o => o.key === 'QTc Interval');
-    let qtqtcText = 'undefined';
-    if(qt != undefined && qtc != undefined){
-      qtqtcText = qt.value + "/" + qtc.value + ' ' + qtc.unit;
-    }
-    //P R T Axis
-    let p = waveinformation.find(o => o.key === 'P Axis');
-    let r = waveinformation.find(o => o.key === 'QRS Axis');
-    let t = waveinformation.find(o => o.key === 'T Axis');
-    let prtAxisText = 'undefined';
-    if(p != undefined && r != undefined && t != undefined){
-      prtAxisText = p.value + ' ' + r.value + ' ' + t.value;
-    }
-    //Sampling Frequency:
-    let frequency = waveinformation.find(o => o.key === 'Sampling Frequency');
-    let frequencyText = 'undefined';
-    if(frequency != undefined){
-      frequencyText = frequency.value + ' ' + frequency.unit;
-    }
-    //Annotations:
-    let annotations = waveinformation.find(o => o.key === 'Annotation');
-    let annotationsArray = []; //Array
-    if(annotations != undefined){
-      annotationsArray = annotations.value; //Array
-    }
-
-    let information = {
-      Duration: durationText,
-      VRate: vRateText,
-      PR: prIntervalText,
-      QR: qrDurationText,
-      QTQTC: qtqtcText,
-      prtAxis: prtAxisText,
-      frequency: frequencyText,
-      annotations: annotationsArray
-    }
-
-    //Return information:
-    return information;
+    //Close divTableRow:
+    html += "</div>";
+    return html;
   }
-
 
    /**
    * Create struct of view.
    */
-   private loadCanvasDOM(information) {
+   private loadCanvasDOM(informationPatient, informationWave) {
+    //Load the data KEY_UNIT_INFO:
+    let htmlUnit = this.loadKey_Unit(informationWave);
     let view = "";
     document.getElementById(this.idView).innerHTML = view;
     view = DOMPurify.sanitize(
     '<div id="infoECG">' +
       '<div id="divTableBody">' +
         '<div class="divTableRow">' +
-          '<div class="divTableCell">NAME: <i>' + information.Name + "</i></div>" +
-          '<div class="divTableCell">SEX: <i>' + information.Sex + "</i></div>" +
-          '<div class="divTableCell">PATIENT SIZE: <i>' + information.Size + "</i></div>" +
-          '<div class="divTableCell">VENT RATE: <i>' + information.VRate + "</i></div>" +
-          '<div class="divTableCell">QT/QTC: <i>' + information.QTQTC + "</i></div>" +
-        "</div>" +
-        '<div class="divTableRow">' +
-          '<div class="divTableCell">PATIENT ID: <i>' + information.Id + "</i></div>" +
-          '<div class="divTableCell">PATIENT AGE: <i>' + information.Age + "</i></div>" +
-          '<div class="divTableCell">PATIENT WEIGHT: <i>' + information.Weight + "</i></div>" +
-          '<div class="divTableCell">PR INTERVAL: <i>' + information.PR + "</i></div>" +
-          '<div class="divTableCell">P-R-T AXES: <i>' + information.prtAxis + "</i></div>" +
-        "</div>" +
-        '<div class="divTableRow">' +
-          '<div class="divTableCell">DATE: <i>' + information.Date + "</i></div>" +
-          '<div class="divTableCell">BIRTH: <i>' + information.Birth + "</i></div>" +
-          '<div class="divTableCell">DURATION: <i>' + information.Duration + "</i></div>" +
-          '<div class="divTableCell">QRS DURATION: <i>' + information.QR + "</i></div>" +
-          '<div class="divTableCell">FREQUENCY: <i>' + information.frequency + "</i></div>" +
-        "</div>" +
+          '<div class="divTableCell">NAME: <i>' + informationPatient.Name + "</i></div>" +
+          '<div class="divTableCell">SEX: <i>' + informationPatient.Sex + "</i></div>" +
+          '<div class="divTableCell">PATIENT SIZE: <i>' + informationPatient.Size + "</i></div>" +
+          '<div class="divTableCell">PATIENT AGE: <i>' + informationPatient.Age + "</i></div>" +
+          '<div class="divTableCell">PATIENT WEIGHT: <i>' + informationPatient.Weight + "</i></div>" +
+          '<div class="divTableCell">DATE: <i>' + informationPatient.Date + "</i></div>" +
+          '<div class="divTableCell">BIRTH: <i>' + informationPatient.Birth + "</i></div>" +
+          '<div class="divTableCell">PATIENT ID: <i>' + informationPatient.Id + "</i></div>" +
+        "</div>" + htmlUnit + 
       "</div>" +
       '<div id="toolsECG">' +
         '<div class="divTools">' +

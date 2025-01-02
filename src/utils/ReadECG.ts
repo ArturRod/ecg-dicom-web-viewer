@@ -1,4 +1,4 @@
-import { WAVE_FORM_BITS_STORED } from "../constants/Constants";
+import { WAVE_FORM_BITS_STORED, KEY_UNIT_INFO } from "../constants/Constants";
 
 const dcmjs = require('dcmjs');
 const { DicomMetaDictionary, DicomMessage, ReadBufferStream, WriteBufferStream } = dcmjs.data;
@@ -153,18 +153,14 @@ class DicomEcg {
     // Extract annotation
     const annotation = this._extractAnnotation();
     if (annotation.length > 0) {
-      info.push({ key: 'Annotation', value: annotation });
+      info.push({ key: 'ANNOTATION', value: annotation });
     }
 
     // Additional info
-    info.push({ key: 'Sampling Frequency', value: waveform.samplingFrequency, unit: 'Hz' });
-    info.push({
-      key: 'Duration',
-      value: waveform.samples / waveform.samplingFrequency,
-      unit: 'sec',
-    });
-    info.push({ key: 'Speed', value: this.opts.speed, unit: 'mm/sec' });
-    info.push({ key: 'Amplitude', value: this.opts.amplitude, unit: 'mm/mV' });
+    info.push({ key: 'SAMPLING FREQUENCY', value: waveform.samplingFrequency, unit: 'Hz' });
+    info.push({ key: 'DURATION', value: waveform.samples / waveform.samplingFrequency, unit: 'sec' });
+    info.push({ key: 'SPEED', value: this.opts.speed, unit: 'mm/sec' });
+    info.push({ key: 'AMPLITUDE', value: this.opts.amplitude, unit: 'mm/mV' });
     return info;
   }
 
@@ -501,23 +497,16 @@ class DicomEcg {
         conceptNameCodeSequence.length !== 0
       ) {
         conceptNameCodeSequence.forEach((conceptNameCodeSequenceItem) => {
-          const keyUnitInfo = [
-            { key: 'QT Interval', unit: 'ms' },
-            { key: 'QTc Interval', unit: 'ms' },
-            { key: 'RR Interval', unit: 'ms' },
-            { key: 'VRate', unit: 'BPM' },
-            { key: 'QRS Duration', unit: 'ms' },
-            { key: 'QRS Axis', unit: '°' },
-            { key: 'T Axis', unit: '°' },
-            { key: 'P Axis', unit: '°' },
-            { key: 'PR Interval', unit: 'ms' },
-          ].find((i) => i.key === conceptNameCodeSequenceItem.CodeMeaning);
-          if (
-            waveformAnnotationSequenceItem.NumericValue !== undefined &&
-            keyUnitInfo !== undefined
-          ) {
+          //Delete null character CodeMeaning, trasform to Uppercase:
+          var cleanedCodeMeaning = conceptNameCodeSequenceItem.CodeMeaning.replace(/\u0000/g, '').toUpperCase();;
+
+          //Search constant data:
+          const keyUnitInfo = KEY_UNIT_INFO.find((i) => i.key === cleanedCodeMeaning);
+          
+          //Load data:
+          if (waveformAnnotationSequenceItem.NumericValue !== undefined && keyUnitInfo !== undefined) {
             info.push({
-              key: conceptNameCodeSequenceItem.CodeMeaning,
+              key: cleanedCodeMeaning,
               value: waveformAnnotationSequenceItem.NumericValue,
               unit: keyUnitInfo.unit,
             });
@@ -525,10 +514,11 @@ class DicomEcg {
         });
       }
     });
-    const rrInterval = info.find((i) => i.key === 'RR Interval');
-    if (!info.find((i) => i.key === 'VRate') && rrInterval) {
+    //RR INTEVAL TO VRATE - BPM:
+    const rrInterval = info.find((i) => i.key === 'RR INTERVAL');
+    if (!info.find((i) => i.key === 'VRATE') && rrInterval) {
       info.push({
-        key: 'VRate',
+        key: 'VRATE',
         value: Math.trunc(((60.0 / waveform.duration) * waveform.samples) / rrInterval.value),
         unit: 'BPM',
       });
