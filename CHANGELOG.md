@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 s.
+
+## [2.1.2](https://github.com/ArturRod/ecg-dicom-web-viewer) (2025-01-08)
+
+**Note:** Added in constants SPLINE - Generates interpolation in the ECG view with a spline, enabled by default, may affect performance.
+Advantages of Using Splines in an ECG:
+Smoothness: Splines can make ECG lines look smoother and more continuous, which can be more pleasing to the eye and easier to interpret.
+Interpolation: If the sample data has large intervals, splines can interpolate the points in between, providing a more continuous representation of the signal.
+Zoom: When zooming, splines can help maintain the continuity of the lines, preventing individual points from being seen.
+Disadvantages of Using Splines in an ECG
+Accuracy: In some cases, splines can over-smooth the signal, obscuring important details that could be clinically relevant.
+Complexity: Implementing splines adds complexity to the code and can require more computational resources.
+
+Tension (tension = 0.5)
+The tension in a cardinal spline controls the stiffness of the curve. A tension value of 0.5 is a good middle ground that provides a smooth curve without being too stiff or too loose.
+Low Tension (close to 0): The curve will be looser and smoother, but may deviate more from the control points.
+High Tension (close to 1): The curve will be stiffer and will fit closer to the control points, but may appear more angular.
+A value of 0.5 is chosen as a compromise between smoothness and accuracy, providing a curve that is visually pleasing and follows the control points reasonably well.
+Number of Segments (numOfSegments = 16)
+The number of segments determines how many intermediate points are calculated between each pair of control points. A value of 16 is a good balance between curve accuracy and performance.
+Fewer Segments (low value): The curve will be less accurate and more angular, but the calculation will be faster.
+More Segments (high value): The curve will be more accurate and smoother, but the calculation will be slower.
+A value of 16 provides a smooth and accurate curve without requiring too many computational resources, which is important to maintain good performance, especially in real-time applications such as ECG visualization.
+
 ## [2.1.1](https://github.com/ArturRod/ecg-dicom-web-viewer) (2025-01-02)
 
 **Note:** Added in constants KEY_UNIT_INFO - These are the data to be displayed/read from the ECG. Only the data that has values ​​will be shown, otherwise nothing will appear. They must always be in capital letters so that they are detected well. It can be customized according to the needs to be displayed in the ECG view. 

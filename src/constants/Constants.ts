@@ -36,4 +36,15 @@ const KEY_UNIT_INFO = [
   { key: 'AMPLITUDE', unit: 'mm/mV' }, //Always.
 ];
 
-export { SOP_CLASS_UIDS, WAVE_FORM_BITS_STORED, KEY_UNIT_INFO};
+//Spline draw ECG:
+const SPLINE = {
+  enable: true, //True o false.
+  //A tension value of 0.5 is a good middle ground that provides a smooth curve without being too stiff or too loose.
+  tension: 0.5, //Tension default 0.5
+  //The number of segments determines how many waypoints are calculated between each pair of control points. A value of 16 is a good balance between curve accuracy and performance.
+  //Fewer Segments (low value): The curve will be less precise and more angular, but the calculation will be faster.
+  //More Segments (high value): The curve will be more precise and smooth, but the calculation will be slower.
+  numOfSegments: 16, //Default 16.
+};
+
+export { SOP_CLASS_UIDS, WAVE_FORM_BITS_STORED, KEY_UNIT_INFO, SPLINE};

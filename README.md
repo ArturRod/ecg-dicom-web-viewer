@@ -25,6 +25,7 @@ import {
   SOP_CLASS_UIDS, //Optional.
   WAVE_FORM_BITS_STORED, //Optional.
   KEY_UNIT_INFO, //Optional.
+  SPLINE, //Optional.
   DicomECGViewer, //Principal.
 } from "ecg-dicom-web-viewer";
 ```
@@ -76,6 +77,7 @@ The next available classes are as follows:
   <p>SOP_CLASS_UIDS - SOP UID of ECG types and graph measurements.</p>
   <p>WAVE_FORM_BITS_STORED - Accuracy and quality of the recorded signal.</p>
   <p>KEY_UNIT_INFO - These are the data to be displayed/read from the ECG. Example: QTC INTERVAL, QRS AXIS, P DURATION etc...</p>
+  <p>SPLINE - Generates interpolation in the ECG view with a spline, enabled by default, may affect performance.</p>
 <li><strong>Class GenericCanvas</strong></li>
   <p>It is the generic class for the canvas, it contains the values ​​of the number of views, canvas size, rows, columns, grid size...</p>
 <li><strong>Class DrawECGCanvas extends GenericCanvas</strong></li>

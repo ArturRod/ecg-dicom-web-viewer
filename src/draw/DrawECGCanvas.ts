@@ -1,4 +1,5 @@
 import GenericCanvas from "./GenericCanvas";
+import { SPLINE } from "../constants/Constants";
 
 //Global variable for pan and drag:
 //The global variable is necessary since we have to remove an event listener that we call from 2 places in the same class.
@@ -303,13 +304,14 @@ class DrawECGCanvas extends GenericCanvas {
         }
         //Variables:
         let data = [];
+        let points = [];
         let time = 0;
         let i = 0;
         //Reference to draw:
         let startY = objPosition.height;
         let startX = objPosition.width + this.margin; //Margin left and right to draw:
         let latestPosition = startY;
-  
+
         //Load data:
         this.dataMg.leads[ileads].signal.forEach((element) => {
           data.push(element);
@@ -329,27 +331,95 @@ class DrawECGCanvas extends GenericCanvas {
         while (i < data.length && time < space) {
           //10mV/s:
           let point = ((data[i] * objPosition.height) * this.configuration.AMPLITUDE);  //Rescalate. 10mV/s Each square is 1 mm.
-          //Draw line:
-          this.ctx.beginPath();
-          this.drawLine(
-            startX + time,
-            latestPosition,
-            startX + time,
-            startY - point
-          );
-          this.ctx.stroke();
-  
-          //Positions:
-          latestPosition = startY - point;
+          //Use spline true o false:
+          if(SPLINE.enable){
+             //Add points:
+             points.push(startX + time, startY - point);
+          }
+          else {
+            //Draw line:
+            this.ctx.beginPath();
+            this.drawLine(
+              startX + time,
+              latestPosition,
+              startX + time,
+              startY - point
+            );
+            this.ctx.stroke();
+
+            //Positions:
+            latestPosition = startY - point;
+          }
+         
           //Duration / time / 100
           //25mm/s Each square is 1 mm
-          time += (this.dataMg.duration / this.configuration.TIME) / 100; 
+          time += (this.dataMg.duration / this.configuration.TIME) / 100;
           i++;
+        }
+        //Sline true:
+        if(SPLINE.enable){
+          //Draw Sline:
+          this.DrawSpline(points);
         }
       };
       //Clear data:
       this.positionsDraw = null;
       return true; //Draw nice.
+    }
+
+    //Draws smooth, continuous curve used in mathematics and computer graphics to interpolate or smooth data.
+    //Draw the spline on the canvas.
+    private DrawSpline(points) {
+      //Calculate the points of the cardinal spline:
+      let splinePoints = this.GetCurvePoints(points);
+      //Draw:
+      this.ctx.beginPath();
+      this.ctx.moveTo(splinePoints[0], splinePoints[1]);
+      for (let i = 2; i < splinePoints.length - 1; i += 2) {
+          this.ctx.lineTo(splinePoints[i], splinePoints[i + 1]);
+      }
+      this.ctx.stroke();
+    }
+
+    //Calculate the points of the cardinal spline, tension of spline. Number of segments between each pair of points (16 by default).   
+    private GetCurvePoints(points) {
+      let result = [];
+      
+      //If there are less than 4 points (8 coordinates), return the original points.
+      if (points.length < 8) {
+        return points;
+      }
+
+      //Add duplicate checkpoints to the beginning and end:
+      points = [points[0], points[1], ...points, points[points.length - 2], points[points.length - 1]];
+
+      //Add duplicate control points to the beginning and end of the array to handle the edges of the spline:
+      for (let i = 2; i < (points.length - 4); i += 2) {
+          //Divides the segment between two points into number segments.
+          for (let t = 0; t <= SPLINE.numOfSegments; t++) {
+              //Tensors in the x and y direction:
+              let t1x = (points[i + 2] - points[i - 2]) * SPLINE.tension;
+              let t2x = (points[i + 4] - points[i]) * SPLINE.tension;
+              let t1y = (points[i + 3] - points[i - 1]) * SPLINE.tension;
+              let t2y = (points[i + 5] - points[i + 1]) * SPLINE.tension;
+              //Powers of st:
+              let st = t / SPLINE.numOfSegments;
+              let pow2 = Math.pow(st, 2);
+              let pow3 = Math.pow(st, 3);
+              //Coefficients for cubic interpolation:
+              let c1 = 2 * pow3 - 3 * pow2 + 1;
+              let c2 = -(2 * pow3) + 3 * pow2;
+              let c3 = pow3 - 2 * pow2 + st;
+              let c4 = pow3 - pow2;
+
+              //Calculate the new coordinates (x, y) for each segment using the coefficients and tensors:
+              result.push(
+                  c1 * points[i] + c2 * points[i + 2] + c3 * t1x + c4 * t2x,
+                  c1 * points[i + 1] + c2 * points[i + 3] + c3 * t1y + c4 * t2y
+              );
+          }
+      }
+      return result;
     }
 
     //Read object position to start draw:
