@@ -78,3 +78,18 @@
   margin: 0px 0px 2px 0px;
   border-radius: 10%;
 }
+
+/* New wrapper to position zoom buttons relative to canvas */
+.ecgCanvasWrapper {
+  position: relative;
+  width: 100%;
+}
+.ecgCanvasWrapper #zoomButons {
+  top: 10px !important; /* place at top inside wrapper */
+  right: 10px;
+  bottom: auto; /* unset bottom positioning */
+}
+.ecgCanvas {
+  display: block;
+  width: 100%;
+}
