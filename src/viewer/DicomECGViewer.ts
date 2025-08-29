@@ -144,10 +144,13 @@ class DicomECGViewer {
         '</div>'+
       '</div>' +
     '</div>' +
-    '<canvas id="' + this.idView + this.nameView + '" style="border-top: 2px solid #000000;"></canvas>' +
-    '<div id="zoomButons">'+
-      '<button id="plus">+</button>' +
-      '<button id="minus">-</button>'+
+    // New wrapper so zoom buttons positioned relative to canvas, not page
+    '<div class="ecgCanvasWrapper">' +
+      '<canvas id="' + this.idView + this.nameView + '" class="ecgCanvas" style="border-top: 2px solid #000000;"></canvas>' +
+      '<div id="zoomButons">'+
+        '<button id="plus">+</button>' +
+        '<button id="minus">-</button>'+
+      '</div>' +
     '</div>');
 
     document.getElementById(this.idView).innerHTML = view;
