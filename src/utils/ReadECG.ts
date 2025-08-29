@@ -708,9 +708,25 @@ class DicomEcg {
 				const unitKey = (units[i] || "").toString();
 				const unitLower = unitKey.toLowerCase();
 				let divisor = 1.0;
-				if (unitLower === "uv") divisor = 1000.0; // microvolt to millivolt
-				else if (unitLower === "mv") divisor = 1.0; // already millivolt
-				else if (unitLower === "mmhg") divisor = 200.0; // heuristic from original code
+
+				// Fix the unit detection: "mv" in DICOM often means microvolt, not millivolt
+				// Based on the sensitivity values (2.513826), these are microvolts that need conversion
+				if (unitLower === "uv" || unitLower === "μv") {
+					divisor = 1000.0; // microvolt to millivolt
+				} else if (unitLower === "mv") {
+					// Check if this is actually microvolt based on sensitivity magnitude
+					// Typical ECG sensitivities in microvolts are in the range of 1-10
+					const sensitivity =
+						channelDefinitionSequence[i]?.ChannelSensitivity || 1;
+					if (sensitivity > 1 && sensitivity < 10) {
+						divisor = 1000.0; // this is likely microvolt, convert to millivolt
+					} else {
+						divisor = 1.0; // already millivolt
+					}
+				} else if (unitLower === "mmhg") {
+					divisor = 200.0; // heuristic from original code
+				}
+
 				for (let j = 0; j < signals[i].length; j++) {
 					signals[i][j] = signals[i][j] / divisor;
 				}
