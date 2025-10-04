@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 s.
 
+## [2.1.3](https://github.com/ArturRod/ecg-dicom-web-viewer) (2025-10-04)
+**Note:** Improve waveform parsing and silent failures (#19) (https://github.com/ArturRod/ecg-dicom-web-viewer/pull/19 by @MomenAbdelwadoud)
+Improve part 10 parsing and waveform sequence handling
+Fix overlapping for zoom controls for big headers
+Fix unit detection for ECG signal conversion
+Updated the handling of units to correctly interpret "mv" as microvolt based on sensitivity values.
+Added checks for channel sensitivity to determine if "mv" should be treated as microvolt or millivolt.
+Ensured proper conversion from microvolt to millivolt when necessary.
+
 ## [2.1.2](https://github.com/ArturRod/ecg-dicom-web-viewer) (2025-01-08)
 
 **Note:** Added in constants SPLINE - Generates interpolation in the ECG view with a spline, enabled by default, may affect performance.
