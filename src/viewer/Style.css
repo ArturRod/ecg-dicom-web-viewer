@@ -16,7 +16,8 @@
   font-weight: 700;
   color: #000000;
 }
-.divTableCell i {
+.divTableCell
+  i {
   font-weight: normal;
 }
 .divTableHeading {
@@ -42,7 +43,13 @@
   background: #f9f8f2;
   width: 100%;
   display: flow-root;
-  border-top: 2px solid rgb(0, 0, 0);
+  border-top: 2px
+    solid
+    rgb(
+      0,
+      0,
+      0
+    );
 }
 .divTools {
   float: right;
@@ -50,14 +57,18 @@
   font-weight: 700;
   margin-left: 1.5rem;
 }
-.divTools i {
+.divTools
+  i {
   font-weight: normal;
 }
-.divTools button {
+.divTools
+  button {
   background-color: #dadada;
   color: black;
-  padding: 5px 15px;
-  margin: 4px 2px;
+  padding: 5px
+    15px;
+  margin: 4px
+    2px;
   border-radius: 10%;
 }
 
@@ -69,13 +80,17 @@
   right: 2px;
 }
 
-#zoomButons button {
+#zoomButons
+  button {
   background-color: #dadada;
   color: black;
   padding: 5px;
   width: 30px;
   height: 30px;
-  margin: 0px 0px 2px 0px;
+  margin: 0px
+    0px
+    2px
+    0px;
   border-radius: 10%;
 }
 
@@ -84,7 +99,8 @@
   position: relative;
   width: 100%;
 }
-.ecgCanvasWrapper #zoomButons {
+.ecgCanvasWrapper
+  #zoomButons {
   top: 10px !important; /* place at top inside wrapper */
   right: 10px;
   bottom: auto; /* unset bottom positioning */
