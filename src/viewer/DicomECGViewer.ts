@@ -296,6 +296,10 @@ class DicomECGViewer {
           '<button id="plus">+</button>' +
           '<button id="minus">-</button>' +
           '</div>' +
+          '<div id="contextMenu" class="context-menu">' +
+          '<button class="context-menu-item" id="contextCenter">Center</button>' +
+          '<button class="context-menu-item" id="contextReset">Reset</button>' +
+          '</div>' +
           '</div>'
       );
 

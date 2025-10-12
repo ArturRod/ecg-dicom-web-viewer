@@ -242,6 +242,47 @@ class DrawECGCanvas extends GenericCanvas {
       () =>
         this.endPan()
     );
+
+    //Context Menu:
+    this.canvas.addEventListener(
+      'contextmenu',
+      e =>
+        this.showContextMenu(
+          e
+        )
+    );
+
+    //Context Menu Items:
+    let contextCenter =
+      document.getElementById(
+        'contextCenter'
+      );
+    contextCenter.addEventListener(
+      'click',
+      () => {
+        this.centerView();
+        this.hideContextMenu();
+      }
+    );
+
+    let contextReset =
+      document.getElementById(
+        'contextReset'
+      );
+    contextReset.addEventListener(
+      'click',
+      () => {
+        this.resetView();
+        this.hideContextMenu();
+      }
+    );
+
+    //Hide context menu on click elsewhere:
+    document.addEventListener(
+      'click',
+      () =>
+        this.hideContextMenu()
+    );
   }
 
   /**
@@ -552,6 +593,50 @@ class DrawECGCanvas extends GenericCanvas {
 
     // Redraw the canvas
     this.draw();
+  }
+
+  /**
+   * Show context menu at cursor position
+   */
+  private showContextMenu(
+    e
+  ) {
+    e.preventDefault();
+
+    const contextMenu =
+      document.getElementById(
+        'contextMenu'
+      );
+    const rect =
+      this.canvas.getBoundingClientRect();
+
+    // Position the context menu at the mouse position
+    contextMenu.style.left =
+      e.clientX -
+      rect.left +
+      'px';
+    contextMenu.style.top =
+      e.clientY -
+      rect.top +
+      'px';
+    contextMenu.style.display =
+      'block';
+  }
+
+  /**
+   * Hide context menu
+   */
+  private hideContextMenu() {
+    const contextMenu =
+      document.getElementById(
+        'contextMenu'
+      );
+    if (
+      contextMenu
+    ) {
+      contextMenu.style.display =
+        'none';
+    }
   }
 
   //#endregion
