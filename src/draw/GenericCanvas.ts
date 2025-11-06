@@ -12,23 +12,23 @@ class GenericCanvas {
   //Configuration:
   public configuration = {
     //GRID:
-    CELL_WIDTH: 0.1, //The stroke width of cell 1mm
-    CELL_SIZE: 6, //The cell size
-    BLOCK_WIDTH: 0.2, //The stroke width of block
-    BLOCK_SIZE: 0, //CELL_SIZE * 5, //The block size, each block includes 5*5 cells
+    CELL_WIDTH: 1,  // The stroke width of cell lines, expressed in millimeters (≈0.26 px on a 96 DPI display)
+    CELL_SIZE: 6,   // The cell size in pixels (≈1 mm visually)
+    BLOCK_WIDTH: 2, // The stroke width of block lines, expressed in millimeters (≈0.53 px on a 96 DPI display)
+    BLOCK_SIZE: 0,  //CELL_SIZE * 5, //The block size, each block includes 5*5 cells
     //ROWS and COLUMNS canvas separation I, II, III, aVR, aVL, aVF, V1, V2, V3, V4, V5, V6
     ROWS: 6,
     COLUMNS: 2,
     columnsText: [
       ["I", "II", "III", "aVR", "aVL", "aVF"], //Colum 1
-      ["V1", "V2", "V3", "V4", "V5", "V6"], // Colum 2
+      ["V1", "V2", "V3", "V4", "V5", "V6"],    //Colum 2
     ],
     //LINE ECG:
-    CURVE_WIDTH: 1.5, //The stroke width of curve
+    CURVE_WIDTH: 1.5,   //The stroke width of curve
     SAMPLING_RATE: 125, //The number of samples per second (1/0.008)
-    FREQUENCY: 250, //The frequency to update the curve 25mm = 1000ms = 1s
-    TIME: 0.25, //Default <- 25mm/s -> Each square is 1 mm
-    AMPLITUDE: 0.10, //Default 10mm/mV  Each square is 1 mm
+    FREQUENCY: 250,     //The frequency to update the curve 25mm = 1000ms = 1s
+    TIME: 0.25,         //Default <- 25mm/s -> Each square is 1 mm
+    AMPLITUDE: 0.10,    //Default 10mm/mV  Each square is 1 mm
     //DESING:
     GRID_COLOR: "#F08080",
     LINE_COLOR: "#000033",
@@ -47,6 +47,14 @@ class GenericCanvas {
     //Canvas ECG:
     this.canvas = <HTMLCanvasElement> document.getElementById(id_canvas);
     this.ctx = this.canvas.getContext("2d");
+
+    //Adjusts line thickness based on screen resolution:
+    const dpr = window.devicePixelRatio || 1;
+    const pxPerMm = 3.78 * dpr; //On a normal monitor (96 DPI), 1 mm ≈ 3.78 px
+
+    // Each cell measures 1 mm; the actual 1 mm stroke would be:
+    this.configuration.CELL_WIDTH /= pxPerMm;   // ≈ 0.26 px a DPR = 1
+    this.configuration.BLOCK_WIDTH /= pxPerMm;  // ≈ 0.53 px a DPR = 1
 
     //Canvas resize:
     let restHeight = document.getElementById('divTableBody').clientHeight + document.getElementById('toolsECG').clientHeight;

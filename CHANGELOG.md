@@ -3,8 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 s.
+## [2.1.4](https://github.com/ArturRod/ecg-dicom-web-viewer) (2025-11-06)
+
+**Note:** Issues identified:
+The lines were not visible at startup because the thicknesses (0.1, 0.2) were less than 1 physical pixel → they were either anti-aliased or disappeared.
+When zooming, the browser increased the device Pixel Ratio (DPR) → the subpixel lines then occupied actual pixels and became visible.
+The line thicknesses (CELL_WIDTH, BLOCK_WIDTH) were defined in canvas pixels, not in actual millimeters, so there was no consistency across screens.
+
+Solution: The ECG grid appears complete from the first render, without waiting for zooming.
+The actual 1 mm / 5 mm cell/block ratio is maintained.
+The thin/thick thicknesses are visibly distinct and consistent.
+The grid looks the same on standard displays, Retina displays, and at different zoom levels.
+
+Other improvements:
+Commit 740a9ff (https://github.com/ArturRod/ecg-dicom-web-viewer/commit/740a9ff7aff77589bd6a605aba9260a4f72ed8b0)
+Add .prettierrc for consistent formatting
+Add reset and center buttons
+Add context menu for canvas
+Package update
+Dcmjs needs updating from ^0.37.0 to ^0.45.0, as it's causing errors with the new version and needs fixing. (Future update)
 
 ## [2.1.3](https://github.com/ArturRod/ecg-dicom-web-viewer) (2025-10-04)
+
 **Note:** Improve waveform parsing and silent failures (#19) (https://github.com/ArturRod/ecg-dicom-web-viewer/pull/19 by @MomenAbdelwadoud)
 Improve part 10 parsing and waveform sequence handling
 Fix overlapping for zoom controls for big headers
